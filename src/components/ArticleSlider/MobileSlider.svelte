@@ -18,24 +18,22 @@
   };
 </script>
 
-{#if !$mobile}
-  <swiper-container
-    class="root"
-    class:isEnd
-    class:isBeginning
-    class:load={!swiperEl}
-    bind:this={swiperEl}
-    slides-per-view="1.2"
-    on:swiperprogress={onProgress}
-  >
-    {#each data as { src, alt }}
-      <swiper-slide class="slide">
-        <div class="slide-wrap">
-          <button><img {src} {alt} /></button>
-        </div>
-      </swiper-slide>
-    {/each}
-  </swiper-container>
+{#if $mobile}
+  <div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
+    <swiper-container
+      bind:this={swiperEl}
+      slides-per-view="1.2"
+      on:swiperprogress={onProgress}
+    >
+      {#each data as { src, alt }}
+        <swiper-slide class="slide">
+          <div class="slide-wrap">
+            <button><img {src} {alt} /></button>
+          </div>
+        </swiper-slide>
+      {/each}
+    </swiper-container>
+  </div>
 {/if}
 
 <style lang="scss">
@@ -44,6 +42,11 @@
     margin: -15px;
     transition: var(--load-fade);
     transition-property: opacity;
+
+    &.load {
+      opacity: 0;
+    }
+
     &::after,
     &::before {
       pointer-events: none;
@@ -70,9 +73,6 @@
       &::before {
         opacity: 0;
       }
-    }
-    &.load {
-      opacity: 0;
     }
   }
 

@@ -19,26 +19,24 @@
 </script>
 
 {#if !$mobile}
-  <swiper-container
-    class="root"
-    id="preview-slider"
-    class:isEnd
-    class:isBeginning
-    class:load={!swiperEl}
-    bind:this={swiperEl}
-    mousewheel
-    slides-per-view="3.33"
-    watch-slides-progress
-    on:swiperprogress={onProgress}
-  >
-    {#each data as { src, alt }}
-      <swiper-slide class="slide">
-        <div class="slide-wrap">
-          <button><img {src} {alt} /></button>
-        </div>
-      </swiper-slide>
-    {/each}
-  </swiper-container>
+  <div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
+    <swiper-container
+      id="preview-slider"
+      bind:this={swiperEl}
+      mousewheel
+      slides-per-view="3.33"
+      watch-slides-progress
+      on:swiperprogress={onProgress}
+    >
+      {#each data as { src, alt }}
+        <swiper-slide class="slide">
+          <div class="slide-wrap">
+            <button><img {src} {alt} /></button>
+          </div>
+        </swiper-slide>
+      {/each}
+    </swiper-container>
+  </div>
 {/if}
 
 <style lang="scss">

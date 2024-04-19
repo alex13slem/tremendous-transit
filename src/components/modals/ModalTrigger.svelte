@@ -27,12 +27,15 @@
   function handleClick() {
     if (type === 'development') {
       if ($mobile) {
-        return navigate(`/development/form`);
+        return navigate(`/${type}/form`);
       }
       servModalIsOpen.set(true);
       servTargetSlug.set(slug);
     }
     if (type === 'publishing') {
+      if ($mobile) {
+        return navigate(`/${type}/form`);
+      }
       pubModalIsOpen.set(true);
       pubTargetSlug.set(slug);
     }

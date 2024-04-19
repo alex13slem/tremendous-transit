@@ -29,11 +29,9 @@
       <!-- {#if $selectedOptionValue === title} -->
       {#if ($mobile && $selectedOptionValue === title) || (!$mobile && selectedIndex === idx)}
         <div class={css.panel} transition:fly={{ y: '75%', duration: 700 }}>
-          <div class={css.slider}>
+          <div class={css.slider} class:isEnd class:isBeginning>
             <swiper-container
               class={css['slider-wrap']}
-              class:isEnd
-              class:isBeginning
               bind:this={swiperEl}
               mousewheel={true}
               slides-per-view="1.1"

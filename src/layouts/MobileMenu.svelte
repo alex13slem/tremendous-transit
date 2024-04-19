@@ -12,9 +12,6 @@
     const pathname = window.location.pathname;
     category = pathname.split('/')[1] || null;
     subCategory = pathname.split('/')[2] || null;
-
-    console.log('category', category);
-    console.log('subCategory', subCategory);
   });
 </script>
 
@@ -27,6 +24,7 @@
             <a
               href={link.href}
               class="nav-link"
+              on:click={() => ($isOpen = false)}
               class:active={category === link.slug}>{link.text}</a
             >
             {#if link.categoriesLinks.length}
@@ -35,6 +33,7 @@
                   <a
                     href={categoryLink.href}
                     class="category-link"
+                    on:click={() => ($isOpen = false)}
                     class:active={subCategory === categoryLink.slug}
                     >{categoryLink.text}</a
                   >
