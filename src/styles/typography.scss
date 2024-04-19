@@ -81,10 +81,10 @@ body {
   &.detail {
     h1,
     h2 {
-      font-size: 30px;
+      font-size: clamp(1.5rem, 1.283rem + 0.92vw, 1.875rem);
     }
     h3 {
-      font-size: 24px;
+      font-size: clamp(1.25rem, 1.033rem + 0.92vw, 1.625rem);
     }
     p {
       font-size: clamp(1rem, 0.881rem + 0.51vw, 1.125rem);

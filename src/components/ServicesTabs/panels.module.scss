@@ -34,7 +34,7 @@
     content: '';
     position: absolute;
     z-index: 2;
-    inset: -10px;
+    inset: -1px;
     width: var(--container-offset);
     background: linear-gradient(90deg, transparent, rgb(var(--c-bg)));
 
@@ -42,7 +42,6 @@
     transition-property: opacity;
     @media (min-width: 1168px) {
       width: 15%;
-      inset: -1px;
     }
   }
   &::after {

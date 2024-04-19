@@ -44,8 +44,8 @@ const place = getWorkplaceString(workplace);
   </Fragment>
   <div class="container">
     <LinkToDetailPage client:load toBack text="Назад" />
-    <section>
-      <h2>{info.name}</h2>
+    <section class="prose detail">
+      <h1>{info.name}</h1>
       <div class="info">
         {
           salary && (
@@ -57,48 +57,46 @@ const place = getWorkplaceString(workplace);
         <p class="info__place">{place}</p>
       </div>
 
-      <div class="prose detail">
-        <blockquote set:html={parse(info.description)} />
+      <blockquote set:html={parse(info.description)} />
 
-        {
-          tasks?.length && (
-            <>
-              <h3>Основные задачи</h3>
-              <ul>
-                {tasks.map(({ text }) => (
-                  <li>{text}</li>
-                ))}
-              </ul>
-            </>
-          )
-        }
+      {
+        tasks?.length && (
+          <>
+            <h3>Основные задачи</h3>
+            <ul>
+              {tasks.map(({ text }) => (
+                <li>{text}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
 
-        {
-          requirements?.length && (
-            <>
-              <h3>Наши ожидания</h3>
-              <ul>
-                {requirements.map(({ text }) => (
-                  <li>{text}</li>
-                ))}
-              </ul>
-            </>
-          )
-        }
+      {
+        requirements?.length && (
+          <>
+            <h3>Наши ожидания</h3>
+            <ul>
+              {requirements.map(({ text }) => (
+                <li>{text}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
 
-        {
-          offers?.length && (
-            <>
-              <h3>Мы предлагаем</h3>
-              <ul>
-                {offers.map(({ text }) => (
-                  <li>{text}</li>
-                ))}
-              </ul>
-            </>
-          )
-        }
-      </div>
+      {
+        offers?.length && (
+          <>
+            <h3>Мы предлагаем</h3>
+            <ul>
+              {offers.map(({ text }) => (
+                <li>{text}</li>
+              ))}
+            </ul>
+          </>
+        )
+      }
       <div class="btns">
         {
           links.test && (
@@ -126,7 +124,7 @@ const place = getWorkplaceString(workplace);
 
 <style lang="scss">
   .container {
-    padding-top: 50px;
+    padding-top: 30px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -140,14 +138,7 @@ const place = getWorkplaceString(workplace);
       grid-template-columns: 1fr 300px;
     }
   }
-  section {
-    h2 {
-      font-size: 36px;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 30px;
-    }
-  }
+
   aside {
     @media (max-width: 1023.98px) {
       margin-top: 70px;
