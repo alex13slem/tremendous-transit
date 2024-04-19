@@ -1,12 +1,8 @@
 ---
 import BasicLayout from '../../layouts/BasicLayout.astro';
 import LandingHero from '../../sections/LandingHero.astro';
-import SectCommon from '../../sections/SectCommon.astro';
 import VacancyCard from '../../components/VacancyCard.svelte';
 import SEO from '../../layouts/SEO.astro';
-import { getCollection, getEntry } from 'astro:content';
-import ModalTrigger from '../../components/modals/ModalTrigger.svelte';
-import ServicesModalForm from '../../components/modals/ServicesModalForm.svelte';
 import { getVacancies } from '../../store/career';
 
 const description =

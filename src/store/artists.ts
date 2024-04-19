@@ -16,7 +16,6 @@ export const artists: Artist[] = [
     },
     thumbnail: {
       src: artistImg.src,
-      src_phd: artistImg.src,
       alt: 'Человек Человеков',
     },
     contacts: [
@@ -46,7 +45,6 @@ export const artists: Artist[] = [
     },
     thumbnail: {
       src: artistImg.src,
-      src_phd: artistImg.src,
       alt: 'Человек Человеков',
     },
     contacts: [
@@ -76,7 +74,6 @@ export const artists: Artist[] = [
     },
     thumbnail: {
       src: artistImg.src,
-      src_phd: artistImg.src,
       alt: 'Человек Человеков',
     },
     contacts: [
@@ -106,7 +103,6 @@ export const artists: Artist[] = [
     },
     thumbnail: {
       src: artistImg.src,
-      src_phd: artistImg.src,
       alt: 'Человек Человеков',
     },
     contacts: [
@@ -136,7 +132,6 @@ export const artists: Artist[] = [
     },
     thumbnail: {
       src: artistImg.src,
-      src_phd: artistImg.src,
       alt: 'Человек Человечкин',
     },
   },
@@ -154,7 +149,6 @@ export const artists: Artist[] = [
     },
     thumbnail: {
       src: artistImg.src,
-      src_phd: artistImg.src,
       alt: 'Человек Человеков',
     },
     contacts: [

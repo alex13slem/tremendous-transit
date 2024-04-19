@@ -1,7 +1,5 @@
 ---
-import { Image, getImage } from 'astro:assets';
-import banner from '../img/hero.jpg';
-import textPng from '../img/hero-logo.png';
+import { Image } from 'astro:assets';
 import textSvg from '../img/hero-text.svg';
 import bg_layout_1 from '../img/hero-page-scene/bg_layout_1.png';
 import clouds_layout_2 from '../img/hero-page-scene/clouds_layout_2.png';
@@ -11,8 +9,6 @@ import hero_layout_5 from '../img/hero-page-scene/hero_layout_5.png';
 import bushes_layout_6 from '../img/hero-page-scene/bushes_layout_6.png';
 
 const { lang } = Astro.params;
-
-const bg = await getImage({ src: banner, format: 'webp' });
 ---
 
 <script>
@@ -23,7 +19,7 @@ const bg = await getImage({ src: banner, format: 'webp' });
     if (!stage) {
       return;
     }
-    const parallaxInstance = new Parallax(stage, {
+    new Parallax(stage, {
       limitY: -1,
       onReady() {
         stage.classList.remove('loading');

@@ -1,10 +1,8 @@
-import type { Context } from "@netlify/functions";
-
 export function post<T>(fn: (data: T) => Promise<Response>) {
-  return async (request: Request, context: Context) => {
+  return async (request: Request) => {
     try {
-      if (request.method.toUpperCase() !== "POST") {
-        return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+      if (request.method.toUpperCase() !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
           status: 405,
         });
       }
@@ -26,13 +24,13 @@ export function post<T>(fn: (data: T) => Promise<Response>) {
         });
       }
 
-      console.error(new Error("Unknown error on server"));
+      console.error(new Error('Unknown error on server'));
       return new Response(
-        JSON.stringify({ error: "Unknown error on server" }),
+        JSON.stringify({ error: 'Unknown error on server' }),
         {
           status: 500,
           statusText: error.message || error,
-        },
+        }
       );
     }
   };

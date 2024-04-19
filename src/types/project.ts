@@ -1,28 +1,3 @@
-enum GameCategory {
-  'arcade',
-  'rpg',
-  'shooter',
-  'racing',
-  'action',
-  'strategy',
-  'fighting',
-  'horror',
-  'simulator',
-  'stealth',
-}
-
-enum GameStatus {
-  'test',
-  'dev',
-  'hot',
-  'new',
-}
-
-enum GameFavorite {
-  'top',
-  'best',
-}
-
 type Workplace = 'office' | 'remote';
 
 // enum Social {

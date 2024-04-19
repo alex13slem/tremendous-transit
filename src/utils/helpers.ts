@@ -1,5 +1,3 @@
-import type { Link } from '../types/project';
-
 export const cn = (...cNames: any): string =>
   cNames.filter(Boolean, String).join(' ');
 
@@ -33,10 +31,6 @@ export function getMapKey(map: Map<string, string>, searchKey: string) {
 export const areSetsEqual = (a: Set<any>, b: Set<any>) =>
   a.size === b.size && [...a].every((value) => b.has(value));
 
-type SetFirstLinkAsNavProps = {
-  category: string;
-  categoryLinks: Link[];
-};
 // export function setFirstLinkAsNav({
 //   category,
 //   categoryLinks,
