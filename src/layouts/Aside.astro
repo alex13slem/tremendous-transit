@@ -1,0 +1,30 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'aside'> {}
+const { props } = Astro;
+---
+
+<aside {...props}>
+  <slot />
+</aside>
+
+<style lang="scss">
+  aside {
+    flex: 0 0 325px;
+    border-right: 1px solid rgb(var(--c-card-border));
+    border-image: linear-gradient(
+        to bottom,
+        rgb(var(--c-card-border)) 0%,
+        rgb(var(--c-card-border)) calc(100% - 50vh),
+        transparent calc(100% - 100px),
+        transparent
+      )
+      1;
+  }
+  @media (max-width: 1023.98px) {
+    aside {
+      display: none;
+    }
+  }
+</style>

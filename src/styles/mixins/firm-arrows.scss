@@ -1,0 +1,28 @@
+@mixin firm-arrows($opacity: 1, $color: currentColor) {
+  &::after,
+  &::before {
+    z-index: 0;
+    content: "";
+    position: absolute;
+    border: 1px solid $color;
+    width: 0.5em;
+    height: 0.5em;
+    opacity: $opacity;
+
+    transition: border-color var(--trans-default);
+    transition-property: color, border-color;
+  }
+
+  &::after {
+    bottom: 0;
+    right: 0;
+    border-left-color: transparent;
+    border-top-color: transparent;
+  }
+  &::before {
+    top: 0;
+    left: 0;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+}

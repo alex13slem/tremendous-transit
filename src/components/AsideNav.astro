@@ -1,0 +1,32 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import TabButton from '../components/ui/TabButton.svelte';
+import type { NavLink } from '../types/project';
+
+interface Props extends HTMLAttributes<'nav'> {
+  links: NavLink[];
+}
+
+const { class: className, links, ...props } = Astro.props;
+const pathname = Astro.url.pathname;
+const category = pathname.split('/')[2] || null;
+---
+
+<nav class:list={['aside-nav', className]} {...props}>
+  {
+    links.map(({ text, href, slug }) => (
+      <a {href}>
+        <TabButton selected={category === slug}>{text}</TabButton>
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .aside-nav {
+    position: sticky;
+    top: 60px;
+    display: flex;
+    flex-direction: column;
+  }
+</style>

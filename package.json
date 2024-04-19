@@ -1,0 +1,36 @@
+{
+  "name": "tremendous-transit",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "decap": "npx decap-server",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "@astrojs/netlify": "^5.2.0",
+    "@astrojs/svelte": "^5.3.0",
+    "@castlenine/svelte-qrcode": "^1.1.0",
+    "@iconify/svelte": "^3.1.6",
+    "@rgossiaux/svelte-headlessui": "^2.0.0",
+    "@sveu/browser": "^1.0.1",
+    "astro": "^4.5.18",
+    "axios": "^1.6.8",
+    "decap-cms-app": "^3.1.9",
+    "decap-cms-core": "^3.3.6",
+    "localforage": "^1.10.0",
+    "marked": "^12.0.1",
+    "nanostores": "^0.10.3",
+    "parallax-js": "^3.1.0",
+    "react-dom": "^18.2.0",
+    "svelte": "^4.2.13",
+    "swiper": "^11.1.1",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "sass": "^1.74.1"
+  }
+}

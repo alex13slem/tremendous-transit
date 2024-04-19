@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import FormCard from '../components/BlogerFormCard.svelte';
+
+interface Props extends HTMLAttributes<'section'> {
+  title?: string;
+}
+
+const { title, ...props } = Astro.props;
+---
+
+<section {...props}>
+  <div class="container">
+    {title && <h2 class="sect-title">{title}</h2>}
+    <FormCard client:visible>
+      <Fragment slot="description">
+        Журналисты или подтверждённые блогеры <span>ПЕРВЫМИ</span>
+        узнают о тестировании игры
+      </Fragment>
+    </FormCard>
+  </div>
+</section>
+
+<style lang="scss">
+  section {
+    overflow: clip;
+  }
+  .container {
+    position: relative;
+    @media (max-width: 1023.98px) {
+      padding: 0;
+    }
+  }
+  .sect-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    @media (max-width: 1023.98px) {
+      padding-inline: var(--container-offset);
+    }
+  }
+</style>

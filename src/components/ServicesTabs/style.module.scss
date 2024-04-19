@@ -1,0 +1,19 @@
+.root {
+  @media (min-width: 768px) {
+    gap: 20px;
+    display: flex;
+    min-height: 51vw;
+  }
+  @media (min-width: 992px) {
+    min-height: 380px;
+  }
+}
+
+.select {
+  @media (min-width: 768px) {
+    display: none;
+  }
+  margin-bottom: 30px;
+  z-index: 2;
+  position: relative;
+}

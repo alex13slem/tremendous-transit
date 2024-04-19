@@ -1,0 +1,35 @@
+---
+import HtmlBase from "./HtmlBase.astro";
+---
+
+<HtmlBase>
+  <slot name="seo" />
+
+  <div class="root">
+    <dotlottie-player
+      src="https://lottie.host/d8e94074-a171-463a-af14-2f92de2701c7/RO3uGWn0bJ.lottie"
+      background="transparent"
+      speed="1"
+      loop
+      autoplay></dotlottie-player>
+    <h1>Раздел находится в разработке</h1>
+  </div>
+</HtmlBase>
+
+<style>
+  .root {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  h1 {
+    position: absolute;
+    top: calc(53% + 30vmin);
+    font-size: clamp(1rem, 0.714rem + 1.43vw, 2rem);
+  }
+  dotlottie-player {
+    height: calc(100vh - 60px);
+  }
+</style>

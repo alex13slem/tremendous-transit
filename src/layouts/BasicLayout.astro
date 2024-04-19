@@ -1,0 +1,30 @@
+---
+import HtmlBase from './HtmlBase.astro';
+import SectSocialSlider from '../sections/SectSocialSlider.astro';
+import SectBloggerForm from '../sections/SectBloggerForm.astro';
+---
+
+<HtmlBase>
+  <slot name="seo" slot="seo" />
+  <main>
+    <slot />
+
+    <SectSocialSlider />
+
+    <SectBloggerForm title="Сми или блогер" />
+  </main>
+  <slot name="after-main" />
+</HtmlBase>
+
+<style lang="scss">
+  main {
+    :global(section) {
+      overflow: hidden;
+      padding-block: 50px;
+    }
+    :global(section):first-of-type {
+      padding-top: 100px;
+      padding-bottom: 50px;
+    }
+  }
+</style>

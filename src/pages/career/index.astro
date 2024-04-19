@@ -1,0 +1,102 @@
+---
+import BasicLayout from '../../layouts/BasicLayout.astro';
+import LandingHero from '../../sections/LandingHero.astro';
+import SectCommon from '../../sections/SectCommon.astro';
+import VacancyCard from '../../components/VacancyCard.svelte';
+import SEO from '../../layouts/SEO.astro';
+import { getCollection, getEntry } from 'astro:content';
+import ModalTrigger from '../../components/modals/ModalTrigger.svelte';
+import ServicesModalForm from '../../components/modals/ServicesModalForm.svelte';
+import { getVacancies } from '../../store/career';
+
+const description =
+  'Присоединяйтесь к нам и станьте частью команды, которая создает самые увлекательные игры!';
+
+const vacancies = await getVacancies();
+---
+
+<BasicLayout>
+  <SEO slot="seo" title="Карьера" {description} imageUrls={{ fb: '' }} />
+  <LandingHero>
+    <!-- <ModalTrigger type={"services"} client:load>Создать новый мир</ModalTrigger> -->
+  </LandingHero>
+  <section class="banner">
+    <div class="container">
+      <h1>
+        Присоединяйтесь к нам и станьте частью команды, которая создает самые
+        увлекательные игры!
+      </h1>
+      <p>
+        Выполните одно из следующих тестовых заданий и заполни анкету, на любую
+        из вакансий чтобы подать заявку в команду EISVIL. Мы всегда ищем новые
+        таланты!
+      </p>
+    </div>
+  </section>
+
+  <section class="vacancies">
+    <div class="container">
+      <h2 class="sect-title">Вакансии</h2>
+      <div class="cards">
+        {
+          vacancies.map((vacancy, idx) => (
+            <VacancyCard client:load {vacancy} isEven={Boolean(idx % 2)} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BasicLayout>
+
+<!-- <ServicesModalForm client:load /> -->
+
+<style lang="scss">
+  .banner {
+    h1 {
+      font-size: clamp(1.25rem, 0.654rem + 2.54vw, 1.875rem);
+      line-height: 1.3;
+      text-align: center;
+      width: min(860px, 100%);
+      margin-inline: auto;
+    }
+
+    p {
+      margin-top: 30px;
+      width: min(630px, 100%);
+      line-height: 2.18;
+      text-align: center;
+      margin-inline: auto;
+      font-size: clamp(0.875rem, 0.756rem + 0.51vw, 1rem);
+    }
+
+    @media (max-width: 629.98px) {
+      h1,
+      p {
+        text-align: left;
+      }
+    }
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 1.142rem + 1.53vw, 1.875rem);
+    @media (max-width: 889.98px) {
+      column-gap: 0;
+      grid-template-columns: 1fr;
+    }
+  }
+  .btn {
+    background-color: #fff;
+  }
+  .vacancies {
+    @media (max-width: 629.98px) {
+      .container {
+        display: contents;
+      }
+      h2 {
+        padding-inline: var(--container-offset);
+      }
+    }
+  }
+</style>

@@ -1,0 +1,236 @@
+---
+import { Image, getImage } from 'astro:assets';
+import banner from '../img/hero.jpg';
+import textPng from '../img/hero-logo.png';
+import textSvg from '../img/hero-text.svg';
+import bg_layout_1 from '../img/hero-page-scene/bg_layout_1.png';
+import clouds_layout_2 from '../img/hero-page-scene/clouds_layout_2.png';
+import clouds_layout_3 from '../img/hero-page-scene/clouds_layout_3.png';
+import clouds_layout_4 from '../img/hero-page-scene/clouds_layout_4.png';
+import hero_layout_5 from '../img/hero-page-scene/hero_layout_5.png';
+import bushes_layout_6 from '../img/hero-page-scene/bushes_layout_6.png';
+
+const { lang } = Astro.params;
+
+const bg = await getImage({ src: banner, format: 'webp' });
+---
+
+<script>
+  import Parallax from 'parallax-js';
+
+  document.addEventListener('astro:page-load', () => {
+    const stage = document.getElementById('stage-hero-page')!;
+    if (!stage) {
+      return;
+    }
+    const parallaxInstance = new Parallax(stage, {
+      limitY: -1,
+      onReady() {
+        stage.classList.remove('loading');
+      },
+      invertX: true,
+    });
+  });
+</script>
+
+<!-- <div class="sect-hero" style=`background-image: url(${bg.src});`> -->
+<div class="sect-hero">
+  <div class="stage loading" id="stage-hero-page">
+    <Image
+      class="stage__image layout-1--bg layer"
+      src={bg_layout_1}
+      alt="bg_layout_1"
+    />
+    <Image
+      class={'stage__image layout-2--clouds layer'}
+      src={clouds_layout_2}
+      alt="clouds_layout_2"
+      data-depth="0.01"
+    />
+    <Image
+      class={'stage__image layout-3--clouds layer'}
+      src={clouds_layout_3}
+      alt="clouds_layout_3"
+      data-depth="0.02"
+    />
+    <Image
+      class={'stage__image layout-4--clouds layer'}
+      src={clouds_layout_4}
+      alt="clouds_layout_4"
+      data-depth="0.05"
+    />
+    <Image
+      class={'stage__image layout-5--hero layer'}
+      src={hero_layout_5}
+      alt="hero_layout_5"
+      data-depth="0.1"
+    />
+    <Image
+      class={'stage__image layout-6--bushes layer'}
+      src={bushes_layout_6}
+      alt="bushes_layout_6"
+      data-depth="0.3"
+    />
+  </div>
+  <div class="container">
+    <div class="inner">
+      <div class="logo">
+        <Image src={textSvg} alt="EISVIL" />
+      </div>
+      <h1>
+        {
+          lang === 'en' ? (
+            <Fragment>
+              <span hidden>Eisvil -</span> a place where an idea becomes a game
+            </Fragment>
+          ) : (
+            <Fragment>
+              <span hidden>Eisvil -</span> место, где идея становится игрой
+            </Fragment>
+          )
+        }
+      </h1>
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  .sect-hero {
+    /* --banner-height: 760px; */
+    z-index: 0;
+    height: 100svh;
+    margin-top: -60px;
+    position: relative;
+
+    padding-block: 88px;
+    padding-block: 11.6vmin;
+    display: grid;
+    place-content: center;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: calc(50% - 20px) 50%;
+
+    @media (max-width: 1023.98px) {
+      height: 100vmax;
+    }
+
+    &::after {
+      z-index: -1;
+      position: absolute;
+      content: '';
+      inset: -1px;
+      background: linear-gradient(
+        180deg,
+        rgba(28, 29, 43, 0) 50%,
+        rgba(28, 29, 43, 0.31) 80%,
+        #1c1d2b calc(100% - 20px),
+        #1c1d2b 100%
+      );
+    }
+  }
+
+  .inner {
+    position: relative;
+    bottom: -70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo {
+    margin-bottom: clamp(0.938rem, 0.639rem + 1.27vw, 1.25rem);
+    width: 100%;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  h1 {
+    user-select: none;
+    margin-bottom: clamp(0.938rem, -0.553rem + 6.36vw, 2.5rem);
+    text-align: center;
+    font-size: clamp(0.875rem, 0.429rem + 2.23vw, 1.5rem);
+    line-height: 1;
+    font-weight: 400;
+
+    text-shadow: 0px 1px 6px rgba(27, 7, 3, 0.8);
+  }
+  .stage {
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
+    perspective: 1000px;
+
+    &.loading {
+      opacity: 0;
+    }
+    &__image {
+      position: absolute;
+      inset: 0 !important;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  .layout {
+    &-1 {
+      &--bg {
+        height: 100%;
+        width: 100%;
+        object-position: calc(50% - 20px) center;
+      }
+    }
+
+    &-2 {
+      &--clouds {
+        top: auto !important;
+        bottom: 15svh !important;
+        width: 100%;
+        scale: 1.06;
+      }
+    }
+
+    &-3 {
+      &--clouds {
+        top: 3svh !important;
+        bottom: auto !important;
+        width: 100%;
+        scale: 1.07;
+      }
+    }
+
+    &-4 {
+      &--clouds {
+        top: 13svh !important;
+        bottom: auto !important;
+        width: 100%;
+        scale: 1.05;
+      }
+    }
+
+    &-5 {
+      &--hero {
+        margin-inline: auto;
+        top: auto !important;
+        height: 100%;
+        width: auto;
+        overflow: visible;
+      }
+    }
+
+    &-6 {
+      &--bushes {
+        top: auto !important;
+        width: 100%;
+        scale: 1.07;
+        transform-origin: center bottom;
+      }
+    }
+  }
+</style>

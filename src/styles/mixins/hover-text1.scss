@@ -1,0 +1,10 @@
+@mixin hover-text1(
+  $t-color: rgb(var(--c-text)),
+  $sh-lt-color: rgb(var(--c-accent), 20%),
+  $sh-rb-color: rgb(var(--c-white), 20%)
+) {
+  color: $t-color;
+  text-shadow:
+    -3px -3px $sh-lt-color,
+    2.5px 2.5px $sh-rb-color;
+}

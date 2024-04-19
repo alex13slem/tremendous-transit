@@ -1,0 +1,21 @@
+---
+import SocialCards from '../components/SocialCards.svelte';
+---
+
+<section>
+  <div class="container">
+    <h2 class="sect-title">Наши сообщества</h2>
+    <SocialCards client:visible />
+  </div>
+</section>
+
+<style lang="scss">
+  @media (max-width: 1023.98px) {
+    .container {
+      display: contents;
+    }
+    h2 {
+      padding-inline: var(--container-offset);
+    }
+  }
+</style>

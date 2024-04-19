@@ -1,0 +1,16 @@
+@keyframes pulsar-bg-c {
+  0% {
+    background-color: rgb(var(--c-accent), 65%);
+  }
+  100% {
+    background-color: rgb(var(--c-accent), 100%);
+  }
+}
+@keyframes pulsar-bt-c {
+  0% {
+    border-top-color: rgb(var(--c-accent), 65%);
+  }
+  100% {
+    border-top-color: rgb(var(--c-accent), 100%);
+  }
+}

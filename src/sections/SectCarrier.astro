@@ -1,0 +1,172 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import BtnFirm from '../components/ui/BtnFirm.svelte';
+import { Image } from 'astro:assets';
+import warriorSVG from '../img/sections/career/warrior.svg';
+
+interface Props extends HTMLAttributes<'section'> {
+  linkToDetail: string;
+}
+
+const { class: className, linkToDetail, ...props } = Astro.props;
+---
+
+<section class:list={['sect-carrier', className]} {...props}>
+  <div class="container">
+    <Image class="image" src={warriorSVG} alt={'warrior'} />
+    <div class="inner">
+      <h2 class="sect-title">Карьера</h2>
+      <div class="body">
+        <h3>
+          Присоединяйтесь к нам и станьте частью команды, которая создает самые
+          увлекательные игры!
+        </h3>
+        <p class="description">
+          Мы предлагаем дружественную и профессиональную обстановку, где вы
+          сможете реализовать свой потенциал и работать над уникальными
+          проектами вместе с единомышленниками.
+        </p>
+        <div class="btns">
+          <a href={linkToDetail}>
+            <BtnFirm variant="contrast">Присоедениться</BtnFirm></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .sect-carrier {
+    --sect-inset: 40px;
+    --sect-offset-x: calc(var(--container-offset) + var(--sect-inset));
+    filter: drop-shadow(var(--box-shadow-active));
+  }
+  .container {
+    position: relative;
+    min-height: 400px;
+
+    display: flex;
+    flex-direction: column;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+
+      background:
+        url('../img/sections/career/decor.svg') var(--container-offset) 50% /
+          320px 100% no-repeat,
+        url('../img/sections/career/triangle.svg') var(--container-offset) 50% /
+          contain no-repeat,
+        url('../img/sections/career/triangle-shadow.svg')
+          calc(var(--container-offset) + 10px) 50% / contain no-repeat;
+    }
+  }
+  .image {
+    position: absolute;
+    top: -40px;
+    right: 60px;
+  }
+  .inner {
+    position: relative;
+    flex: 1 1 auto;
+
+    &::before {
+      content: '';
+      z-index: -1;
+      position: absolute;
+      inset: 0;
+      background: url('../img/sections/career/mask.svg') center/cover no-repeat;
+      background-color: rgb(var(--c-accent));
+      clip-path: polygon(
+        100% 0,
+        100% calc(100% - 80px),
+        calc(100% - 80px) 100%,
+        0 100%,
+        0 0
+      );
+    }
+  }
+  h2 {
+    flex: 0 0 calc(var(--left-panel-w) - var(--sect-inset));
+    margin: 0;
+    margin-bottom: 24px;
+  }
+  .body {
+    flex: 0 1 630px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1.5rem, 1.232rem + 1.34vw, 1.875rem);
+
+    :global(button) {
+      align-self: flex-start;
+    }
+  }
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    font-size: clamp(0.875rem, 0.607rem + 1.34vw, 1.25rem);
+  }
+  p {
+    font-size: clamp(0.75rem, 0.571rem + 0.89vw, 1rem);
+  }
+
+  .btns {
+    a {
+      display: contents;
+    }
+  }
+
+  @media (max-width: 1023.98px) {
+    .container {
+      padding-block: 20px 30px;
+      min-height: 311px;
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+
+        background:
+          url(/src/img/sections/career/decor.svg) center/50%,
+          linear-gradient(90deg, rgb(239, 129, 27) 0%, rgb(227, 37, 33) 100%);
+      }
+    }
+    .inner {
+      max-width: calc(100% - 230px);
+      &::before {
+        display: none;
+      }
+    }
+    .image {
+      top: -60px;
+      right: 0;
+    }
+    .btns {
+      display: flex;
+      justify-content: center;
+    }
+  }
+  @media (max-width: 479.98px) {
+    .inner {
+      max-width: 100%;
+    }
+    .image {
+      display: none;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding: var(--sect-inset) var(--container-offset) var(--sect-inset)
+        var(--sect-offset-x);
+    }
+    .inner {
+      display: flex;
+      gap: 20px;
+    }
+  }
+</style>

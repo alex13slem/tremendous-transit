@@ -1,0 +1,15 @@
+<svg
+	xmlns="http://www.w3.org/2000/svg"
+	width="9"
+	height="9"
+	viewBox="0 0 9 9"
+	fill="none"
+>
+	<mask id="path-1-inside-1_8_340" fill="white">
+		<path d="M9 1.24834e-07L-7.94258e-07 9.11639e-07L-7.45308e-09 9"></path>
+	</mask>
+	<path
+		d="M-7.94258e-07 9.11639e-07L-8.81681e-07 -0.999999L-1 -0.999999L-1 9.99061e-07L-7.94258e-07 9.11639e-07ZM9 -1L-8.81681e-07 -0.999999L-7.06835e-07 1L9 1L9 -1ZM-1 9.99061e-07L-1 9L1 9L0.999999 8.24216e-07L-1 9.99061e-07Z"
+		fill="white"
+		mask="url(#path-1-inside-1_8_340)"></path>
+</svg>

@@ -1,0 +1,30 @@
+---
+import HtmlBase from "../layouts/HtmlBase.astro";
+import SEO from "../layouts/SEO.astro";
+
+const { lang } = Astro.params;
+---
+
+<HtmlBase noindex>
+  <SEO slot="seo" title={"404"} description={""} imageUrls={{ fb: "" }} />
+  <main class="main">
+    <h1>404</h1>
+    <p>
+      {lang === "en" ? "PAGE NOT FOUND" : "СТРАНИЦА НЕ НАЙДЕНА"}
+    </p>
+  </main>
+</HtmlBase>
+
+<style>
+  .main {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+  }
+  h1 {
+    font-size: 100px;
+  }
+</style>

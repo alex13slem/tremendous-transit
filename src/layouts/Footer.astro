@@ -1,0 +1,240 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import SiteLogo from '../components/ui/SiteLogo.svelte';
+import SVGApple from '../components/svg/platforms/SVGApple.svelte';
+import SVGGoogle from '../components/svg/platforms/SVGGoogle.svelte';
+import SVGRusstore from '../components/svg/platforms/SVGRusstore.svelte';
+import SVGHuawei from '../components/svg/platforms/SVGHuawei.svelte';
+import SVGPlaygame from '../components/svg/platforms/SVGYandex.svelte';
+import SVGVk from '../components/svg/platforms/SVGVk.svelte';
+import SVGSteam from '../components/svg/platforms/SVGSteam.svelte';
+import SVGNintendo from '../components/svg/platforms/SVGNintendo.svelte';
+import SVGXBox from '../components/svg/platforms/SVGXBox.svelte';
+import SVGSony from '../components/svg/platforms/SVGSony.svelte';
+import SVGSupport from '../components/svg/SVGSupport.svelte';
+import FooterNavLinks from '../components/FooterNavLinks.svelte';
+
+interface Props extends HTMLAttributes<'footer'> {}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<footer class:list={['footer', className]} {...props}>
+  <div class="container">
+    <div class="inner">
+      <div class="left-panel">
+        <SiteLogo />
+        <div class="info">
+          <!-- <p>Информация о организации ооо</p>
+          <p>или ИП</p>
+          <p>оргин</p>
+          <p>иннн</p>
+          <p>и прочая херня</p> -->
+        </div>
+      </div>
+      <hr class="divider" />
+      <div class="center-panel">
+        <nav class="navigation">
+          <div class="col">
+            <FooterNavLinks client:load />
+          </div>
+          <div class="col">
+            <a class="nav-link" href="">Пользовательское соглашение</a>
+            <a class="nav-link" href="">Политика конфиденциальности</a>
+            <br />
+            <a class="nav-link" href="">Для прессы</a>
+          </div>
+        </nav>
+      </div>
+      <div class="right-panel">
+        <div class="platforms">
+          <h2>Мы на платформах</h2>
+          <div class="links">
+            <a href="" class="link"><SVGApple /></a>
+            <a href="" class="link"><SVGGoogle /></a>
+            <a href="" class="link"><SVGRusstore /></a>
+            <a href="" class="link"><SVGHuawei /></a>
+            <a href="" class="link"><SVGPlaygame /></a>
+            <a href="" class="link"><SVGVk /></a>
+            <a href="" class="link">
+              <SVGSteam />
+            </a>
+            <a href="" class="link"><SVGNintendo /></a>
+            <a href="" class="link"><SVGXBox /></a>
+            <a href="" class="link"><SVGSony /></a>
+          </div>
+        </div>
+        <div class="bottom-block">
+          <a href=""><SVGSupport /></a>
+        </div>
+      </div>
+      <div class="bottom-panel">
+        <p class="copyright"><span>Eisvil</span> 2024. Все права защищены</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="scss">
+  .footer {
+    grid-area: footer;
+    @media (min-width: 1290px) {
+      border-top: 1px solid transparent;
+      border-image: var(--border-image-head-foot);
+    }
+  }
+  .inner {
+    padding-block: 2rem;
+    @media (min-width: 1290px) {
+      min-height: 242px;
+      display: grid;
+      grid-template-columns: 325px 1fr auto;
+      grid-template-areas: 'left center right' 'bottom bottom bottom';
+    }
+  }
+
+  .divider {
+    @media (min-width: 1290px) {
+      display: none;
+    }
+    border-color: rgb(var(--c-border));
+    margin-block: 2rem;
+  }
+
+  .left-panel {
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @media (min-width: 1290px) {
+      padding-right: 1ch;
+    }
+    @media (max-width: 1289.98px) {
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .info {
+      font-size: 10px;
+      color: rgb(var(--c-text), 30%);
+      p:not(:first-child) {
+        margin-top: 0.5rem;
+      }
+      @media (max-width: 1289.98px) {
+        text-align: center;
+      }
+    }
+  }
+
+  .center-panel {
+    grid-area: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-inline: var(--border);
+    padding-inline: 2rem;
+    @media (max-width: 1289.98px) {
+      display: none;
+    }
+  }
+
+  .bottom-panel {
+    grid-area: bottom;
+    grid-column: span 3;
+    display: grid;
+    place-items: center;
+  }
+
+  .copyright {
+    margin: 0;
+    margin-top: 2rem;
+    font-size: 10px;
+    font-weight: 700;
+    user-select: none;
+    span {
+      text-decoration: underline;
+      color: rgb(var(--c-accent));
+    }
+    @media (max-width: 767.98px) {
+      font-size: 8px;
+    }
+  }
+
+  .navigation {
+    display: flex;
+    @media (max-width: 767.98px) {
+      :global(.nav-link) {
+        font-size: 14px;
+      }
+    }
+    .col {
+      flex: 1 1 0;
+      // width: 190px;
+
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      :global(.nav-link) {
+        color: rgb(var(--c-text), 30%);
+        font-weight: 300;
+        transition: color var(--trans-default);
+      }
+      :global(.nav-link):hover {
+        color: rgb(var(--c-text), 50%);
+      }
+    }
+  }
+
+  .right-panel {
+    grid-area: right;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    @media (min-width: 1290px) {
+      padding-left: 1rem;
+    }
+    @media (max-width: 1289.98px) {
+      gap: 2rem;
+      align-items: center;
+    }
+  }
+
+  .platforms {
+    h2 {
+      margin-bottom: 1em;
+      font-size: 20px;
+      font-weight: 600;
+
+      @media (max-width: 1289.98px) {
+        text-align: center;
+      }
+    }
+    .links {
+      display: flex;
+      max-width: 170px;
+      flex-wrap: wrap;
+      gap: 10px 5px;
+      justify-content: center;
+      @media (max-width: 1289.98px) {
+        max-width: 100%;
+        gap: clamp(0.625rem, 0.255rem + 1.23vw, 1.25rem);
+      }
+    }
+    .link {
+      color: rgb(var(--c-text), 30%);
+      transition: color var(--trans-default);
+      :global(svg) {
+        @media (max-width: 767.98px) {
+          height: 25px;
+          width: 25px;
+        }
+      }
+    }
+    .link:hover {
+      color: rgb(var(--c-text), 50%);
+    }
+  }
+</style>

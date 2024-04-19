@@ -1,0 +1,55 @@
+---
+import HeaderSidePanel from '../components/HeaderSidePanel.astro';
+import SiteLogo from '../components/ui/SiteLogo.svelte';
+import SiteMenuToggle from '../components/ui/MobileMenuToggler.svelte';
+import SiteNav from './SiteNav.svelte';
+---
+
+<header class="header">
+  <div class="container">
+    <HeaderSidePanel>
+      <SiteLogo client:load />
+    </HeaderSidePanel>
+    <SiteNav onHeader client:load />
+    <HeaderSidePanel>
+      <SiteMenuToggle client:visible />
+    </HeaderSidePanel>
+  </div>
+</header>
+
+<style>
+  .header {
+    z-index: 4;
+    position: sticky;
+    overflow: hidden;
+    padding-block: 2px;
+    grid-area: header;
+
+    background: rgb(var(--c-bg), 50%);
+    backdrop-filter: blur(10px);
+
+    top: 0;
+    width: 100%;
+
+    border-bottom: 1px solid transparent;
+    border-image: var(--border-image-head-foot);
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: end;
+    gap: 5px;
+  }
+
+  .site-logo {
+    box-sizing: content-box;
+    padding-block: 0.5rem;
+  }
+
+  @media (max-width: 1023.98px) {
+    .container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

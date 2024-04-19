@@ -1,0 +1,219 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import type { CollectionEntry } from "astro:content";
+import GameCardPlatformsSlider from "@/components/GameCardPlatformsSlider.svelte";
+import { genresRus } from "@/lang";
+import SVGCheck from "@/components/svg/SVGCheck.svelte";
+import ModalTrigger from "../../components/modals/ModalTrigger.svelte";
+import Icon from "@iconify/svelte";
+import ShareLinksBlock from "../../components/ShareLinksBlock.svelte";
+import BtnFirm from "../../components/ui/BtnFirm.svelte";
+
+interface Props extends HTMLAttributes<"aside"> {
+  game: CollectionEntry<"games">;
+}
+
+const { class: className, game, ...props } = Astro.props;
+
+const {
+  title,
+  thumbnail,
+  platforms,
+  developer,
+  publisher,
+  date,
+  langs,
+  genre,
+} = game.data;
+
+const genreLocale = genre.map((genre) =>
+  new Map(Object.entries(genresRus)).get(genre),
+);
+const steam = game.data.platforms?.find(({ slug }) => slug === "steam");
+---
+
+<script>
+  const toggleAllLangs = document.querySelector(".toggle-all-langs");
+  const tableLangs = document.querySelector(".table-langs");
+  const moveWord = toggleAllLangs?.querySelector("span");
+
+  toggleAllLangs?.addEventListener("click", handleToggleAllLangs);
+
+  function handleToggleAllLangs() {
+    tableLangs?.classList.toggle("open");
+    if (moveWord) {
+      if (tableLangs?.classList.contains("open")) {
+        moveWord.innerText = "Скрыть";
+      } else {
+        moveWord.innerText = "Посмотреть";
+      }
+    }
+  }
+</script>
+
+<aside class:list={["", className]} {...props}>
+  <img class="thumbnail" src={thumbnail} alt={title} />
+
+  <div class="body">
+    {platforms && <GameCardPlatformsSlider {platforms} isScrollable={false} />}
+
+    <div class="table-info">
+      <div class="td-left">Жанр:</div>
+      <div class="td-right"><strong>{genreLocale}</strong></div>
+
+      <div class="td-left">Разработчик:</div>
+      <div class="td-right"><strong>{developer}</strong></div>
+
+      <div class="td-left">Издатель:</div>
+      <div class="td-right"><strong>{publisher}</strong></div>
+
+      <div class="td-left">Дата выхода:</div>
+      <div class="td-right"><strong>{date.split("/").join(".")}</strong></div>
+    </div>
+
+    <div
+      class:list={["table-langs", langs.length <= 3 ? "open" : ""]}
+      style=`--length: ${langs.length}`
+    >
+      <div><b>Языки:</b></div>
+      <div class="ta-c"><b>Озвучка</b></div>
+      <div class="ta-c"><b>Текст</b></div>
+
+      {
+        langs.map(({ lang, voice, text }) => (
+          <>
+            <div class="td-lang">{lang}</div>
+            <div class="td-check">{voice && <SVGCheck />}</div>
+            <div class="td-check">{text && <SVGCheck />}</div>
+          </>
+        ))
+      }
+    </div>
+    {
+      langs.length > 3 && (
+        <button class="toggle-all-langs">
+          <span>Посмотреть</span> все поддерживаемые языки ({9})
+        </button>
+      )
+    }
+
+    <div class="interactive-block">
+      {
+        game.data.isMobile ? (
+          <ModalTrigger client:load type={"qrGame"} id={game.id}>
+            Играть сейчас
+          </ModalTrigger>
+        ) : steam ? (
+          <a href={steam.href} target="_blank">
+            <BtnFirm>Играть сейчас</BtnFirm>
+          </a>
+        ) : null
+      }
+
+      <ShareLinksBlock client:load imgSrc={thumbnail} {title} />
+    </div>
+  </div>
+</aside>
+
+<style lang="scss">
+  aside {
+    z-index: 1;
+    position: relative;
+    height: fit-content;
+
+    border: thin solid #555660;
+    box-shadow: var(--box-shadow-active);
+    backdrop-filter: blur(16px);
+  }
+
+  .body {
+    padding: 20px;
+    padding-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  strong {
+    color: rgb(var(--c-accent));
+  }
+
+  .table-info {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px 15px;
+
+    font-size: 14px;
+
+    .td-left {
+      grid-column: 1;
+    }
+    .td-right {
+      grid-column: 2;
+    }
+  }
+
+  .table-langs {
+    --lh: 2.5em;
+    --min-height: calc(calc(3 + 1) * calc(var(--lh) + 1px));
+    --max-height: calc(calc(var(--length) + 1) * var(--lh));
+
+    height: var(--min-height);
+    overflow: hidden;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(120px, auto) 1fr 1fr;
+    grid-auto-rows: var(--lh);
+
+    font-size: 14px;
+
+    transition: var(--trans-slow);
+    transition-property: height;
+
+    .td-lang {
+      grid-column: 1;
+    }
+    .td-check {
+      place-items: center;
+      color: rgb(var(--c-accent));
+    }
+    & > * {
+      display: grid;
+      align-items: center;
+      border-bottom: var(--border-card);
+      width: 100%;
+      height: 100%;
+    }
+    &.open {
+      height: var(--max-height);
+    }
+  }
+  .checkbox {
+    color: rgb(var(--c-accent));
+    svg {
+      margin: 0 auto;
+    }
+  }
+
+  .toggle-all-langs {
+    margin-top: -20px;
+    text-align: left;
+    font-size: 12px;
+    transition: var(--trans-default);
+    transition-property: color;
+    &:hover {
+      color: rgb(var(--c-accent));
+    }
+  }
+
+  .interactive-block {
+    display: flex;
+    gap: 30px;
+
+    :global(.btn-firm) {
+      flex: 1 1 auto;
+    }
+  }
+</style>

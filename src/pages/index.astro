@@ -1,0 +1,49 @@
+---
+import SectHero from '../sections/LandingHero.astro';
+import SectCarrier from '../sections/SectCarrier.astro';
+import ServicesModalForm from '../components/modals/ServicesModalForm.svelte';
+import PublishingModalForm from '../components/modals/PublishingModalForm.svelte';
+import ModalTrigger from '../components/modals/ModalTrigger.svelte';
+import BasicLayout from '../layouts/BasicLayout.astro';
+// import GamesSlider from '../components/GamesSlider.svelte';
+import { ServicesTabs } from '../components/ServicesTabs';
+import SectCommon from '../sections/SectCommon.astro';
+import { PublishingTabs } from '../components/PublishingTabs';
+// import { publishingLinks } from "@/store/publishing";
+// import { servicesLinks } from "@/store/services";
+import SEO from '../layouts/SEO.astro';
+import { navLinks } from '../store/nav-links';
+
+const toDetailDevelopment = navLinks.find(
+  ({ slug }) => slug === 'development'
+)?.href;
+const toDetailPublishing = navLinks.find(
+  ({ slug }) => slug === 'publishing'
+)?.href;
+---
+
+<BasicLayout>
+  <SEO slot="seo" title="Главная" description={''} imageUrls={{ fb: '' }} />
+  <SectHero>
+    <ModalTrigger client:load type={'development'} flexPosition="center">
+      Создать новый мир
+    </ModalTrigger>
+  </SectHero>
+
+  <!-- <SectCommon title="Наши игры" linkToDetail="/games">
+    <GamesSlider client:load />
+  </SectCommon> -->
+
+  <SectCommon title="Услуги" linkToDetail={toDetailDevelopment}>
+    <ServicesTabs client:visible />
+  </SectCommon>
+
+  <SectCommon title="Издательство" linkToDetail={toDetailPublishing}>
+    <PublishingTabs client:visible />
+  </SectCommon>
+
+  <SectCarrier linkToDetail="/career" />
+</BasicLayout>
+
+<ServicesModalForm client:load />
+<PublishingModalForm client:load />

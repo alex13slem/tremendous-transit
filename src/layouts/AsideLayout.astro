@@ -1,0 +1,33 @@
+---
+import Aside from './Aside.astro';
+import HtmlBase from './HtmlBase.astro';
+---
+
+<HtmlBase>
+  <slot name="seo" slot="seo" />
+  <div class="container">
+    <Aside>
+      <slot name="aside" />
+    </Aside>
+    <main>
+      <slot name="main" />
+    </main>
+  </div>
+</HtmlBase>
+
+<style lang="scss">
+  main {
+    padding-bottom: 4rem;
+    padding-right: 0;
+    padding-top: 30px;
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      display: flex;
+    }
+    main {
+      padding-left: 30px;
+    }
+  }
+</style>

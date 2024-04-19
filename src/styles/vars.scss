@@ -1,0 +1,64 @@
+:root {
+  --container-width: 1360px;
+  --container-offset: 20px;
+
+  --left-panel-w: clamp(19.688rem, 17.985rem + 2.66vw, 20.313rem);
+  --header-height: clamp(2.813rem, 2.47rem + 1.46vw, 3.75rem);
+
+  // --grey-55: hsl(0deg 0% 55%);
+  // color: rgb(85, 86, 96);
+
+  --c-bg: 28, 29, 43;
+  --c-card: 29, 36, 52;
+  --c-field-border_dark: 85, 86, 96;
+  --c-field_dark: var(--c-card);
+  --c-accent: 239, 129, 27;
+  --c-accent-dark: 227, 37, 33;
+  --c-white: 255, 255, 255;
+  --c-grey: 217, 217, 217;
+  --c-text: var(--c-white);
+  --c-label: 105, 108, 145;
+  --gradient: linear-gradient(
+    180deg,
+    rgb(var(--c-accent-dark)) 0%,
+    rgb(var(--c-accent)) 100%
+  );
+  --gradient-blue: linear-gradient(135deg, #64a4ed 0%, #1d6dc8 39%);
+  --gradient-green: linear-gradient(135deg, #78f89c 0%, #1fb148 39%);
+  --gradient-orange: linear-gradient(135deg, #f4b67b 0%, #df7614 39%);
+  --gradient-red: linear-gradient(135deg, #ff7c96 0%, #d72749 39%);
+
+  --time-default: 0.3s;
+  --time-slow: 0.7s;
+  --trans-default: var(--time-default) ease-in-out;
+  --trans-slow: var(--time-slow) ease-in-out;
+  --trans-steps: var(--time-default) steps(5);
+  --load-fade: 0.1s ease;
+
+  --c-border: 85, 86, 96;
+  --border: 1px solid rgb(var(--c-border));
+  --border-image-head-foot: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 15.71%,
+      rgba(255, 255, 255, 0.24) 30.52%,
+      rgba(255, 255, 255, 0.36) 50.14%,
+      rgba(255, 255, 255, 0.24) 69.29%,
+      rgba(255, 255, 255, 0.04) 87.86%
+    )
+    1;
+  --c-card-border: 84, 91, 105;
+  --border-card: 1px solid rgb(var(--c-card-border));
+  --border-card-accent-color: 58, 79, 126;
+  --border-card-accent: 1px solid rgb(var(--border-card-accent-color));
+
+  --box-shadow-active: 0px 1px 15px rgba(7, 13, 27, 0.7);
+  --box-shadow-hover: 0px 1px 15px rgba(27, 7, 3, 0.4);
+
+  --c-input-sm-size: 35px;
+  --c-input-sm-fsz: 14px;
+  --c-input-sm-width: 390px;
+
+  --c-input-md-size: clamp(2.5rem, 1.665rem + 3.56vw, 3.375rem);
+  --c-input-md-fsz: clamp(0.75rem, 0.631rem + 0.51vw, 0.875rem);
+  --c-input-md-width: 607px;
+}

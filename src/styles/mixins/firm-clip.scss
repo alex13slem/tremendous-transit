@@ -1,0 +1,28 @@
+@mixin firm-clip($size: var(--input-md-size)) {
+  clip-path: polygon(
+    $size 0%,
+    100% 0,
+    100% calc(100% - $size),
+    calc(100% - $size) 100%,
+    0% 100%,
+    0 $size
+  );
+  clip-path: polygon(
+    1.25em 0%,
+    100% 0,
+    100% calc(100% - 1.25em),
+    calc(100% - 1.25em) 100%,
+    0% 100%,
+    0 1.25em
+  );
+  // clip-path: polygon(
+  //   calc($size / 2) 0%,
+  //   100% 0,
+  //   100% calc(100% - calc($size / 2) - 0px),
+  //   calc(100% - calc($size / 5)) calc(100% - calc(Size - $size / 5)),
+  //   calc(100% - 40px) calc(100% - 20px),
+  //   calc(100% - 60px) 100%,
+  //   0 100%,
+  //   0 25px
+  // );
+}

@@ -1,0 +1,110 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import SiteHeader from './Header.astro';
+import SiteFooter from './Footer.astro';
+import MobileMenu from './MobileMenu.svelte';
+import Toaster from '../components/Toaster.svelte';
+import '../styles/index.scss';
+import type { HTMLAttributes } from 'astro/types';
+import Head, { type HeadProps } from './Head.astro';
+
+export interface HtmlProps
+  extends Omit<HTMLAttributes<'html'>, 'title'>,
+    HeadProps {
+  favicon?: string;
+  hasHeader?: boolean;
+  hasFooter?: boolean;
+}
+
+const {
+  class: className,
+  hasHeader = true,
+  hasFooter = true,
+  favicon = '/favicon.svg',
+  noindex,
+  ...props
+}: HtmlProps = Astro.props;
+---
+
+<html {...props}>
+  <Head {favicon} {noindex}>
+    <slot name="seo" />
+    <script
+      is:inline
+      src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <!-- Yandex.Metrika counter -->
+    <script is:inline type="text/javascript">
+      (function (m, e, t, r, i, k, a) {
+        m[i] =
+          m[i] ||
+          function () {
+            (m[i].a = m[i].a || []).push(arguments);
+          };
+        m[i].l = 1 * new Date();
+        for (var j = 0; j < document.scripts.length; j++) {
+          if (document.scripts[j].src === r) {
+            return;
+          }
+        }
+        (k = e.createElement(t)),
+          (a = e.getElementsByTagName(t)[0]),
+          (k.async = 1),
+          (k.src = r),
+          a.parentNode.insertBefore(k, a);
+      })(
+        window,
+        document,
+        'script',
+        'https://mc.yandex.ru/metrika/tag.js',
+        'ym'
+      );
+
+      ym(96794584, 'init', {
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        webvisor: true,
+      });
+    </script>
+    <meta name="referrer" content="origin" />
+    <ViewTransitions />
+  </Head>
+  <body>
+    <noscript
+      ><div>
+        <img
+          src="https://mc.yandex.ru/watch/96794584"
+          style="position:absolute; left:-9999px;"
+          alt=""
+        />
+      </div></noscript
+    >
+    <!-- /Yandex.Metrika counter -->
+    {hasHeader && <SiteHeader />}
+    <slot />
+    {hasFooter && <SiteFooter />}
+
+    <MobileMenu client:load />
+    <Toaster client:load />
+
+    <script>
+      import { register } from 'swiper/element/bundle';
+      register();
+    </script>
+    <script
+      is:inline
+      src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
+      type="module"></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on('init', (user) => {
+          if (!user) {
+            window.netlifyIdentity.on('login', () => {
+              document.location.href = '/admin/';
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

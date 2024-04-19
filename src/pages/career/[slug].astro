@@ -1,0 +1,189 @@
+---
+import BasicLayout from '../../layouts/BasicLayout.astro';
+import BtnFirm from '../../components/ui/BtnFirm.svelte';
+import ShareLinksBlock from '../../components/ShareLinksBlock.svelte';
+import LinkToDetailPage from '../../components/ui/LinkToDetailPage.svelte';
+import VacancySlider from '../../components/VacancySlider.svelte';
+import SEO from '../../layouts/SEO.astro';
+import { parse } from 'marked';
+import { getVacancies, getWorkplaceString } from '../../store/career';
+
+export async function getStaticPaths() {
+  const data = await getVacancies();
+
+  const paths = data.map((v) => {
+    return { params: { slug: v.slug }, props: { vacancy: v } };
+  });
+
+  return paths;
+}
+
+const { slug } = Astro.params;
+const { vacancy } = Astro.props;
+const vacancies = await getVacancies();
+
+const { info, workplace, requirements, tasks, offers, links } = vacancy;
+
+const salary =
+  info?.salary &&
+  new Intl.NumberFormat('ru', {
+    style: 'currency',
+    currency: 'RUB',
+    maximumFractionDigits: 0,
+  }).format(info.salary);
+
+const place = getWorkplaceString(workplace);
+---
+
+<BasicLayout>
+  <Fragment slot="seo">
+    <SEO
+      title={info.name}
+      description={info.description}
+      imageUrls={{ fb: '' }}
+    />
+  </Fragment>
+  <div class="container">
+    <LinkToDetailPage client:load toBack text="Назад" />
+    <section>
+      <h2>{info.name}</h2>
+      <div class="info">
+        {
+          salary && (
+            <p>
+              <b>{salary}</b>
+            </p>
+          )
+        }
+        <p class="info__place">{place}</p>
+      </div>
+
+      <div class="prose detail">
+        <blockquote set:html={parse(info.description)} />
+
+        {
+          tasks?.length && (
+            <>
+              <h3>Основные задачи</h3>
+              <ul>
+                {tasks.map(({ text }) => (
+                  <li>{text}</li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+
+        {
+          requirements?.length && (
+            <>
+              <h3>Наши ожидания</h3>
+              <ul>
+                {requirements.map(({ text }) => (
+                  <li>{text}</li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+
+        {
+          offers?.length && (
+            <>
+              <h3>Мы предлагаем</h3>
+              <ul>
+                {offers.map(({ text }) => (
+                  <li>{text}</li>
+                ))}
+              </ul>
+            </>
+          )
+        }
+      </div>
+      <div class="btns">
+        {
+          links.test && (
+            <a href={links.test} target="_blank">
+              <BtnFirm variant="transparent">Тестовое задание</BtnFirm>
+            </a>
+          )
+        }
+        <a href={links.form} target="_blank">
+          <BtnFirm>Откликнуться</BtnFirm>
+        </a>
+        <ShareLinksBlock
+          client:load
+          title={info.name}
+          text="Поделиться вакансией:"
+        />
+      </div>
+    </section>
+    <aside>
+      <h3>Другие вакансии</h3>
+      <VacancySlider client:load {vacancies} />
+    </aside>
+  </div>
+</BasicLayout>
+
+<style lang="scss">
+  .container {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    & > section,
+    & > aside {
+      padding: 0;
+      grid-row: 2;
+    }
+    @media (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+    }
+  }
+  section {
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+  }
+  aside {
+    @media (max-width: 1023.98px) {
+      margin-top: 70px;
+    }
+    display: grid;
+    align-content: start;
+    gap: 30px;
+    h3 {
+      margin-bottom: 16px;
+      font-size: 25px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+  }
+  .btns {
+    margin-top: 30px;
+    display: flex;
+    gap: 30px;
+    a {
+      display: contents;
+    }
+    @media (max-width: 797.98px) {
+      flex-direction: column;
+    }
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    &__place {
+      background-color: #ffffff75;
+      line-height: 2;
+      padding-inline: 1em;
+      border-radius: 1em;
+    }
+  }
+</style>

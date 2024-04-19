@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BasicLayout from '../../layouts/BasicLayout.astro';
+import LinkToDetailPage from '../../components/ui/LinkToDetailPage.svelte';
+import ServicesForm from '../../components/forms/ServicesForm/index.svelte';
+import { PublishingForm } from '../../components/forms/PublishingForm';
+
+export async function getStaticPaths() {
+  const servicesArticles = await getCollection('service-articles');
+
+  return servicesArticles.map((article) => ({
+    params: { servicesCategory: article.data.category },
+    props: { article },
+  }));
+}
+
+const { servicesCategory } = Astro.params;
+---
+
+<BasicLayout>
+  <div class="root">
+    <div class="container">
+      <LinkToDetailPage client:load toBack text="Назад" />
+      {servicesCategory === 'development' && <ServicesForm client:load />}
+      {servicesCategory === 'publishing' && <PublishingForm client:load />}
+    </div>
+  </div>
+</BasicLayout>
+
+<style lang="scss">
+  .root {
+    padding-top: 50px;
+
+    :global(form) {
+      margin-top: 50px;
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import LinkToDetailPage from '../components/ui/LinkToDetailPage.svelte';
+
+interface Props extends HTMLAttributes<'section'> {
+  title?: string;
+  linkToDetail?: string;
+}
+
+const { title, linkToDetail, ...props } = Astro.props;
+---
+
+<section {...props}>
+  <div class="container">
+    {
+      title && (
+        <h2 class="sect-title">
+          {title}
+          {linkToDetail && <LinkToDetailPage to={linkToDetail} client:load />}
+        </h2>
+      )
+    }
+    <slot />
+  </div>
+</section>
+
+<style>
+  section {
+    overflow: clip;
+  }
+  .container {
+    position: relative;
+  }
+  .sect-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    @media (min-width: 992px) {
+      align-items: flex-end;
+    }
+  }
+</style>
