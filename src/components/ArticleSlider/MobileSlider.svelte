@@ -2,7 +2,6 @@
   import { type SwiperContainer } from 'swiper/element/bundle';
   import type { Image } from '../../types/project';
   import { useragent } from '@sveu/browser';
-  const { mobile } = useragent();
 
   export let data: Image[];
 
@@ -18,23 +17,21 @@
   };
 </script>
 
-{#if $mobile}
-  <div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
-    <swiper-container
-      bind:this={swiperEl}
-      slides-per-view="1.2"
-      on:swiperprogress={onProgress}
-    >
-      {#each data as { src, alt }}
-        <swiper-slide class="slide">
-          <div class="slide-wrap">
-            <button><img {src} {alt} /></button>
-          </div>
-        </swiper-slide>
-      {/each}
-    </swiper-container>
-  </div>
-{/if}
+<div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
+  <swiper-container
+    bind:this={swiperEl}
+    slides-per-view="1.2"
+    on:swiperprogress={onProgress}
+  >
+    {#each data as { src, alt }}
+      <swiper-slide class="slide">
+        <div class="slide-wrap">
+          <button><img {src} {alt} /></button>
+        </div>
+      </swiper-slide>
+    {/each}
+  </swiper-container>
+</div>
 
 <style lang="scss">
   .root {
