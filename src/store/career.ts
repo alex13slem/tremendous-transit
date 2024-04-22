@@ -2,6 +2,7 @@ import { getCollection } from 'astro:content';
 import type { VacancyWorkplace } from '../schemas/vacancySchema';
 
 export const cities = await getCollection('cities');
+export const professions = await getCollection('professions');
 
 export const getVacancies = async () =>
   await getCollection('vacancies').then((collection) =>

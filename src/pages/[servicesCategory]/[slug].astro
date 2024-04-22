@@ -13,7 +13,6 @@ import {
 } from '../../store/nav-links';
 import DetailSlider from '../../components/ArticleSlider/DetailSlider.svelte';
 import PreviewSlider from '../../components/ArticleSlider/PreviewSlider.svelte';
-import MobileSlider from '../../components/ArticleSlider/MobileSlider.svelte';
 
 export async function getStaticPaths() {
   const servicesArticles = await getCollection('service-articles');
@@ -47,7 +46,6 @@ const navLinks =
         <>
           <DetailSlider data={gallery} client:load />
           <PreviewSlider data={gallery} client:load />
-          <MobileSlider data={gallery} client:load />
         </>
       )
     }

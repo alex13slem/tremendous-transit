@@ -23,9 +23,14 @@
     id="preview-slider"
     bind:this={swiperEl}
     mousewheel
-    slides-per-view="3.33"
+    slides-per-view="1.2"
     watch-slides-progress
     on:swiperprogress={onProgress}
+    breakpoints={{
+      1024: {
+        slidesPerView: 3.33,
+      },
+    }}
   >
     {#each data as { src, alt }}
       <swiper-slide class="slide">
@@ -43,6 +48,10 @@
     margin: -15px;
     transition: var(--load-fade);
     transition-property: opacity;
+    &.load {
+      opacity: 0;
+    }
+
     &::after,
     &::before {
       pointer-events: none;
@@ -50,8 +59,11 @@
       position: absolute;
       z-index: 2;
       inset: -1px;
-      width: 15%;
+      width: var(--container-offset);
       background: linear-gradient(90deg, transparent, rgb(var(--c-bg)));
+      @media (min-width: 1024px) {
+        width: 15%;
+      }
     }
     &::after {
       left: auto;
@@ -70,9 +82,6 @@
         opacity: 0;
       }
     }
-    &.load {
-      opacity: 0;
-    }
   }
 
   .slide-wrap {
@@ -88,17 +97,20 @@
 
   .slide {
     height: 100%;
-    &:hover button,
-    &:global(.swiper-slide-thumb-active button) {
-      filter: brightness(1);
-      border-image: linear-gradient(
-          160deg,
-          rgba(255, 255, 255, 60%) 0%,
-          rgba(255, 255, 255, 0) 60%
-        )
-        30;
-      &::after {
-        opacity: 1;
+
+    @media (min-width: 1024px) {
+      &:hover button,
+      &:global(.swiper-slide-thumb-active button) {
+        filter: brightness(1);
+        border-image: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 60%) 0%,
+            rgba(255, 255, 255, 0) 60%
+          )
+          30;
+        &::after {
+          opacity: 1;
+        }
       }
     }
 
@@ -108,36 +120,37 @@
       background: transparent;
       aspect-ratio: 16 / 9;
 
-      // height: 170px;
       width: 100%;
 
-      border-image: linear-gradient(
-          160deg,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0) 90%
-        )
-        30;
-      border-width: 1px;
-      border-style: solid;
+      @media (min-width: 1024px) {
+        border-image: linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0) 90%
+          )
+          30;
+        border-width: 1px;
+        border-style: solid;
 
-      filter: brightness(0.5);
+        filter: brightness(0.5);
 
-      transition: var(--trans-default);
-      transition-property: box-shadow, border-image, filter;
+        transition: var(--trans-default);
+        transition-property: box-shadow, border-image, filter;
 
-      &::after {
-        pointer-events: none;
-        position: absolute;
-        content: '';
-        inset: 0px;
-        opacity: 0;
+        &::after {
+          pointer-events: none;
+          position: absolute;
+          content: '';
+          inset: 0px;
+          opacity: 0;
 
-        background: linear-gradient(
-          149deg,
-          rgba(255, 255, 255, 0.3) 0%,
-          rgba(255, 255, 255, 0) 36.93%
-        );
-        transition: opacity var(--trans-default);
+          background: linear-gradient(
+            149deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0) 36.93%
+          );
+          transition: opacity var(--trans-default);
+        }
       }
     }
 
@@ -146,11 +159,6 @@
       object-position: center;
       height: 100%;
       width: 100%;
-    }
-  }
-  @media (max-width: 1023.98px) {
-    .root {
-      display: none;
     }
   }
 </style>

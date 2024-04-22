@@ -37,7 +37,7 @@ const place = getWorkplaceString(workplace);
 <BasicLayout>
   <Fragment slot="seo">
     <SEO
-      title={info.name}
+      title={info.profession.join(' / ')}
       description={info.description}
       imageUrls={{ fb: '' }}
     />
@@ -45,7 +45,7 @@ const place = getWorkplaceString(workplace);
   <div class="container">
     <LinkToDetailPage client:load toBack text="Назад" />
     <section class="prose detail">
-      <h1>{info.name}</h1>
+      <h1>{info.level} - {info.profession.join(' / ')}</h1>
       <div class="info">
         {
           salary && (
@@ -110,13 +110,13 @@ const place = getWorkplaceString(workplace);
         </a>
         <ShareLinksBlock
           client:load
-          title={info.name}
+          title={info.profession.join(' / ')}
           text="Поделиться вакансией:"
         />
       </div>
     </section>
     <aside>
-      <h3>Другие вакансии</h3>
+      <h3 class="part-title">Другие вакансии</h3>
       <VacancySlider client:load {vacancies} />
     </aside>
   </div>
@@ -146,12 +146,6 @@ const place = getWorkplaceString(workplace);
     display: grid;
     align-content: start;
     gap: 30px;
-    h3 {
-      margin-bottom: 16px;
-      font-size: 25px;
-      line-height: 1;
-      text-transform: uppercase;
-    }
   }
   .btns {
     margin-top: 30px;

@@ -1,3 +1,5 @@
 title: Telegram
-link: https://t.me/Eisvil
-order: 3
+slug: telegram
+# link: https://t.me/Eisvil
+# order: 3
+iconifyId: ic:baseline-telegram

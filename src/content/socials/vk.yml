@@ -1,3 +1,5 @@
 title: VK
-link: https://vk.com/eisvil
-order: 2
+slug: vk
+# link: https://vk.com/eisvil
+# order: 2
+iconifyId: ri:vk-fill

@@ -5,7 +5,7 @@ export const socialsCollection: CmsCollection = {
   label: 'Соцсети',
   folder: 'src/content/socials',
   create: true,
-  slug: '{{title}}',
+  slug: '{{fields.slug}}',
   extension: 'yml',
   format: 'yml',
   fields: [
@@ -15,14 +15,15 @@ export const socialsCollection: CmsCollection = {
       widget: 'string',
     },
     {
-      label: 'Ссылка',
-      name: 'link',
+      label: 'Slug',
+      name: 'slug',
       widget: 'string',
     },
+
     {
-      label: 'Очередь',
-      name: 'order',
-      widget: 'number',
+      label: 'Iconify ID',
+      name: 'iconifyId',
+      widget: 'string',
     },
   ],
 };

@@ -1,0 +1,29 @@
+---
+import GamesHero from '../../sections/GamesHero.svelte';
+import BasicLayout from '../../layouts/BasicLayout.astro';
+import BestGamesSlider from '../../components/BestGamesSlider.svelte';
+import SectCommon from '../../sections/SectCommon.astro';
+import GamesCatalog from '../../components/GamesCatalog.svelte';
+import SEO from '../../layouts/SEO.astro';
+import { getCollection } from 'astro:content';
+---
+
+<BasicLayout title="Игры">
+  <SEO
+    slot="seo"
+    title="Игры"
+    description="Игры разработанные нашими друзьями и партнёрами."
+    imageUrls={{ fb: '' }}
+  />
+  <GamesHero client:load />
+
+  <SectCommon title="Лучшие игры">
+    <!-- <BestGamesSlider client:load /> -->
+  </SectCommon>
+
+  <SectCommon title="Наши игры" id="games-catalog">
+    <!-- <GamesCatalog client:load /> -->
+  </SectCommon>
+</BasicLayout>
+
+<style></style>

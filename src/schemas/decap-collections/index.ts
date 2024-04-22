@@ -1,20 +1,25 @@
-import { serviceCategoriesCollection } from './serviceCategories';
-import { articlesCollection } from './serviceArticles';
+import { artistsCollection } from './artists';
 import { citiesCollection } from './cities';
+import { companyInfoCollection } from './companyInfo';
 import { developersCollection } from './developers';
+import { gameMarketplacesCollection } from './gameMarketplaces';
 import { gamesCollection } from './games';
 import { gamesFavoritesCollection } from './gamesFavorites';
 import { gamesStatusesCollection } from './gamesStatuses';
 import { genresCollection } from './genres';
 import { languagesCollection } from './languages';
-import { marketplacesCollection } from './marketplaces';
 import { navLinksCollection } from './nav-links';
+import { professionsCollection } from './professions';
 import { publishersCollection } from './publishers';
 import { publishingSlidesCollection } from './publishingSlides';
+import { articlesCollection } from './serviceArticles';
+import { serviceCategoriesCollection } from './serviceCategories';
 import { socialsCollection } from './socials';
 import { vacanciesCollection } from './vacancies';
 
 export const decapCollections = [
+  artistsCollection,
+  professionsCollection,
   serviceCategoriesCollection,
   articlesCollection,
   citiesCollection,
@@ -24,10 +29,11 @@ export const decapCollections = [
   gamesStatusesCollection,
   genresCollection,
   languagesCollection,
-  marketplacesCollection,
   navLinksCollection,
   publishersCollection,
   publishingSlidesCollection,
   socialsCollection,
   vacanciesCollection,
+  companyInfoCollection,
+  gameMarketplacesCollection,
 ];

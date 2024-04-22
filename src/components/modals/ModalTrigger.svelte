@@ -4,13 +4,16 @@
     artistModal,
     pubModalIsOpen,
     qrDonatModalIsOpen,
-    qrGamesModalIsOpen,
     servModalIsOpen,
   } from '../../store/modals';
   import { pubTargetSlug, servTargetSlug } from '../../store/forms';
   // import { gameQrTargetId } from '../../store/games';
   import { useragent } from '@sveu/browser';
   import { navigate } from 'astro:transitions/client';
+  import {
+    isOpen as gamesIsOpen,
+    targetSlug as gamesTargetSlug,
+  } from './GamesQrModal';
 
   /**
    * @type {"services" | "publishing" | "qrGame" | "qrDonat" | "artist"} type
@@ -39,11 +42,11 @@
       pubModalIsOpen.set(true);
       pubTargetSlug.set(slug);
     }
-    // if (type === 'qrGame') {
-    //   if (!id) return;
-    //   qrGamesModalIsOpen.set(true);
-    //   gameQrTargetId.set(id);
-    // }
+    if (type === 'qrGame') {
+      if (!slug) return;
+      gamesTargetSlug.set(slug);
+      gamesIsOpen.set(true);
+    }
     if (type === 'qrDonat') {
       qrDonatModalIsOpen.set(true);
     }

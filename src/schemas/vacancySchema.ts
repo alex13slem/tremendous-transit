@@ -2,7 +2,8 @@ import { z } from 'astro:content';
 import { citiesSchema } from './citiesSchema';
 
 const vacancyInfo = z.object({
-  name: z.string(),
+  profession: z.string().array(),
+  level: z.string(),
   description: z.string(),
   salary: z.number().nullish(),
 });

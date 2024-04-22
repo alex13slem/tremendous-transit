@@ -2,12 +2,18 @@
 body {
   font-family: 'Inter', sans-serif;
 }
-
-.sect-title {
-  margin-bottom: clamp(1.875rem, 0.682rem + 5.09vw, 3.125rem);
-  font-size: clamp(1.5rem, 0.784rem + 3.05vw, 2.25rem);
+.sect-title,
+.part-title {
+  margin-bottom: 1em;
   font-weight: 700;
   text-transform: uppercase;
+}
+.sect-title {
+  font-size: clamp(1.5rem, 1.283rem + 0.92vw, 1.875rem);
+}
+
+.part-title {
+  font-size: clamp(1.25rem, 1.033rem + 0.92vw, 1.625rem);
 }
 
 .ta-c {
@@ -15,6 +21,7 @@ body {
 }
 
 .prose {
+  font-size: clamp(0.75rem, 0.25rem + 2.5vw, 1rem);
   h1,
   h2,
   h3 {
@@ -30,13 +37,6 @@ body {
     line-height: 1.4;
   }
 
-  // p {
-  //   line-height: 1.75em;
-  // }
-
-  p {
-    font-size: clamp(0.75rem, 0.25rem + 2.5vw, 1rem);
-  }
   p:not(:last-child) {
     margin-bottom: 0.8em;
   }
@@ -72,13 +72,14 @@ body {
     &:last-child {
       margin-bottom: 0;
     }
-    padding: 23px 56px 23px 30px;
-    font-size: clamp(1rem, 0.881rem + 0.51vw, 1.125rem);
+    padding: 1.5em;
+    padding-right: 3em;
     background-color: rgb(var(--c-white), 3%);
     border-left: 4px solid rgb(var(--c-accent));
   }
 
   &.detail {
+    font-size: clamp(1rem, 0.881rem + 0.51vw, 1.125rem);
     h1,
     h2 {
       font-size: clamp(1.5rem, 1.283rem + 0.92vw, 1.875rem);
@@ -86,21 +87,16 @@ body {
     h3 {
       font-size: clamp(1.25rem, 1.033rem + 0.92vw, 1.625rem);
     }
-    p {
-      font-size: clamp(1rem, 0.881rem + 0.51vw, 1.125rem);
-    }
   }
 
   &.min {
+    font-size: 14px;
     h1,
     h2 {
       font-size: 24px;
     }
     h3 {
       font-size: 20px;
-    }
-    p {
-      font-size: 14px;
     }
   }
 }

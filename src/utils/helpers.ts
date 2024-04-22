@@ -79,3 +79,11 @@ export function toRoman(num: number) {
   }
   return romanNumeral;
 }
+
+export function getAndroidLink(id: string) {
+  return `market://details?id=${id}`;
+}
+
+export function getIOSLink(id: string) {
+  return `itms-apps://itunes.apple.com/app/id${id}`;
+}

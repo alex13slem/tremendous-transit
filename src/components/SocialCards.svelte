@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { socials } from '../store/socials';
+  import { companySocials as socials } from '../store/socials';
   import SocialCard from './SocialCard.svelte';
   import type { SwiperContainer } from 'swiper/element';
 
@@ -15,11 +15,11 @@
     slides-per-view="auto"
     space-between="20"
   >
-    {#each socials as link}
-      {#if link.data.link}
+    {#each socials as s}
+      {#if s.href}
         <swiper-slide class="slide">
           <div class="slide__wrap">
-            <SocialCard data={link} id={link.id} />
+            <SocialCard data={s} />
           </div>
         </swiper-slide>
       {/if}

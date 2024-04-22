@@ -1,10 +1,8 @@
-import { atom } from "nanostores";
+import { atom } from 'nanostores';
 
 export const servModalIsOpen = atom<boolean>(false);
 
 export const pubModalIsOpen = atom<boolean>(false);
-
-export const qrGamesModalIsOpen = atom<boolean>(false);
 
 export const qrDonatModalIsOpen = atom<boolean>(false);
 

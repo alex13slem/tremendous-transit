@@ -1,6 +1,7 @@
 title: MIDDLE - GAME DESIGNER / PROJECT MANAGER
 info:
-  name: MIDDLE - GAME DESIGNER / PROJECT MANAGER
+  profession: ['Game designer', 'Project manager']
+  level: Middle
   description: >-
     **EISVIL** - дружная команда нацеленная на независимую разработку.  Мы
     делаем только те игры, которые интересны нам самим.
@@ -20,7 +21,7 @@ requirements:
   - text: Способность грамотно и четко излагать рабочую информацию устно и письменно;
   - text: Свободно использовать Miro, Google Sheets/Docs, Notion;
   - text: Понимание процессы управления проектом;
-  - text: "Минимальное кол-во рабочих часов: 2ч в день/10ч в неделю;"
+  - text: 'Минимальное кол-во рабочих часов: 2ч в день/10ч в неделю;'
   - text: Исполнительность;
   - text: Нацеленность на результат;
   - text: Умение быстро находить и применять информацию;

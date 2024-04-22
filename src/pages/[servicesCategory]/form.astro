@@ -4,6 +4,7 @@ import BasicLayout from '../../layouts/BasicLayout.astro';
 import LinkToDetailPage from '../../components/ui/LinkToDetailPage.svelte';
 import ServicesForm from '../../components/forms/ServicesForm/index.svelte';
 import { PublishingForm } from '../../components/forms/PublishingForm';
+import SEO from '../../layouts/SEO.astro';
 
 export async function getStaticPaths() {
   const servicesArticles = await getCollection('service-articles');
@@ -14,10 +15,15 @@ export async function getStaticPaths() {
   }));
 }
 
+const { article } = Astro.props;
+const {
+  data: { title, description },
+} = article;
 const { servicesCategory } = Astro.params;
 ---
 
 <BasicLayout>
+  <SEO slot="seo" {title} {description} imageUrls={{ fb: '' }} />
   <div class="root">
     <div class="container">
       <LinkToDetailPage client:load toBack text="Назад" />

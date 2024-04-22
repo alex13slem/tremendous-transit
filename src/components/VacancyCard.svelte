@@ -26,7 +26,7 @@
 </script>
 
 <article class:isEven class="size-{size}">
-  <h3>{info.name}</h3>
+  <h3>{info.profession.join(' / ')}</h3>
   <p>{place}</p>
   {#if salary && size === 'md'}
     <p><b>{salary}</b></p>
@@ -59,7 +59,7 @@
   {#if size === 'md'}
     <ShareLinksBlock
       to="/career/{vacancy.slug}"
-      title={info.name}
+      title={info.profession.join(' / ')}
       text="Поделиться вакансией"
     />
   {/if}

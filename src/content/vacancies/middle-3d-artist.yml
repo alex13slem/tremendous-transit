@@ -1,6 +1,7 @@
 title: MIDDLE - 3D ARTIST
 info:
-  name: MIDDLE - 3D ARTIST
+  profession: ['3D Artist']
+  level: Middle
   description: >-
     **EISVIL** - дружная команда нацеленная на независимую разработку.  Мы
     делаем только те игры, которые интересны нам самим.
@@ -13,7 +14,8 @@ info:
 workplace:
   remote: true
 links:
-  test: "https://docs.google.com/document/d/1y0pjTgi6gLMALp1EGhGDlop_nnzn70mbKmrD\
+  test:
+    "https://docs.google.com/document/d/1y0pjTgi6gLMALp1EGhGDlop_nnzn70mbKmrD\
     _86hfJA/edit?usp=sharing "
   form: https://forms.gle/gZ4wgQGSpreFvG5h8
 requirements:
@@ -22,11 +24,11 @@ requirements:
   - text: Умение делать UV развертку (UV mapping);
   - text: Имеете навыки создания текстур для 3D моделей;
   - text: Обладаете базовыми навыками 3D анимации;
-  - text: "Минимальное кол-во рабочих часов: 2ч в день/10ч в неделю;"
+  - text: 'Минимальное кол-во рабочих часов: 2ч в день/10ч в неделю;'
   - text: Исполнительность;
   - text: Нацеленность на результат;
   - text: Самоорганизация;
-  - text: "Готовность развивать свои навыки и повышать квалификацию. "
+  - text: 'Готовность развивать свои навыки и повышать квалификацию. '
 tasks:
   - text: Полный цикл создания 3D-моделей окружения;
   - text: Риггинг и скиннинг готовых 3D-моделей;

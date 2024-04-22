@@ -1,0 +1,21 @@
+title: Eisvil
+slug: eisvil
+socials:
+  - slug: discord
+    href: https://discord.gg/e9uTMxXGph
+    order: 1
+  - slug: vk
+    href: https://vk.com/eisvil
+    order: 2
+  - slug: telegram
+    href: https://t.me/Eisvil
+    order: 3
+  - slug: linkedin
+    href: https://www.linkedin.com/
+    order: 4
+  - slug: facebook
+    href: https://facebook.com/
+    order: 5
+  - slug: twitter
+    href: https://twitter.com/
+    order: 6

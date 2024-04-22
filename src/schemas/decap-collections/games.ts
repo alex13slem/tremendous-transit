@@ -16,12 +16,12 @@ export const gamesCollection: CmsCollection = {
       name: 'title',
       widget: 'string',
     },
-    // {
-    //   // Slug
-    //   label: "Slug",
-    //   name: "slug",
-    //   widget: "string",
-    // },
+    {
+      // Slug
+      label: 'Slug',
+      name: 'slug',
+      widget: 'string',
+    },
     {
       // Краткое описание
       label: 'Краткое описание',
@@ -62,6 +62,12 @@ export const gamesCollection: CmsCollection = {
       name: 'isBrowser',
       widget: 'boolean',
       default: false,
+    },
+    {
+      label: 'Ссылка на игру (если браузерная)',
+      name: 'browserLink',
+      widget: 'string',
+      required: false,
     },
     {
       // Разработчик
@@ -134,7 +140,7 @@ export const gamesCollection: CmsCollection = {
           label: 'Площадка',
           name: 'marketplace',
           widget: 'relation',
-          collection: 'marketplaces',
+          collection: 'game-marketplaces',
           multiple: false,
           search_fields: ['title'],
           value_field: 'slug',
@@ -148,7 +154,7 @@ export const gamesCollection: CmsCollection = {
         {
           label: 'appId',
           name: 'appId',
-          hint: 'Идентификатор приложения (для Android)',
+          hint: 'Идентификатор приложения',
           widget: 'string',
           required: false,
         },
@@ -163,6 +169,7 @@ export const gamesCollection: CmsCollection = {
       search_fields: ['title'],
       value_field: 'value',
       display_fields: ['title'],
+      required: false,
     },
     {
       // В избранном

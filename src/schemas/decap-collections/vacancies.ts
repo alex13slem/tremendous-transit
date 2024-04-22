@@ -21,9 +21,20 @@ export const vacanciesCollection: CmsCollection = {
       summary: '{{fields.name}}',
       fields: [
         {
-          label: 'Название',
-          name: 'name',
-          widget: 'string',
+          label: 'Профессия',
+          name: 'profession',
+          widget: 'relation',
+          collection: 'professions',
+          search_fields: ['title'],
+          value_field: 'title',
+          multiple: true,
+          display_fields: ['title'],
+        },
+        {
+          label: 'Уровень',
+          name: 'level',
+          widget: 'select',
+          options: ['Intern', 'Junior', 'Middle', 'Senior', 'Lead'],
         },
         {
           label: 'Описание',

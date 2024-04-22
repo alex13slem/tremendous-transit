@@ -1,7 +1,7 @@
-import { z } from "astro/zod";
+import { z } from 'astro:content';
 
 export const socialsSchema = z.object({
   title: z.string(),
-  link: z.string().nullish(),
-  order: z.number().optional(),
+  slug: z.string(),
+  iconifyId: z.string(),
 });

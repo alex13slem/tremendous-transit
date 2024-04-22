@@ -60,16 +60,19 @@
 <style lang="scss">
   .inner {
     --padding: 2rem;
+    --window-width: 960px;
 
     padding: 4rem 1rem;
 
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    pointer-events: none;
   }
 
   .window {
-    width: min(960px, 100%);
+    pointer-events: all;
+    width: min(var(--window-width), 100%);
 
     background-color: rgb(var(--c-bg));
     border: var(--border-card);

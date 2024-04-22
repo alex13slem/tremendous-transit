@@ -1,6 +1,7 @@
 title: USER ACQUISITION MANAGER
 info:
-  name: USER ACQUISITION MANAGER
+  profession: ['User Acquisition Manager']
+  level: Middle
   description: >-
     **EISVIL** - дружная команда нацеленная на независимую разработку.  Мы
     делаем только те игры, которые интересны нам самим.
@@ -13,7 +14,7 @@ info:
 workplace:
   remote: true
 links:
-  form: "https://forms.gle/SsyTRudvWgqTCscW9 "
+  form: 'https://forms.gle/SsyTRudvWgqTCscW9 '
 requirements:
   - text: Опыт работы в Game Dev User Acquisition Manager/Media Buyer и ведения
       рекламных кампаний на мобильные игры;
@@ -29,7 +30,7 @@ tasks:
   - text: Создавать, настраивать, оптимизировать, анализировать рекламные кампании;
   - text: Работать с источниками трафика Facebook, Google, Yandex, In-App сетки,
       видео-сетки, DSP-сетки и другими;
-  - text: "Разрабатывать стратегии для достижения целей; "
+  - text: 'Разрабатывать стратегии для достижения целей; '
   - text: Проводить А/Б тестирования;
   - text: Анализ эффективности рекламных кампаний;
   - text: Участвовать в разработке, тестировании и ротации креативов совместно с

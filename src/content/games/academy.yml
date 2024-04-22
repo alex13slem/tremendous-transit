@@ -1,0 +1,48 @@
+title: Purrfect Academy
+slug: academy
+description: Банальные, но неопровержимые выводы, а также независимые
+  государства призывают нас к новым свершениям, которые, в свою очередь, должны
+  быть преданы социально-демократической анафеме. Противоположная точка зрения
+  подразумевает, что некоторые особенности внутренней политики будут
+  функционально разнесены на независимые элементы.
+body: |-
+  ## Заголовок 
+   Текст 
+  ### Подзаголовок 
+   Текст
+genre:
+  - arcade
+isMobile: true
+isBrowser: false
+browserLink: http://localhost:4321/admin#/collections/games/entries/academy
+developer: eisvil
+publisher: eisvil
+releaseDate: 2024-04-12T13:43:00
+translations:
+  - voice: false
+    interface: true
+    lang: ru
+platforms:
+  - marketplace: apple
+    href: https://apps.apple.com/us/app/township/id638689075
+    appId: "638689075"
+  - marketplace: google
+    href: https://play.google.com/store/apps/details?id=com.gamebrain.hexasort&hl=ru&gl=US
+    appId: com.gamebrain.hexasort
+status: []
+favorites:
+  - best
+  - top
+thumbnail: /images/uploads/academy-1024x500.jpg
+heroImage:
+  src: /images/uploads/academy-baner.jpg
+  srcPlaceholder: /images/uploads/banner-ph.webp
+  alt: Purrfect Academy
+adBanner:
+  src: /images/uploads/banner-ph.webp
+  alt: Purrfect Academy
+gallery:
+  - src: /images/uploads/academy-baner.jpg
+    alt: Purrfect Academy
+  - src: /images/uploads/academy-1024x500.jpg
+    alt: Purrfect Academy
