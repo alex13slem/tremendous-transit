@@ -5,9 +5,10 @@ export const gamesCollection: CmsCollection = {
   label: 'Игры',
   folder: 'src/content/games',
   create: true,
-  slug: '{{fields.slug}}',
   extension: 'yml',
   format: 'yml',
+
+  slug: '{{fields.slug}}',
   fields: [
     {
       // Название
@@ -43,25 +44,23 @@ export const gamesCollection: CmsCollection = {
       label: 'Жанр',
       name: 'genre',
       widget: 'relation',
-      collection: 'genres',
+      collection: 'game-genres',
       multiple: true,
       search_fields: ['title'],
       value_field: 'slug',
       display_fields: ['title'],
     },
     {
-      // Это мобильная игра
-      label: 'Это мобильная игра',
-      name: 'isMobile',
-      widget: 'boolean',
-      default: false,
-    },
-    {
-      // Это браузерная игра
-      label: 'Это браузерная игра',
-      name: 'isBrowser',
-      widget: 'boolean',
-      default: false,
+      // Тип
+      label: 'Тип',
+      name: 'type',
+      widget: 'select',
+      options: [
+        { value: 'isMobile', label: 'Мобильная игра' },
+        { value: 'isBrowser', label: 'Браузерная игра' },
+        { value: 'isDesktop', label: 'Десктопная игра' },
+        { value: 'isConsole', label: 'Консольная игра' },
+      ],
     },
     {
       label: 'Ссылка на игру (если браузерная)',
@@ -99,6 +98,18 @@ export const gamesCollection: CmsCollection = {
       date_format: 'DD-MM-YYYY',
       default: '',
       picker_utc: true,
+    },
+    {
+      // Комманда разработчиков
+      label: 'Комманда разработчиков',
+      name: 'team',
+      widget: 'relation',
+      collection: 'artists',
+      multiple: true,
+      search_fields: ['title'],
+      value_field: 'slug',
+      display_fields: ['title'],
+      required: false,
     },
     {
       // Переводы

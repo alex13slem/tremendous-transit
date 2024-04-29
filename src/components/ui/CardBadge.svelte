@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let type: "test" | "dev" | "hot" | "new";
+  export let type: string;
 </script>
 
 <div class="card-badge {type}">
@@ -66,7 +66,7 @@
 
   .card-badge::after {
     position: absolute;
-    content: "";
+    content: '';
     width: 75%;
     height: 75%;
     top: 5px;
@@ -76,7 +76,7 @@
   }
   .card-badge::before {
     position: absolute;
-    content: "";
+    content: '';
     width: 5px;
     height: 5px;
     top: 3px;

@@ -87,3 +87,15 @@ export function getAndroidLink(id: string) {
 export function getIOSLink(id: string) {
   return `itms-apps://itunes.apple.com/app/id${id}`;
 }
+
+export const makeAbsoluteURL = (url: string) => {
+  // Регулярное выражение для проверки наличия протокола в начале строки
+  const regex = /^(?:\w+:)?\/\/([^\/?#]+)/i;
+
+  // Если ссылка не содержит протокол, добавляем "https://"
+  if (!regex.test(url)) {
+    url = `https://${url}`;
+  }
+
+  return url;
+};

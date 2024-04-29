@@ -38,7 +38,7 @@ const navLinks =
 <AsideLayout>
   <SEO slot="seo" {title} {description} imageUrls={{ fb: '' }} />
   <Fragment slot="aside">
-    {navLinks.length && <AsideNav links={navLinks} />}
+    {!!navLinks.length && <AsideNav links={navLinks} />}
   </Fragment>
   <Fragment slot="main">
     {

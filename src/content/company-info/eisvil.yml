@@ -19,3 +19,10 @@ socials:
   - slug: twitter
     href: https://twitter.com/
     order: 6
+marketplaces:
+  - order: 0
+    slug: apple
+    href: http://localhost:4321/admin#/collections/company-info/entries/eisvil
+  - order: 1
+    slug: google
+    href: https://store.steampowered.com/app/1203620/Enshrouded/

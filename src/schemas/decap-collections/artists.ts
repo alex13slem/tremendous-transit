@@ -5,7 +5,7 @@ export const artistsCollection: CmsCollection = {
   label: 'Труженики',
   folder: 'src/content/artists',
   create: true,
-  slug: '{{title}}',
+  slug: '{{fields.slug}}',
   extension: 'yml',
   format: 'yml',
   fields: [
@@ -13,6 +13,12 @@ export const artistsCollection: CmsCollection = {
       // Имя
       label: 'Имя',
       name: 'title',
+      widget: 'string',
+    },
+    {
+      // Slug
+      label: 'Slug',
+      name: 'slug',
       widget: 'string',
     },
     {
@@ -58,7 +64,7 @@ export const artistsCollection: CmsCollection = {
       collection: 'professions',
       multiple: true,
       search_fields: ['title'],
-      value_field: 'title',
+      value_field: 'slug',
       display_fields: ['title'],
     },
   ],

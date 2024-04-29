@@ -1,0 +1,132 @@
+swiper-container {
+  transition: var(--load-fade);
+  transition-property: opacity;
+}
+swiper-container.load {
+  opacity: 0;
+}
+
+.root {
+  --clip-radius: 42px;
+  position: relative;
+  min-height: 505px;
+  padding-block: 60px;
+  display: flex;
+  gap: 30px;
+  & > * {
+    flex: 1 1 100%;
+  }
+}
+
+.bg-shadow {
+  z-index: -1;
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    to right,
+    rgb(var(--c-bg)) 0%,
+    rgb(var(--c-bg)) 80px,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+}
+.bg {
+  z-index: -2;
+  position: absolute;
+  inset: 0;
+  left: 90px;
+  background-color: rgb(var(--c-card));
+
+  border: var(--border-card);
+  clip-path: polygon(
+    100% 0,
+    100% calc(100% - 48px),
+    calc(100% - 48px) 100%,
+    0 100%,
+    0 0
+  );
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -10px;
+    right: -10px;
+    transform: rotate(45deg);
+    background-color: rgb(var(--c-card-border));
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: calc(48px * 1.4);
+    bottom: -1px;
+    right: calc(48px - 1px);
+    transform-origin: bottom;
+    transform: rotate(45deg);
+    background-color: rgb(var(--c-card-border));
+  }
+}
+.decor {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+}
+
+.left {
+  flex: 1 0 630px;
+  padding-top: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  swiper-container {
+    filter: drop-shadow(var(--box-shadow-hover));
+
+    --clip-d-size: calc(var(--clip-radius) * 1.41);
+
+    position: relative;
+
+    :global(.shadow) {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      height: 100%;
+    }
+
+    clip-path: polygon(
+      var(--clip-radius) 0,
+      100% 0,
+      100% 100%,
+      0 100%,
+      0 var(--clip-radius)
+    );
+  }
+
+  img {
+    height: 306px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.right {
+  position: relative;
+  padding-inline: 30px var(--clip-radius);
+
+  swiper-slide {
+    padding-right: calc(110px - var(--clip-radius));
+  }
+  &::after {
+    z-index: 1;
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: auto;
+    right: calc(var(--clip-radius) - 2px);
+    width: calc(110px - var(--clip-radius));
+    background-image: linear-gradient(90deg, transparent, rgb(var(--c-card)));
+  }
+}

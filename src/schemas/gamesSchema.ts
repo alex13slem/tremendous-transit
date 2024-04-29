@@ -1,4 +1,5 @@
 import { z } from 'astro:content';
+import { marketplacesSchema } from './gameMarketplacesSchema';
 
 const gamesPlatformsSchema = z.object({
   marketplace: z.string(),
@@ -6,9 +7,8 @@ const gamesPlatformsSchema = z.object({
   appId: z.string().optional(),
 });
 
-const gamesPlatformsSchemaSelect = gamesPlatformsSchema.extend({
-  title: z.string(),
-});
+const gamesPlatformsSchemaSelect =
+  gamesPlatformsSchema.merge(marketplacesSchema);
 
 export const gamesSchema = z.object({
   title: z.string(),
@@ -16,12 +16,12 @@ export const gamesSchema = z.object({
   description: z.string(),
   body: z.string(),
   genre: z.string().array(),
-  isMobile: z.boolean(),
-  isBrowser: z.boolean(),
+  type: z.enum(['isMobile', 'isBrowser', 'isDesktop', 'isConsole']),
   browserLink: z.string().optional(),
   developer: z.string(),
   publisher: z.string(),
   releaseDate: z.date(),
+  team: z.string().array().optional(),
   translations: z
     .object({
       lang: z.string(),
@@ -30,7 +30,7 @@ export const gamesSchema = z.object({
     })
     .array(),
   platforms: gamesPlatformsSchema.array().nullish(),
-  status: z.string().array().optional(),
+  status: z.string().optional(),
   favorites: z.string().array().optional(),
   thumbnail: z.string(),
   heroImage: z.object({
@@ -48,3 +48,4 @@ export const gamesSchemaSelect = gamesSchema.extend({
 
 export type Game = z.infer<typeof gamesSchema>;
 export type GameSelect = z.infer<typeof gamesSchemaSelect>;
+export type GamePlatform = z.infer<typeof gamesPlatformsSchemaSelect>;

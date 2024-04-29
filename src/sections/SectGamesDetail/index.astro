@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Aside from './Aside.astro';
+import Body from './Body.svelte';
+import type { GameSelect } from '../../schemas/gamesSchema';
+
+interface Props extends HTMLAttributes<'section'> {
+  game: GameSelect;
+}
+
+const { class: className, game, ...props } = Astro.props;
+
+const { title } = game;
+---
+
+<section class:list={['games-detail', className]} {...props}>
+  <div class="container">
+    <h1 class="sect-title">{title}</h1>
+
+    <Body {game} client:load />
+
+    <Aside {game} />
+  </div>
+</section>
+
+<style lang="scss">
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 410px;
+    column-gap: 30px;
+  }
+
+  h1 {
+    grid-column: span 2;
+  }
+</style>

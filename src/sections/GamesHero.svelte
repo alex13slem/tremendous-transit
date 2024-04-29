@@ -1,52 +1,15 @@
 <script lang="ts">
-  import type { CollectionEntry } from 'astro:content';
-  import { getAndroidLink, getIOSLink, getRandom } from '../utils/helpers';
+  import { getRandom } from '../utils/helpers';
   import { fade } from 'svelte/transition';
   import { onMount } from 'svelte';
-  // import { topGames } from "../store/games";
-  import ModalTrigger from '../components/modals/ModalTrigger.svelte';
-  import Portal from '../components/Portal.svelte';
-  import BtnFirm from '../components/ui/BtnFirm.svelte';
   import type { Game } from '../schemas/gamesSchema';
-  import { favoriteGames } from '../store/games';
-  import { GamesQrModal } from '../components/modals/GamesQrModal';
-  import { useragent } from '@sveu/browser';
+  import { topGames } from '../store/games';
+  import GameActionButton from '../components/GameActionButton.svelte';
 
   let game: Game;
-  let steamLink: string | undefined;
-  let iosLink: string | undefined;
-  let googleLink: string | undefined;
-  let huaweiLink: string | undefined;
-  let rustoreLink: string | undefined;
-  const { platform, mobile } = useragent();
 
   onMount(() => {
-    game = getRandom(favoriteGames);
-
-    steamLink = game.platforms?.find(
-      ({ marketplace }) => marketplace === 'steam'
-    )?.href;
-
-    const iosAppId = game.platforms?.find(
-      ({ marketplace }) => marketplace === 'apple'
-    )?.appId;
-
-    const googleAppId = game.platforms?.find(
-      ({ marketplace }) => marketplace === 'google'
-    )?.appId;
-
-    const huaweiAppId = game.platforms?.find(
-      ({ marketplace }) => marketplace === 'huawei'
-    )?.appId;
-
-    const rustoreAppId = game.platforms?.find(
-      ({ marketplace }) => marketplace === 'ru-store'
-    )?.appId;
-
-    iosAppId && (iosLink = getIOSLink(iosAppId));
-    googleAppId && (googleLink = getAndroidLink(googleAppId));
-    huaweiAppId && (huaweiLink = getAndroidLink(huaweiAppId));
-    rustoreAppId && (rustoreLink = getAndroidLink(rustoreAppId));
+    game = getRandom(topGames);
   });
 </script>
 
@@ -59,34 +22,7 @@
       alt={game.title}
     />
 
-    {#if $mobile}
-      {#if $platform === 'ios' && iosLink}
-        <a href={iosLink} target="_blank">
-          <BtnFirm>Играть сейчас</BtnFirm>
-        </a>
-      {:else if $platform === 'android' && (googleLink || huaweiLink || rustoreLink)}
-        <a href={googleLink || huaweiLink || rustoreLink} target="_blank">
-          <BtnFirm>Играть сейчас</BtnFirm>
-        </a>
-      {:else if game.isBrowser && game.browserLink}
-        <a href={game.browserLink} target="_blank">
-          <BtnFirm>Играть сейчас</BtnFirm>
-        </a>
-      {/if}
-    {/if}
-
-    {#if !$mobile}
-      {#if game.isMobile}
-        <ModalTrigger type={'qrGame'} slug={game.slug}
-          >Играть сейчас</ModalTrigger
-        >
-        <GamesQrModal />
-      {:else if game.isBrowser && (game.browserLink || steamLink)}
-        <a href={game.browserLink || steamLink} target="_blank">
-          <BtnFirm>Играть сейчас</BtnFirm>
-        </a>
-      {/if}
-    {/if}
+    <GameActionButton {game} />
   {/if}
 </div>
 

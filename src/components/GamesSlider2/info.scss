@@ -1,0 +1,38 @@
+article {
+  padding: 2px;
+  // background-color: rgb(var(--c-card));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+
+  h3 {
+    font-size: 30px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+}
+
+.prose {
+  --lh: 1.5625em;
+  max-height: calc(6 * var(--lh));
+
+  overflow: hidden;
+  overflow: clip;
+  text-overflow: ellipsis;
+
+  :global(p) {
+    line-height: var(--lh);
+  }
+}
+
+.btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+
+  a {
+    display: contents;
+  }
+}

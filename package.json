@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "sharp": "^0.33.3",
     "svelte": "^4.2.13",
+    "svelte-paginate": "^0.1.0",
     "swiper": "^11.1.1",
     "typescript": "^5.4.5"
   },

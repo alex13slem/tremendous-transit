@@ -12,12 +12,14 @@ body: |-
    Текст
 genre:
   - arcade
-isMobile: true
-isBrowser: false
-browserLink: http://localhost:4321/admin#/collections/games/entries/academy
+type: isMobile
+browserLink: ""
 developer: eisvil
 publisher: eisvil
 releaseDate: 2024-04-12T13:43:00
+team:
+  - aleksandr-scherba
+  - vanya
 translations:
   - voice: false
     interface: true
@@ -29,10 +31,10 @@ platforms:
   - marketplace: google
     href: https://play.google.com/store/apps/details?id=com.gamebrain.hexasort&hl=ru&gl=US
     appId: com.gamebrain.hexasort
-status: []
+status: dev
 favorites:
-  - best
   - top
+  - best
 thumbnail: /images/uploads/academy-1024x500.jpg
 heroImage:
   src: /images/uploads/academy-baner.jpg

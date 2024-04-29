@@ -22,6 +22,7 @@
   class="form-field {className} size-{size} v-{variant}"
   class:typing={!!value}
 >
+  <slot name="left" />
   <input
     on:input
     on:blur

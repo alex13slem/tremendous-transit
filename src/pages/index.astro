@@ -5,7 +5,7 @@ import ServicesModalForm from '../components/modals/ServicesModalForm.svelte';
 import PublishingModalForm from '../components/modals/PublishingModalForm.svelte';
 import ModalTrigger from '../components/modals/ModalTrigger.svelte';
 import BasicLayout from '../layouts/BasicLayout.astro';
-// import GamesSlider from '../components/GamesSlider.svelte';
+import GamesSlider from '../components/GamesSlider.svelte';
 import { ServicesTabs } from '../components/ServicesTabs';
 import SectCommon from '../sections/SectCommon.astro';
 import { PublishingTabs } from '../components/PublishingTabs';
@@ -13,6 +13,7 @@ import { PublishingTabs } from '../components/PublishingTabs';
 // import { servicesLinks } from "@/store/services";
 import SEO from '../layouts/SEO.astro';
 import { navLinks } from '../store/nav-links';
+import { bestGames } from '../store/games';
 
 const toDetailDevelopment = navLinks.find(
   ({ slug }) => slug === 'development'
@@ -30,9 +31,9 @@ const toDetailPublishing = navLinks.find(
     </ModalTrigger>
   </SectHero>
 
-  <!-- <SectCommon title="Наши игры" linkToDetail="/games">
-    <GamesSlider client:load />
-  </SectCommon> -->
+  <SectCommon title="Наши игры" linkToDetail="/games">
+    <GamesSlider client:load games={bestGames} />
+  </SectCommon>
 
   <SectCommon title="Услуги" linkToDetail={toDetailDevelopment}>
     <ServicesTabs client:visible />

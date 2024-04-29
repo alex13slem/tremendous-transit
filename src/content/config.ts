@@ -4,12 +4,13 @@ import { citiesSchema } from '../schemas/citiesSchema';
 import { companyInfoSchema } from '../schemas/companyInfo';
 import { developersSchema } from '../schemas/gameDevelopersSchema';
 import { gameFavoritesSchema } from '../schemas/gameFavoritesSchema';
-import { genresSchema } from '../schemas/gameGenresSchema';
+import { gameGenresSchema } from '../schemas/gameGenresSchema';
 import { marketplacesSchema } from '../schemas/gameMarketplacesSchema';
 import { publishersSchema } from '../schemas/gamePublishersSchema';
+import { gameStagesSchema } from '../schemas/gameStagesSchema';
 import { gameStatusesSchema } from '../schemas/gameStatusesSchema';
-import { translationsSchema } from '../schemas/gameTranslationSchema';
 import { gamesSchema } from '../schemas/gamesSchema';
+import { languagesSchema } from '../schemas/languagesSchema';
 import { navLinksSchema } from '../schemas/navLinks';
 import { professionsSchema } from '../schemas/professionsSchema';
 import { publishingSlidesSchema } from '../schemas/publishingSlidesSchema';
@@ -43,9 +44,9 @@ const gameMarketplacesCollection = defineCollection({
   schema: marketplacesSchema,
 });
 
-const genresCollection = defineCollection({
+const gameGenresCollection = defineCollection({
   type: 'data',
-  schema: genresSchema,
+  schema: gameGenresSchema,
 });
 
 const publishersCollection = defineCollection({
@@ -63,9 +64,9 @@ const serviceCategoriesCollection = defineCollection({
   schema: serviceCategoriesSchema,
 });
 
-const translationsCollection = defineCollection({
+const languagesCollection = defineCollection({
   type: 'data',
-  schema: translationsSchema,
+  schema: languagesSchema,
 });
 
 const serviceArticlesCollection = defineCollection({
@@ -108,16 +109,22 @@ const artistsCollection = defineCollection({
   schema: artistsSchema,
 });
 
+const gameStagesCollection = defineCollection({
+  type: 'data',
+  schema: gameStagesSchema,
+});
+
 export const collections = {
   artists: artistsCollection,
   professions: professionsCollection,
   'company-info': companyInfoCollection,
   games: gamesCollection,
-  'game-genres': genresCollection,
+  'game-genres': gameGenresCollection,
   'game-statuses': gameStatusesCollection,
   'game-favorites': gameFavoritesCollection,
-  'game-translations': translationsCollection,
   'game-marketplaces': gameMarketplacesCollection,
+  'game-stages': gameStagesCollection,
+  languages: languagesCollection,
   developers: developersCollection,
   publishers: publishersCollection,
   'service-articles': serviceArticlesCollection,

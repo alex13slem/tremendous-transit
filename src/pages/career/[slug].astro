@@ -60,7 +60,7 @@ const place = getWorkplaceString(workplace);
       <blockquote set:html={parse(info.description)} />
 
       {
-        tasks?.length && (
+        !!tasks?.length && (
           <>
             <h3>Основные задачи</h3>
             <ul>
@@ -73,7 +73,7 @@ const place = getWorkplaceString(workplace);
       }
 
       {
-        requirements?.length && (
+        !!requirements?.length && (
           <>
             <h3>Наши ожидания</h3>
             <ul>
@@ -86,7 +86,7 @@ const place = getWorkplaceString(workplace);
       }
 
       {
-        offers?.length && (
+        !!offers?.length && (
           <>
             <h3>Мы предлагаем</h3>
             <ul>

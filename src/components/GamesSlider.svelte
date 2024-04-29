@@ -1,10 +1,11 @@
 <script lang="ts">
-  import GameCard from './GameCard.svelte';
+  import { GameCard } from './GameCard';
   import { onMount } from 'svelte';
   import { type SwiperContainer } from 'swiper/element/bundle';
   import { Mousewheel, Pagination } from 'swiper/modules';
   import type { SwiperOptions } from 'swiper/types';
-  import { games } from '../store/games';
+  import type { GameSelect } from '../schemas/gamesSchema';
+  export let games: GameSelect[];
 
   let swiperEl: SwiperContainer;
 
@@ -15,19 +16,17 @@
       spaceBetween: -10,
       // Responsive breakpoints
       breakpoints: {
-        // when window width is >= 320px
-        320: {
+        640: {
           slidesPerView: 2,
           spaceBetween: -20,
         },
-        // when window width is >= 480px
-        480: {
+        992: {
           slidesPerView: 3,
+          spaceBetween: -20,
         },
-        // when window width is >= 640px
-        640: {
+        1290: {
+          spaceBetween: -20,
           slidesPerView: 4,
-          spaceBetween: -30,
         },
       },
       mousewheel: {},
@@ -54,13 +53,33 @@
 
 <div class="wrap">
   <swiper-container bind:this={swiperEl} class:load={!swiperEl} init="false">
-    <!-- {#each games as game}
+    {#each games as game}
       <swiper-slide>
         <div class="slide-wrap">
           <GameCard {game} />
         </div>
       </swiper-slide>
-    {/each} -->
+      <swiper-slide>
+        <div class="slide-wrap">
+          <GameCard {game} />
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-wrap">
+          <GameCard {game} />
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-wrap">
+          <GameCard {game} />
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="slide-wrap">
+          <GameCard {game} />
+        </div>
+      </swiper-slide>
+    {/each}
   </swiper-container>
   <div class="pagination" />
 </div>
@@ -72,9 +91,7 @@
   .wrap {
     position: relative;
     z-index: 0;
-    margin: -30px;
-    margin-bottom: -60px;
-    min-height: 378px;
+    margin: -20px;
   }
   .wrap::after,
   .wrap::before {
@@ -95,7 +112,7 @@
   }
 
   .slide-wrap {
-    padding: 30px;
+    padding: 20px;
     min-width: 270px;
   }
   swiper-container {

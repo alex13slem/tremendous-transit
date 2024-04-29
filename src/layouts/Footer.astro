@@ -1,22 +1,16 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import SiteLogo from '../components/ui/SiteLogo.svelte';
-import SVGApple from '../components/svg/platforms/SVGApple.svelte';
-import SVGGoogle from '../components/svg/platforms/SVGGoogle.svelte';
-import SVGRusstore from '../components/svg/platforms/SVGRusstore.svelte';
-import SVGHuawei from '../components/svg/platforms/SVGHuawei.svelte';
-import SVGPlaygame from '../components/svg/platforms/SVGYandex.svelte';
-import SVGVk from '../components/svg/platforms/SVGVk.svelte';
-import SVGSteam from '../components/svg/platforms/SVGSteam.svelte';
-import SVGNintendo from '../components/svg/platforms/SVGNintendo.svelte';
-import SVGXBox from '../components/svg/platforms/SVGXBox.svelte';
-import SVGSony from '../components/svg/platforms/SVGSony.svelte';
 import SVGSupport from '../components/svg/SVGSupport.svelte';
 import FooterNavLinks from '../components/FooterNavLinks.svelte';
+import { companyInfoWRelations } from '../store/companyInfo';
+import MarketplaceButton from '../components/MarketplaceButton.svelte';
 
 interface Props extends HTMLAttributes<'footer'> {}
 
 const { class: className, ...props } = Astro.props;
+
+const { marketplaces } = companyInfoWRelations;
 ---
 
 <footer class:list={['footer', className]} {...props}>
@@ -50,18 +44,7 @@ const { class: className, ...props } = Astro.props;
         <div class="platforms">
           <h2>Мы на платформах</h2>
           <div class="links">
-            <a href="" class="link"><SVGApple /></a>
-            <a href="" class="link"><SVGGoogle /></a>
-            <a href="" class="link"><SVGRusstore /></a>
-            <a href="" class="link"><SVGHuawei /></a>
-            <a href="" class="link"><SVGPlaygame /></a>
-            <a href="" class="link"><SVGVk /></a>
-            <a href="" class="link">
-              <SVGSteam />
-            </a>
-            <a href="" class="link"><SVGNintendo /></a>
-            <a href="" class="link"><SVGXBox /></a>
-            <a href="" class="link"><SVGSony /></a>
+            {marketplaces.map((m) => <MarketplaceButton {...m} client:load />)}
           </div>
         </div>
         <div class="bottom-block">
@@ -217,8 +200,8 @@ const { class: className, ...props } = Astro.props;
       max-width: 170px;
       flex-wrap: wrap;
       gap: 10px 5px;
-      justify-content: center;
       @media (max-width: 1289.98px) {
+        justify-content: center;
         max-width: 100%;
         gap: clamp(0.625rem, 0.255rem + 1.23vw, 1.25rem);
       }

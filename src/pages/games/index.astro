@@ -1,11 +1,12 @@
 ---
 import GamesHero from '../../sections/GamesHero.svelte';
 import BasicLayout from '../../layouts/BasicLayout.astro';
-import BestGamesSlider from '../../components/BestGamesSlider.svelte';
+import { GamesSlider2 } from '../../components/GamesSlider2';
 import SectCommon from '../../sections/SectCommon.astro';
-import GamesCatalog from '../../components/GamesCatalog.svelte';
 import SEO from '../../layouts/SEO.astro';
-import { getCollection } from 'astro:content';
+import { bestGames } from '../../store/games';
+import { GamesCatalog } from '../../components/GamesCatalog';
+import { GamesDetailsSlider } from '../../components/GamesDetailsSlider';
 ---
 
 <BasicLayout title="Игры">
@@ -15,15 +16,38 @@ import { getCollection } from 'astro:content';
     description="Игры разработанные нашими друзьями и партнёрами."
     imageUrls={{ fb: '' }}
   />
+
   <GamesHero client:load />
 
-  <SectCommon title="Лучшие игры">
-    <!-- <BestGamesSlider client:load /> -->
-  </SectCommon>
+  {
+    !!bestGames.length && (
+      <SectCommon title="Лучшие игры">
+        <div class="best-games-desktop">
+          <GamesSlider2 games={bestGames} client:load />
+        </div>
+        <div class="best-games-mobile">
+          <GamesDetailsSlider games={bestGames} client:load />
+        </div>
+      </SectCommon>
+    )
+  }
 
   <SectCommon title="Наши игры" id="games-catalog">
-    <!-- <GamesCatalog client:load /> -->
+    <GamesCatalog client:load />
   </SectCommon>
 </BasicLayout>
 
-<style></style>
+<style lang="scss">
+  .best-games-desktop {
+    display: none;
+
+    @media (min-width: 1290px) {
+      display: contents;
+    }
+  }
+  .best-games-mobile {
+    @media (min-width: 1290px) {
+      display: none;
+    }
+  }
+</style>

@@ -2,7 +2,6 @@
   import type { SwiperContainer } from 'swiper/element';
   import type { Image } from '../../types/project';
   import { formatStrToId } from '../../utils/helpers';
-  import { useragent } from '@sveu/browser';
 
   export let data: Image[];
 
@@ -28,50 +27,5 @@
 </swiper-container>
 
 <style lang="scss">
-  .root {
-    margin: -30px;
-    margin-bottom: 0;
-    background-color: rgb(var(--c-white), 10%);
-
-    transition: var(--load-fade);
-    transition-property: opacity;
-
-    &.load {
-      opacity: 0;
-    }
-  }
-
-  .slide-wrap {
-    width: 100%;
-    height: 100%;
-    box-shadow: var(--box-shadow-active);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  .slide {
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    padding: 30px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: rgb(var(--c-bg));
-
-    img {
-      object-fit: contain;
-      width: 100%;
-      height: 100%;
-      background-color: rgb(var(--c-bg), 0.5);
-
-      backdrop-filter: blur(16px);
-    }
-  }
-  @media (max-width: 1023.98px) {
-    .root {
-      display: none;
-    }
-  }
+  @import './detail-slider.scss';
 </style>

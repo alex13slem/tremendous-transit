@@ -19,5 +19,10 @@ export const gameMarketplacesCollection: CmsCollection = {
       name: 'slug',
       widget: 'string',
     },
+    {
+      label: 'Iconify ID',
+      name: 'iconifyId',
+      widget: 'string',
+    },
   ],
 };

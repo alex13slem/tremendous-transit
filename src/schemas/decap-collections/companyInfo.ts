@@ -47,5 +47,33 @@ export const companyInfoCollection: CmsCollection = {
         },
       ],
     },
+    {
+      label: 'Мы на платформах',
+      name: 'marketplaces',
+      widget: 'list',
+      fields: [
+        {
+          label: 'Платформа',
+          name: 'slug',
+          widget: 'relation',
+          collection: 'game-marketplaces',
+          multiple: false,
+          search_fields: ['title'],
+          value_field: 'slug',
+          display_fields: ['title'],
+        },
+        {
+          label: 'Ссылка',
+          name: 'href',
+          widget: 'string',
+        },
+        {
+          label: 'Порядок',
+          name: 'order',
+          widget: 'number',
+          default: 0,
+        },
+      ],
+    },
   ],
 };
