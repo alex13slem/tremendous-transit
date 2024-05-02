@@ -1,43 +1,34 @@
 <script lang="ts">
   import { type SwiperContainer } from 'swiper/element/bundle';
   import type { Image } from '../../types/project';
-  import { beforeUpdate, onMount } from 'svelte';
+  import type { Swiper, SwiperEvents } from 'swiper/types';
 
   export let data: Image[];
 
   let swiperEl: SwiperContainer;
 
   let isEnd: boolean;
-  let isBeginning: boolean;
 
-  const onProgress = (e: any) => {
-    const [swiper, progress] = e.detail;
-    isEnd = swiper.isEnd;
-    isBeginning = swiper.isBeginning;
+  const onSlideChange: SwiperEvents['slideChange'] = (e: any) => {
+    console.log(e);
+
+    const s = e.detail[0] as Swiper;
+    isEnd = s.isEnd;
   };
-  onMount(() => {
-    swiperEl.breakpoints = {
-      1024: {
-        slidesPerView: 3.33,
-      },
-    };
-  });
 </script>
 
-<div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
+<div class="root" class:isEnd class:load={!swiperEl}>
   <swiper-container
     id="preview-slider"
     bind:this={swiperEl}
-    mousewheel
-    slides-per-view="1.2"
     watch-slides-progress
-    on:swiperprogress={onProgress}
+    mousewheel
+    slides-per-view="auto"
+    on:swiperprogress={onSlideChange}
   >
     {#each data as { src, alt }}
       <swiper-slide class="slide">
-        <div class="slide-wrap">
-          <button><img {src} {alt} /></button>
-        </div>
+        <button><img {src} {alt} /></button>
       </swiper-slide>
     {/each}
   </swiper-container>

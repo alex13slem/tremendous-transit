@@ -1,4 +1,4 @@
-gameSlug: academy
+title: academy
 stages:
   - name: НАЗВАНИЕ ЭТАПА ПЛАНИРОВАНИЯ
     num: 1
@@ -27,6 +27,23 @@ stages:
       adipisicing elit.
     currentCash: 55
     totalCash: 350
+    crowdfundingPlatforms:
+      - slug: boosty
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: buy-me-a-coffee
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: gofundme
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: indiegogo
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: kickstarter
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: ko-fi
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: patreon
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
+      - slug: planeta-ru
+        href: http://localhost:4321/admin#/collections/game-stages/entries/academy
   - name: НАЗВАНИЕ ЭТАПА ПЛАНИРОВАНИЯ
     num: 4
     description: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis

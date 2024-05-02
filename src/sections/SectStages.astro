@@ -1,0 +1,41 @@
+---
+import ProjectStage from '../components/ProjectStage.svelte';
+import type { Stage } from '../schemas/gameStagesSchema';
+
+interface Props {
+  stages: Stage[];
+}
+
+const { stages } = Astro.props;
+const { slug } = Astro.params;
+---
+
+<section>
+  <div class="container">
+    <h2 class="sect-title">План проекта</h2>
+    <div class="stages">
+      {
+        stages.map((stage, idx) => (
+          <ProjectStage
+            client:load
+            {stage}
+            gameSlug={slug}
+            isLast={stages.length - 1 === idx}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @media (max-width: 1023.98px) {
+    h2 {
+      margin-bottom: 50px;
+      padding-inline: var(--container-offset);
+    }
+    .container {
+      padding: 0;
+    }
+  }
+</style>

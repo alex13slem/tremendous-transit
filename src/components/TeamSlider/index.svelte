@@ -2,10 +2,19 @@
   import type { SwiperContainer } from 'swiper/element';
   import type { Artist } from '../../schemas/artistsSchema';
   import ArtistCard from '../ArtistCard.svelte';
+  import { onMount } from 'svelte';
 
   export let artists: Artist[];
 
   let swiperEl: SwiperContainer;
+
+  onMount(() => {
+    swiperEl.breakpoints = {
+      1024: {
+        centeredSlides: true,
+      },
+    };
+  });
 </script>
 
 <div class="wrap">
@@ -15,7 +24,6 @@
     bind:this={swiperEl}
     mousewheel
     slides-per-view="auto"
-    centered-slides
   >
     {#each artists as artist}
       <swiper-slide class="slide">

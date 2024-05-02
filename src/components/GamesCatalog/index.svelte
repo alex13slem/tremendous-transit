@@ -18,7 +18,7 @@
     genresOptions,
     marketplacesOptions,
   } from '.';
-  import GenresSlider from './GameGenresSlider.svelte';
+  import GenresSlider from '../GameGenresSlider.svelte';
 
   const pageSizeVariant = [16, 24, 40];
   let filteredItems: GameSelect[];
@@ -107,7 +107,10 @@
       </Select>
     </div>
     <div class="genre-filter-mobile">
-      <GenresSlider genres={genresOptions} bind:value={genreValue} />
+      <GenresSlider
+        genres={genresOptions.map((genre) => genre.value)}
+        bind:value={genreValue}
+      />
     </div>
 
     <div class="marketplace-filter-desktop">

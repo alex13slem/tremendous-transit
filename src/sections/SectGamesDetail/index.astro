@@ -3,6 +3,17 @@ import type { HTMLAttributes } from 'astro/types';
 import Aside from './Aside.astro';
 import Body from './Body.svelte';
 import type { GameSelect } from '../../schemas/gamesSchema';
+import GameGenresSlider from '../../components/GameGenresSlider.svelte';
+import { getGenreTitle } from '../../store/gameGenres';
+import { getPublisherTitle } from '../../store/publishers';
+import { getDeveloperTitle } from '../../store/developers';
+import PreviewSlider from '../../components/ArticleSlider/PreviewSlider.svelte';
+import PlatformsSlider from '../../components/PlatformsSlider.svelte';
+import LinkToDetailPage from '../../components/ui/LinkToDetailPage.svelte';
+import { parse } from 'marked';
+import LangsBlock from './LangsBlock.astro';
+import GameActionButton from '../../components/GameActionButton.svelte';
+import ShareLinksBlock from '../../components/ShareLinksBlock.svelte';
 
 interface Props extends HTMLAttributes<'section'> {
   game: GameSelect;
@@ -15,22 +26,175 @@ const { title } = game;
 
 <section class:list={['games-detail', className]} {...props}>
   <div class="container">
-    <h1 class="sect-title">{title}</h1>
+    <div class="desktop-view">
+      <h1 class="sect-title">{title}</h1>
+      <Body {game} client:load />
+      <Aside {game} />
+    </div>
 
-    <Body {game} client:load />
+    <div class="mobile-view">
+      <div class="header">
+        <div class="thumbnail"><img src={game.thumbnail} alt={title} /></div>
+        <div class="info">
+          <h1>{title}</h1>
+          <div class="devs">
+            <p><b>Издатель:</b> {getPublisherTitle(game.publisher)}</p>
+            <hr />
+            <p><b>Разработчик:</b> {getDeveloperTitle(game.developer)}</p>
+          </div>
+          <GameGenresSlider
+            client:load
+            genres={game.genre.map((genre) => getGenreTitle(genre))}
+          />
+        </div>
+      </div>
+      <PreviewSlider data={game.gallery} client:load />
+      <div class="body">
+        {
+          !!game.platforms.length && (
+            <PlatformsSlider platforms={game.platforms} client:load />
+          )
+        }
+        <div class="detail-h">
+          <h2>Описание</h2>
+          <LinkToDetailPage client:load to={`/games/${game.slug}/detail`} />
+        </div>
+        <div class="prose" set:html={parse(game.description)} />
+        <LangsBlock translations={game.translations} />
+        <div class="interactive-block">
+          <GameActionButton {game} client:load />
 
-    <Aside {game} />
+          <ShareLinksBlock client:load imgSrc={game.thumbnail} {title} />
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   .container {
-    display: grid;
-    grid-template-columns: 1fr 410px;
-    column-gap: 30px;
+    @media (min-width: 1024px) {
+      display: grid;
+      grid-template-columns: 1fr 410px;
+      column-gap: 30px;
+    }
   }
 
   h1 {
     grid-column: span 2;
+  }
+
+  .desktop-view {
+    display: none;
+
+    @media (min-width: 1024px) {
+      display: contents;
+    }
+  }
+  .mobile-view {
+    display: contents;
+    font-size: clamp(1rem, 0.642rem + 1.53vw, 1.375rem);
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
+  }
+
+  .header {
+    display: flex;
+    margin-bottom: 16px;
+    gap: 1em;
+
+    h1 {
+      font-size: clamp(1.25rem, 0.654rem + 2.54vw, 1.875rem);
+      text-transform: uppercase;
+    }
+
+    .devs {
+      display: flex;
+      gap: clamp(0.313rem, 0.014rem + 1.27vw, 0.625rem);
+
+      font-size: 0.75em;
+
+      b {
+        color: rgb(var(--c-accent));
+      }
+
+      hr {
+        border-color: rgb(var(--c-white), 30%);
+      }
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .thumbnail {
+    font-size: clamp(5.313rem, 0.84rem + 19.08vw, 10rem);
+    width: 1em;
+    height: 1em;
+    position: relative;
+    color: rgb(var(--c-white));
+
+    &::after,
+    &::before {
+      z-index: 0;
+      content: '';
+      position: absolute;
+      border: 1px solid currentColor;
+      width: 0.1em;
+      height: 0.1em;
+    }
+
+    &::after {
+      bottom: 0;
+      right: 0;
+      border-left-color: transparent;
+      border-top-color: transparent;
+    }
+    &::before {
+      top: 0;
+      left: 0;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+    }
+
+    img {
+      --clip-size: 0.2em;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      clip-path: polygon(
+        var(--clip-size) 0%,
+        100% 0,
+        100% calc(100% - var(--clip-size)),
+        calc(100% - var(--clip-size)) 100%,
+        0% 100%,
+        0 var(--clip-size)
+      );
+    }
+  }
+
+  .body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .detail-h {
+    display: flex;
+    justify-content: space-between;
+  }
+  .interactive-block {
+    display: flex;
+    gap: 30px;
+
+    :global(.btn-firm) {
+      flex: 1 1 auto;
+    }
   }
 </style>

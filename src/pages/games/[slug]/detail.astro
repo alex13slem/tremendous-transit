@@ -1,0 +1,47 @@
+---
+import { parse } from 'marked';
+import GamesSlider from '../../../components/GamesSlider.svelte';
+import BasicLayout from '../../../layouts/BasicLayout.astro';
+import SEO from '../../../layouts/SEO.astro';
+import SectCommon from '../../../sections/SectCommon.astro';
+import { bestGames, gamesWithRelations } from '../../../store/games';
+import LinkToDetailPage from '../../../components/ui/LinkToDetailPage.svelte';
+
+export async function getStaticPaths() {
+  const paths = gamesWithRelations.map((game) => ({
+    params: {
+      slug: game.slug,
+    },
+    props: { game },
+  }));
+  return paths;
+}
+
+const { game } = Astro.props;
+const { title, description, body } = game;
+const seoImg = new URL(game.thumbnail, Astro.site);
+---
+
+<BasicLayout>
+  <SEO slot="seo" {title} {description} imageUrls={{ fb: seoImg.toString() }} />
+
+  <section>
+    <div class="container">
+      <LinkToDetailPage client:load toBack text="Назад" />
+      <div class="prose" set:html={parse(body)} />
+    </div>
+  </section>
+
+  <SectCommon title="Наши игры">
+    <GamesSlider games={bestGames} client:load />
+  </SectCommon>
+</BasicLayout>
+
+<style lang="scss">
+  section {
+    padding-block: 30px !important;
+  }
+  .prose {
+    margin-top: 30px;
+  }
+</style>

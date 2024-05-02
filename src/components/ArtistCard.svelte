@@ -18,19 +18,21 @@
     --clip: polygon(20px 0, 100% 0%, calc(100% - 20px) 100%, 0% 100%);
     position: relative;
     z-index: 0;
-    filter: grayscale(80%);
 
-    transition: var(--trans-default);
-    transition-property: transform, filter;
-    &:hover {
-      transform: scale(107%);
-      filter: grayscale(0%) drop-shadow(var(--box-shadow-active));
+    @media (min-width: 1024px) {
+      filter: grayscale(80%);
+      transition: var(--trans-default);
+      transition-property: transform, filter;
+      &:hover {
+        transform: scale(107%);
+        filter: grayscale(0%) drop-shadow(var(--box-shadow-active));
 
-      &::after {
-        opacity: 1;
-      }
-      &::before {
-        opacity: 0;
+        &::after {
+          opacity: 1;
+        }
+        &::before {
+          opacity: 0;
+        }
       }
     }
 
