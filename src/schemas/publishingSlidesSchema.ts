@@ -14,6 +14,7 @@ export const publishingSlidesSchema = z.object({
 
 export const publishingSlidesSchemaSelect = publishingSlidesSchema.extend({
   article: serviceArticlesSchema.extend({ slug: z.string() }).optional(),
+  slug: z.string(),
 });
 
 export type PublishingSlide = z.infer<typeof publishingSlidesSchema>;

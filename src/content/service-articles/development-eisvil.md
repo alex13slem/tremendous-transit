@@ -6,7 +6,7 @@ date: 2024-04-12T13:43:00
 description: |-
   import type { CmsCollection } from "decap-cms-core";
 
-  export const 
+  export const  qwe
 
   Collection: CmsCollection =
 thumbnail:
@@ -18,6 +18,6 @@ gallery: []
 
 import type { CmsCollection } from "decap-cms-core";
 
-export const
+export cons
 
 Collection: CmsCollection =

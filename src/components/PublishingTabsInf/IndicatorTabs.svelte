@@ -1,16 +1,18 @@
 <script lang="ts">
   import { cn } from '../../utils/helpers';
   import Icon from '@iconify/svelte';
-  import { publishingSlides } from '../../store/publishing-slides';
   import { activeIdx } from '.';
+  import { publishingSlides } from '../../store/publishing-slides';
+
+  let currIdx: number;
+  activeIdx.subscribe((idx) => {
+    currIdx = idx;
+  });
 </script>
 
 <nav class="nav">
   {#each $publishingSlides as { slug }, idx}
-    <button
-      class={cn('link', idx === $activeIdx && 'active')}
-      on:click={() => ($activeIdx = idx)}
-    >
+    <button class={cn('link', idx === currIdx && 'active')}>
       {#if slug === 'computer'}
         <Icon icon="bx:desktop" width="36" height="36" />
       {/if}
@@ -26,7 +28,6 @@
 
 <style lang="scss">
   .nav {
-    position: relative;
     grid-area: indicator-tabs;
     display: flex;
   }
@@ -35,7 +36,7 @@
     min-height: 40px;
     padding: 0;
     padding-bottom: 13px;
-    cursor: pointer;
+    cursor: default;
 
     display: flex;
     justify-content: center;

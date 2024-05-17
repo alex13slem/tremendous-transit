@@ -1,58 +1,82 @@
 <script lang="ts">
-  import { shiftIdx, infSlides, moveSlide, wheel } from '.';
-  import { swipe } from '../../utils/svelte/swipe';
   import Card from './Card.svelte';
-
-  let clientHeight: number;
+  import { publishingSlides } from '../../store/publishing-slides';
+  import { activeIdx } from '.';
+  import { swipe } from '../../utils/svelte/swipe';
 </script>
 
-<div
-  class="cards"
-  style="--shift-idx: {$shiftIdx}; height: {clientHeight +
-    (clientHeight / 100) * 7}px"
-  use:wheel={{ speed: 700 }}
-  use:swipe={{
-    onSwipeLeft: () => {
-      moveSlide('left');
-    },
-    onSwipeRight: () => {
-      moveSlide('right');
-    },
-  }}
->
-  {#each $infSlides as data, idx (data.infIdx)}
-    <Card {data} {idx} bind:clientHeight />
-  {/each}
+<div class="root">
+  <div
+    class="slider"
+    style="--activeIdx: {$activeIdx}"
+    use:swipe={{
+      onSwipeLeft() {
+        $activeIdx = Math.min($publishingSlides.length - 1, $activeIdx + 1);
+      },
+      onSwipeRight() {
+        $activeIdx = Math.max(0, $activeIdx - 1);
+      },
+    }}
+  >
+    {#each $publishingSlides as data, idx (data.slug)}
+      <Card {data} {idx} />
+    {/each}
+  </div>
 </div>
 
 <style lang="scss">
-  .cards {
-    --gap: clamp(1.75rem, -2.846rem + 7.18vw, 3.438rem);
+  .root {
     grid-area: cards;
     position: relative;
-    container: inline-size;
-    overflow-x: clip;
+  }
+  .slider {
+    --gap: clamp(1.75rem, -2.846rem + 7.18vw, 3.438rem);
+    position: relative;
+
+    display: flex;
+    gap: 50px;
 
     width: 100%;
+  }
+  @media (max-width: 1289.98px) {
+    .root {
+      height: 420px;
+      overflow: clip;
+      overflow-clip-margin: 20px;
 
-    &::after,
-    &::before {
-      content: '';
-      pointer-events: none;
+      &::after,
+      &::before {
+        content: '';
+        pointer-events: none;
 
-      background-color: transparent;
-      padding: 0;
-      border: none;
+        background-color: transparent;
+        padding: 0;
+        border: none;
 
-      z-index: 3;
-      position: absolute;
-      inset: 0;
-      width: calc(33.3% - 20px);
-      background: linear-gradient(90deg, rgb(var(--c-bg)), transparent);
+        z-index: 3;
+        position: absolute;
+        inset: 0 -20px;
+        width: 20px;
+        background: linear-gradient(90deg, rgb(var(--c-bg)), transparent);
+      }
+      &::after {
+        left: auto;
+        transform: rotate(180deg);
+      }
     }
-    &::after {
-      left: auto;
-      transform: rotate(180deg);
+
+    .slider {
+      position: absolute;
+      width: 250%;
+
+      translate: calc(var(--activeIdx) * -1 * 30%);
+      transition: var(--trans-slow);
+      transition-property: translate;
+    }
+  }
+  @media (max-width: 767.98px) {
+    .root {
+      height: 350px;
     }
   }
 </style>

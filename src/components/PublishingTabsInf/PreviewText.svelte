@@ -1,16 +1,26 @@
 <script lang="ts">
   import { parse } from 'marked';
   import ModalTrigger from '../modals/ModalTrigger.svelte';
-  import { publishingSlides } from '../../store/publishing-slides';
   import { activeIdx } from '.';
+  import { publishingSlides } from '../../store/publishing-slides';
+
+  let currIdx: number;
+  activeIdx.subscribe((idx) => {
+    currIdx = idx;
+  });
 </script>
 
 {#each $publishingSlides as { slug, article }, idx}
-  {#if idx === $activeIdx}
+  {#if idx === currIdx}
     <div class="preview">
       {#if article}
         <div class="body prose">
-          {@html parse(article.description)}
+          <!-- {@html parse(article.description)} -->
+          <p>
+            Наша цель – предоставить разработчикам творческую свободу и помогать
+            в решении конкретных и индивидуальных для каждой команды задач. Мы
+            отвечаем за полный цикл одготовки и продвижения игры.
+          </p>
         </div>
       {/if}
       <div class="buttons">
@@ -24,8 +34,6 @@
 
 <style lang="scss">
   .preview {
-    position: relative;
-
     grid-area: preview-text;
     display: flex;
     flex-direction: column;
@@ -35,8 +43,7 @@
   .body {
     --lines: 6;
     flex: 1 1 auto;
-    line-height: 1.4em;
-    height: calc(var(--lines) * 1.4em);
+    // height: calc(var(--lines) * 1.4em);
     overflow: hidden;
   }
   @media (max-width: 767.98px) {

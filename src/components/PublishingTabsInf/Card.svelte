@@ -1,72 +1,100 @@
 <script lang="ts">
-  import { activeIdx } from '.';
-  import type { PublishingSlideSelect } from '../../schemas/publishingSlidesSchema';
+  import { fly } from 'svelte/transition';
 
-  export let data: PublishingSlideSelect;
+  import { onMount } from 'svelte';
+  import { sineInOut } from 'svelte/easing';
+  import { activeIdx, initLeft, moveSlide, type InfPublishingSlide } from '.';
+
+  export let data: InfPublishingSlide;
   export let idx: number;
+  export let clientHeight: number;
 
-  const { image, text, title } = data;
+  const { article, order, infIdx, image, text, title } = data;
+
+  let load = false;
+  onMount(() => (load = true));
+
+  function handleClick() {
+    if (idx === 0) moveSlide('right');
+
+    if (idx === 1) {
+      window.location.href = `${article?.category}/${article?.slug}`;
+    }
+
+    if (idx === 2) moveSlide('left');
+  }
 </script>
 
-<button class:isActive={idx === $activeIdx} on:click={() => ($activeIdx = idx)}>
-  <div class="image"><img src={image.src} alt={image.alt} /></div>
-  <div class="body">
-    <h3>{title}</h3>
-    <p>{text}</p>
-  </div>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="260"
-    height="260"
-    viewBox="0 0 280 280"
-    fill="none"
-    class="border"
+{#if load}
+  <button
+    transition:fly={{
+      duration: 700,
+      x: $initLeft ? '-100%' : '100%',
+      easing: sineInOut,
+    }}
+    class:active={order === $activeIdx + 1}
+    style="--idx: {infIdx}; "
+    on:click={handleClick}
+    bind:clientHeight
   >
-    <path
-      d="M0.5 67.2071L67.2071 0.5H279.5V279.5H0.5V67.2071Z"
-      stroke="url(#paint0_linear_1600_783)"
-      stroke-opacity="0.45"
-    />
-    <defs>
-      <linearGradient
-        id="paint0_linear_1600_783"
-        x1="0"
-        y1="0"
-        x2="183"
-        y2="280"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#FFBE82" />
-        <stop offset="0.494454" stop-color="#FFBE82" stop-opacity="0" />
-      </linearGradient>
-    </defs>
-  </svg>
-</button>
+    <div class="image"><img src={image.src} alt={image.alt} /></div>
+    <div class="body">
+      <h3>{title}</h3>
+      <p>{text}</p>
+    </div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="260"
+      height="260"
+      viewBox="0 0 280 280"
+      fill="none"
+      class="border"
+    >
+      <path
+        d="M0.5 67.2071L67.2071 0.5H279.5V279.5H0.5V67.2071Z"
+        stroke="url(#paint0_linear_1600_783)"
+        stroke-opacity="0.45"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_1600_783"
+          x1="0"
+          y1="0"
+          x2="183"
+          y2="280"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#FFBE82" />
+          <stop offset="0.494454" stop-color="#FFBE82" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </button>
+{/if}
 
 <style lang="scss">
   button {
+    --fact-width: clamp(19.063rem, 15.658rem + 5.32vw, 20.313rem);
+    --width: calc(var(--fact-width) - calc(var(--gap) * 1.34 / 3));
     aspect-ratio: 4/5;
-    flex: 1 1 0;
+    position: absolute;
+    width: var(--width);
+    left: calc(
+      calc(var(--width) + var(--gap)) * calc(var(--idx) + var(--shift-idx)) +
+        48%
+    );
+    translate: -160% 0;
 
     transform-origin: top;
     transition: var(--trans-slow);
-    transition-property: transform, filter, opacity;
+    transition-property: transform, filter, left, opacity;
 
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    position: relative;
-    cursor: pointer;
 
     @media (max-width: 767.98px) {
       --fact-width: clamp(13.563rem, 9.567rem + 17.05vw, 17.75rem);
-    }
-
-    &:first-child {
-      transform-origin: top left;
-    }
-    &:last-child {
-      transform-origin: top right;
     }
 
     &::after {
@@ -112,7 +140,7 @@
         filter: brightness(75%);
       }
     }
-    &.isActive {
+    &.active {
       z-index: 2;
       transform: scale(108%);
 
@@ -208,6 +236,7 @@
     text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
   }
 
@@ -216,6 +245,7 @@
     font-size: clamp(0.5rem, 0.409rem + 0.39vw, 0.75rem);
     line-height: 1;
     white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
   }
 </style>
