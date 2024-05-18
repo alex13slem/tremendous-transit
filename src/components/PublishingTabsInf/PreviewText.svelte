@@ -15,12 +15,12 @@
     <div class="preview">
       {#if article}
         <div class="body prose">
-          <!-- {@html parse(article.description)} -->
-          <p>
+          {@html parse(article.description)}
+          <!-- <p>
             Наша цель – предоставить разработчикам творческую свободу и помогать
             в решении конкретных и индивидуальных для каждой команды задач. Мы
             отвечаем за полный цикл одготовки и продвижения игры.
-          </p>
+          </p> -->
         </div>
       {/if}
       <div class="buttons">
