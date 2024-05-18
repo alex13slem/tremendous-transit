@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let genres: string[];
+  import type { SelectOption } from '../ui/Select';
+
+  export let genres: SelectOption[];
   export let value: string | null = null;
 </script>
 
@@ -8,10 +10,10 @@
     <swiper-slide>
       <button
         on:click={() => {
-          if (value === genre) return (value = null);
-          value = genre;
+          if (value === genre.value) return (value = null);
+          value = genre.value;
         }}
-        class:active={value === genre}>{genre}</button
+        class:active={value === genre.value}>{genre.value}</button
       >
     </swiper-slide>
   {/each}
@@ -22,7 +24,7 @@
     width: fit-content;
   }
   button {
-    font-size: 0.75em;
+    font-size: 12px;
     line-height: 2;
     padding-inline: 1em;
     background-color: rgb(var(--c-card));

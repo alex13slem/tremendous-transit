@@ -2,7 +2,6 @@ import { defineCollection } from 'astro:content';
 import { artistsSchema } from '../schemas/artistsSchema';
 import { citiesSchema } from '../schemas/citiesSchema';
 import { companyInfoSchema } from '../schemas/companyInfo';
-import { crowdfundingPlatformsSchema } from '../schemas/crowdfundingPlatformsSchema';
 import { developersSchema } from '../schemas/gameDevelopersSchema';
 import { gameFavoritesSchema } from '../schemas/gameFavoritesSchema';
 import { gameGenresSchema } from '../schemas/gameGenresSchema';
@@ -115,11 +114,6 @@ const gameStagesCollection = defineCollection({
   schema: gameStagesSchema,
 });
 
-const crowdfundingPlatformsCollection = defineCollection({
-  type: 'data',
-  schema: crowdfundingPlatformsSchema,
-});
-
 export const collections = {
   artists: artistsCollection,
   professions: professionsCollection,
@@ -130,7 +124,6 @@ export const collections = {
   'game-favorites': gameFavoritesCollection,
   'game-marketplaces': gameMarketplacesCollection,
   'game-stages': gameStagesCollection,
-  'crowdfunding-platforms': crowdfundingPlatformsCollection,
   languages: languagesCollection,
   developers: developersCollection,
   publishers: publishersCollection,

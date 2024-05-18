@@ -18,17 +18,13 @@ import SectBloggerForm from '../sections/SectBloggerForm.astro';
 
 <style lang="scss">
   main {
-    --offset: 40px;
     :global(section) {
       overflow: hidden;
-      padding-block: var(--offset);
+      padding-block: 50px;
     }
     :global(section):first-of-type {
-      padding-top: calc(var(--offset) * 2);
-      padding-bottom: var(--offset);
-    }
-    @media (min-width: 1024px) {
-      --offset: 50px;
+      padding-top: 100px;
+      padding-bottom: 50px;
     }
   }
 </style>

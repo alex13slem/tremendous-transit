@@ -7,12 +7,6 @@ const gamesPlatformsSchema = z.object({
   appId: z.string().optional(),
 });
 
-const gameTranslationsSchema = z.object({
-  lang: z.string(),
-  interface: z.boolean(),
-  voice: z.boolean(),
-});
-
 const gamesPlatformsSchemaSelect =
   gamesPlatformsSchema.merge(marketplacesSchema);
 
@@ -28,8 +22,14 @@ export const gamesSchema = z.object({
   publisher: z.string(),
   releaseDate: z.date(),
   team: z.string().array().optional(),
-  translations: gameTranslationsSchema.array(),
-  platforms: gamesPlatformsSchema.array(),
+  translations: z
+    .object({
+      lang: z.string(),
+      interface: z.boolean(),
+      voice: z.boolean(),
+    })
+    .array(),
+  platforms: gamesPlatformsSchema.array().nullish(),
   status: z.string().optional(),
   favorites: z.string().array().optional(),
   thumbnail: z.string(),
@@ -43,10 +43,9 @@ export const gamesSchema = z.object({
 });
 
 export const gamesSchemaSelect = gamesSchema.extend({
-  platforms: gamesPlatformsSchemaSelect.array(),
+  platforms: gamesPlatformsSchemaSelect.array().nullish(),
 });
 
 export type Game = z.infer<typeof gamesSchema>;
 export type GameSelect = z.infer<typeof gamesSchemaSelect>;
 export type GamePlatform = z.infer<typeof gamesPlatformsSchemaSelect>;
-export type GameTranslation = z.infer<typeof gameTranslationsSchema>;

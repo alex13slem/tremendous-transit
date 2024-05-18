@@ -1,7 +1,6 @@
 import { artistsCollection } from './artists';
 import { citiesCollection } from './cities';
 import { companyInfoCollection } from './companyInfo';
-import { crowdfundingPlatformsCollection } from './crowdfundingPlatforms';
 import { developersCollection } from './developers';
 import { genresCollection } from './gameGenres';
 import { gameMarketplacesCollection } from './gameMarketplaces';
@@ -20,7 +19,6 @@ import { socialsCollection } from './socials';
 import { vacanciesCollection } from './vacancies';
 
 export const decapCollections = [
-  crowdfundingPlatformsCollection,
   gameStagesCollection,
   artistsCollection,
   professionsCollection,

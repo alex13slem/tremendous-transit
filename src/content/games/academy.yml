@@ -26,11 +26,11 @@ translations:
     lang: ru
 platforms:
   - marketplace: apple
-    href: https://apps.apple.com/us/app/township/id638689075?l=ru
+    href: https://apps.apple.com/us/app/township/id638689075
     appId: "638689075"
   - marketplace: google
-    href: https://play.google.com/store/apps/details?id=com.block.juggle&hl=ru&gl=US
-    appId: com.block.juggle
+    href: https://play.google.com/store/apps/details?id=com.gamebrain.hexasort&hl=ru&gl=US
+    appId: com.gamebrain.hexasort
 status: dev
 favorites:
   - top

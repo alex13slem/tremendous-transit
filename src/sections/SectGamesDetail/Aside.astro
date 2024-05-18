@@ -1,13 +1,14 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
 import PlatformsSlider from '../../components/PlatformsSlider.svelte';
+import SVGCheck from '../../components/svg/SVGCheck.svelte';
 import ShareLinksBlock from '../../components/ShareLinksBlock.svelte';
 import type { GameSelect } from '../../schemas/gamesSchema';
 import GameActionButton from '../../components/GameActionButton.svelte';
+import { getLanguageTitle } from '../../store/languages';
 import { getPublisherTitle } from '../../store/publishers';
 import { getDeveloperTitle } from '../../store/developers';
 import { getGenreTitle } from '../../store/gameGenres';
-import LangsBlock from './LangsBlock.astro';
 
 interface Props extends HTMLAttributes<'aside'> {
   game: GameSelect;
@@ -76,7 +77,32 @@ const dateString = new Date(releaseDate).toLocaleDateString('ru-RU');
       <div class="td-right"><strong>{dateString}</strong></div>
     </div>
 
-    <LangsBlock {translations} />
+    <div
+      class:list={['table-langs', translations.length <= 3 ? 'open' : '']}
+      style=`--length: ${translations.length}`
+    >
+      <div><b>Языки:</b></div>
+      <div class="ta-c"><b>Озвучка</b></div>
+      <div class="ta-c"><b>Текст</b></div>
+
+      {
+        translations.map(({ lang, voice, interface: text }) => (
+          <>
+            <div class="td-lang">{getLanguageTitle(lang)}</div>
+            <div class="td-check">{voice && <SVGCheck />}</div>
+            <div class="td-check">{text && <SVGCheck />}</div>
+          </>
+        ))
+      }
+    </div>
+    {
+      translations.length > 3 && (
+        <button class="toggle-all-langs">
+          <span>Посмотреть</span> все поддерживаемые языки (
+          {translations.length})
+        </button>
+      )
+    }
 
     <div class="interactive-block">
       <GameActionButton {game} client:load />
@@ -125,10 +151,57 @@ const dateString = new Date(releaseDate).toLocaleDateString('ru-RU');
     }
   }
 
+  .table-langs {
+    --lh: 2.5em;
+    --min-height: calc(calc(3 + 1) * calc(var(--lh) + 1px));
+    --max-height: calc(calc(var(--length) + 1) * var(--lh));
+
+    height: var(--min-height);
+    overflow: hidden;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(120px, auto) 1fr 1fr;
+    grid-auto-rows: var(--lh);
+
+    font-size: 14px;
+
+    transition: var(--trans-slow);
+    transition-property: height;
+
+    .td-lang {
+      grid-column: 1;
+    }
+    .td-check {
+      place-items: center;
+      color: rgb(var(--c-accent));
+    }
+    & > * {
+      display: grid;
+      align-items: center;
+      border-bottom: var(--border-card);
+      width: 100%;
+      height: 100%;
+    }
+    &.open {
+      height: var(--max-height);
+    }
+  }
   .checkbox {
     color: rgb(var(--c-accent));
     svg {
       margin: 0 auto;
+    }
+  }
+
+  .toggle-all-langs {
+    margin-top: -20px;
+    text-align: left;
+    font-size: 12px;
+    transition: var(--trans-default);
+    transition-property: color;
+    &:hover {
+      color: rgb(var(--c-accent));
     }
   }
 
