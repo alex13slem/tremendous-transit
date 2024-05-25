@@ -7,8 +7,13 @@ import clouds_layout_3 from '../img/hero-page-scene/clouds_layout_3.png';
 import clouds_layout_4 from '../img/hero-page-scene/clouds_layout_4.png';
 import hero_layout_5 from '../img/hero-page-scene/hero_layout_5.png';
 import bushes_layout_6 from '../img/hero-page-scene/bushes_layout_6.png';
+import HeroPageInteractive from '../components/HeroPageInteractive.svelte';
 
-const { lang } = Astro.params;
+interface Props {
+  wInteractive?: boolean;
+}
+
+const { wInteractive } = Astro.props;
 ---
 
 <script>
@@ -73,20 +78,8 @@ const { lang } = Astro.params;
       <div class="logo">
         <Image src={textSvg} alt="EISVIL" />
       </div>
-      <h1>
-        {
-          lang === 'en' ? (
-            <Fragment>
-              <span hidden>Eisvil -</span> a place where an idea becomes a game
-            </Fragment>
-          ) : (
-            <Fragment>
-              <span hidden>Eisvil -</span> место, где идея становится игрой
-            </Fragment>
-          )
-        }
-      </h1>
-      <slot />
+      <h1><span hidden>Eisvil -</span> место, где идея становится игрой</h1>
+      {wInteractive && <HeroPageInteractive client:visible />}
     </div>
   </div>
 </div>

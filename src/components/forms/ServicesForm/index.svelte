@@ -1,8 +1,6 @@
 <script lang="ts">
   import localforage from 'localforage';
   import { servicesFormSchema } from '../../../schemas/forms';
-  import { servFormSubmitted, servTargetSlug } from '../../../store/forms';
-  import { servModalIsOpen } from '../../../store/modals';
   import { toasterHub } from '../../../store/toasterHub';
   import { formatErrors } from '../../../utils/helpers';
   import { sendForm } from '../../../utils/sendForm';
@@ -15,6 +13,12 @@
   import AccessBlock from '../../AccessBlock.svelte';
   import Fieldset from '../../ui/Fieldset.svelte';
   import Form from '../../ui/Form.svelte';
+  import { onMount } from 'svelte';
+  import { isOpen as modalIsOpen } from '../../modals/DevServModal';
+  import { isSubmitted } from '.';
+
+  export let targetSlug: string | null = null;
+
   let formValues = { ...formValuesInit };
   let submitting = false;
   let sendingAttempt = false;
@@ -47,15 +51,18 @@
       sendingAttempt = false;
       formValues = { ...formValuesInit };
       await localforage.setItem('servFormSubmitted', 'true').then(() => {
-        servFormSubmitted.set(true);
-        servModalIsOpen.set(false);
+        $isSubmitted = true;
+        $modalIsOpen = false;
       });
     }
   };
 
-  servTargetSlug.subscribe((slug) => {
-    const servTarget = servicesOptions.find((option) => option.slug === slug);
-    formValues.selectedService = servTarget?.value || null;
+  onMount(() => {
+    if (targetSlug) {
+      formValues.selectedService =
+        servicesOptions.find((option) => option.slug === targetSlug)?.value ||
+        null;
+    }
   });
 </script>
 

@@ -1,16 +1,11 @@
 ---
 import SectHero from '../sections/LandingHero.astro';
 import SectCarrier from '../sections/SectCarrier.astro';
-import ServicesModalForm from '../components/modals/ServicesModalForm.svelte';
-import PublishingModalForm from '../components/modals/PublishingModalForm.svelte';
-import ModalTrigger from '../components/modals/ModalTrigger.svelte';
 import BasicLayout from '../layouts/BasicLayout.astro';
 import GamesSlider from '../components/GamesSlider.svelte';
 import { ServicesTabs } from '../components/ServicesTabs';
 import SectCommon from '../sections/SectCommon.astro';
 import { PublishingTabs } from '../components/PublishingTabsInf';
-// import { publishingLinks } from "@/store/publishing";
-// import { servicesLinks } from "@/store/services";
 import SEO from '../layouts/SEO.astro';
 import { navLinks } from '../store/nav-links';
 import { bestGames } from '../store/games';
@@ -25,11 +20,7 @@ const toDetailPublishing = navLinks.find(
 
 <BasicLayout>
   <SEO slot="seo" title="Главная" description={''} imageUrls={{ fb: '' }} />
-  <SectHero>
-    <ModalTrigger client:load type={'development'} flexPosition="center">
-      Создать новый мир
-    </ModalTrigger>
-  </SectHero>
+  <SectHero wInteractive />
 
   <SectCommon title="Наши игры" linkToDetail="/games">
     <GamesSlider client:load games={bestGames} />
@@ -45,6 +36,3 @@ const toDetailPublishing = navLinks.find(
 
   <SectCarrier linkToDetail="/career" />
 </BasicLayout>
-
-<ServicesModalForm client:load />
-<PublishingModalForm client:load />

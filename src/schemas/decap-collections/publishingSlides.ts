@@ -23,7 +23,7 @@ export const publishingSlidesCollection: CmsCollection = {
       label: 'Статья',
       name: 'article',
       widget: 'relation',
-      collection: 'service-articles',
+      collection: 'articles',
       search_fields: ['title'],
       value_field: '{{slug}}',
       display_fields: ['category', 'title'],

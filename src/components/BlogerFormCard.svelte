@@ -1,19 +1,16 @@
 <script>
   import BtnFirm from './ui/BtnFirm.svelte';
-  import BlogersForm from './forms/BlogersForm.svelte';
+  import { BlogersForm } from './forms/BlogersForm';
   import bgPreview from '../img/bg-form-bloger.jpg';
-  import { blogerFormSubmitted } from '../store/forms';
+  import { isSubmitted } from './forms/BlogersForm';
 
   let active = false;
-  let submitted = false;
-
-  blogerFormSubmitted.subscribe((val) => (submitted = val));
 </script>
 
 <div
   class="form-card"
   class:active
-  class:submitted
+  class:submitted={$isSubmitted}
   on:blur|capture={() => (active = false)}
   on:focus|capture={() => (active = true)}
   style="background-image: url({bgPreview.src});"
@@ -25,8 +22,8 @@
   </div>
   <div class="body">
     <div class="preview">
-      <BtnFirm on:click={() => blogerFormSubmitted.set(false)}>
-        {#if !submitted}
+      <BtnFirm on:click={() => ($isSubmitted = false)}>
+        {#if !$isSubmitted}
           Заполнить форму
         {:else}
           Отправить ещё раз

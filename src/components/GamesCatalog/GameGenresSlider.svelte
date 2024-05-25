@@ -5,7 +5,7 @@
   export let value: string | null = null;
 </script>
 
-<swiper-container slides-per-view="auto" space-between="10">
+<swiper-container slides-per-view="auto">
   {#each genres as genre}
     <swiper-slide>
       <button
@@ -22,6 +22,7 @@
 <style lang="scss">
   swiper-slide {
     width: fit-content;
+    margin-right: 10px;
   }
   button {
     font-size: 12px;

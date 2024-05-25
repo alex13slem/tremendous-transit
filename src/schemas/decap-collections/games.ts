@@ -172,6 +172,37 @@ export const gamesCollection: CmsCollection = {
       ],
     },
     {
+      // Этапы разработки
+      label: 'Этапы разработки',
+      name: 'devStages',
+      widget: 'list',
+      fields: [
+        {
+          label: 'Название этапа',
+          name: 'title',
+          widget: 'string',
+          hint: 'Только для админки',
+        },
+        {
+          label: 'Этап',
+          name: 'stageSlug',
+          widget: 'relation',
+          collection: 'game-dev-stages',
+          multiple: false,
+          search_fields: ['title'],
+          value_field: 'slug',
+          display_fields: ['gameSlug', 'title'],
+          // @ts-ignore
+          // filters: [{ field: 'gameSlug', values: ['{{slug}}'] }],
+        },
+        {
+          label: 'Номер',
+          name: 'num',
+          widget: 'number',
+        },
+      ],
+    },
+    {
       // Статус
       label: 'Статус',
       name: 'status',
@@ -198,6 +229,13 @@ export const gamesCollection: CmsCollection = {
       label: 'Картинка для описания',
       hint: '(Размер 1024 х 500) - строгие требования',
       name: 'thumbnail',
+      widget: 'image',
+    },
+    {
+      // Иконка
+      label: 'Иконка',
+      hint: '(Размер 500 х 500) - строгие требования',
+      name: 'icon',
       widget: 'image',
     },
     {

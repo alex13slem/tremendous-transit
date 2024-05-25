@@ -3,6 +3,16 @@ import type { HTMLAttributes } from 'astro/types';
 import Aside from './Aside.astro';
 import Body from './Body.svelte';
 import type { GameSelect } from '../../schemas/gamesSchema';
+import { getPublisherTitle } from '../../store/publishers';
+import { getDeveloperTitle } from '../../store/developers';
+import { getGenreTitle } from '../../store/gameGenres';
+import PreviewSlider from '../../components/ArticleSlider/PreviewSlider.svelte';
+import PlatformsSlider from '../../components/PlatformsSlider.svelte';
+import LinkToDetailPage from '../../components/ui/LinkToDetailPage.svelte';
+import { parse } from 'marked';
+import TranslationsTable from '../../components/TranslationsTable/index.astro';
+import GameActionButton from '../../components/GameActionButton.svelte';
+import ShareLinksBlock from '../../components/ShareLinksBlock.svelte';
 
 interface Props extends HTMLAttributes<'section'> {
   game: GameSelect;
@@ -10,27 +20,99 @@ interface Props extends HTMLAttributes<'section'> {
 
 const { class: className, game, ...props } = Astro.props;
 
-const { title } = game;
+const {
+  title,
+  icon,
+  publisher,
+  developer,
+  genre,
+  gallery,
+  platforms,
+  thumbnail,
+} = game;
 ---
 
 <section class:list={['games-detail', className]} {...props}>
-  <div class="container">
+  <div class="container desktop">
     <h1 class="sect-title">{title}</h1>
 
-    <Body {game} client:load />
-
     <Aside {game} />
+
+    <Body {game} client:load />
   </div>
+  <div class="container mobile">
+    <div class="header">
+      <div class="icon">
+        <img src={icon} alt={title} />
+      </div>
+      <h1>{title}</h1>
+      <div class="info">
+        <p class="publisher">
+          <span>Издатель:</span>
+          {getPublisherTitle(publisher)}
+        </p>
+        <hr />
+        <p class="developer">
+          <span>Разработчик:</span>
+          {getDeveloperTitle(developer)}
+        </p>
+      </div>
+      <div class="genres">
+        {genre.map((g) => <span>{getGenreTitle(g)}</span>)}
+      </div>
+    </div>
+    <PreviewSlider client:load data={gallery} />
+    {
+      platforms && (
+        <PlatformsSlider client:load {platforms} isScrollable={false} />
+      )
+    }
+    <div>
+      <h2 class="sect-title">
+        Описание <LinkToDetailPage
+          to={`/games/${game.slug}/detail`}
+          client:load
+        />
+      </h2>
+      <div class="prose">
+        <Fragment set:html={parse(game.description)} />
+      </div>
+    </div>
+    <div class="footer">
+      <div class="translations-table">
+        <TranslationsTable translations={game.translations} />
+      </div>
+      <div class="interactive-block">
+        <GameActionButton {game} client:load />
+
+        <ShareLinksBlock client:load imgSrc={thumbnail} {title} />
+      </div>
+    </div>
+  </div>
+
+  <style lang="scss">
+    .container.desktop {
+      display: grid;
+      grid-template-columns: 1fr 410px;
+      column-gap: 30px;
+      grid-template-areas: 'title title' 'body aside';
+      @media (max-width: 1289.98px) {
+        display: none;
+      }
+      h1 {
+        grid-area: title;
+      }
+    }
+
+    .container.mobile {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      @media (min-width: 1280px) {
+        display: none;
+      }
+    }
+
+    @import './mobile.scss';
+  </style>
 </section>
-
-<style lang="scss">
-  .container {
-    display: grid;
-    grid-template-columns: 1fr 410px;
-    column-gap: 30px;
-  }
-
-  h1 {
-    grid-column: span 2;
-  }
-</style>

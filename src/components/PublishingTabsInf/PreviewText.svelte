@@ -1,8 +1,12 @@
 <script lang="ts">
   import { parse } from 'marked';
-  import ModalTrigger from '../modals/ModalTrigger.svelte';
   import { activeIdx } from '.';
   import { publishingSlides } from '../../store/publishing-slides';
+  import {
+    PublishingModal,
+    isOpen as modalIsOpen,
+  } from '../modals/PublishingModal';
+  import BtnFirm from '../ui/BtnFirm.svelte';
 
   let currIdx: number;
   activeIdx.subscribe((idx) => {
@@ -10,10 +14,10 @@
   });
 </script>
 
-{#each $publishingSlides as { slug, article }, idx}
+{#each $publishingSlides as { slug, article }, idx (slug)}
   {#if idx === currIdx}
     <div class="preview">
-      {#if article}
+      {#if article.description}
         <div class="body prose">
           {@html parse(article.description)}
           <!-- <p>
@@ -24,11 +28,10 @@
         </div>
       {/if}
       <div class="buttons">
-        <ModalTrigger type="publishing" slug={article.slug}
-          >Подать заявку</ModalTrigger
-        >
+        <BtnFirm on:click={() => ($modalIsOpen = true)}>Подать заявку</BtnFirm>
       </div>
     </div>
+    <PublishingModal targetSlug={article.slug} />
   {/if}
 {/each}
 

@@ -1,8 +1,6 @@
 <script lang="ts">
   import localforage from 'localforage';
   import { publishingFormSchema } from '../../../schemas/forms';
-  import { pubFormSubmitted, pubTargetSlug } from '../../../store/forms';
-  import { pubModalIsOpen } from '../../../store/modals';
   import { toasterHub } from '../../../store/toasterHub';
   import { formatErrors } from '../../../utils/helpers';
   import { sendForm } from '../../../utils/sendForm';
@@ -15,6 +13,13 @@
   import AccessBlock from '../../AccessBlock.svelte';
   import Fieldset from '../../ui/Fieldset.svelte';
   import Form from '../../ui/Form.svelte';
+  import { onMount } from 'svelte';
+  import { isSubmitted } from '.';
+
+  import { isOpen as modalIsOpen } from '../../modals/PublishingModal';
+
+  export let targetSlug: string | null = null;
+
   let formValues = { ...formValuesInit };
   let submitting = false;
   let sendingAttempt = false;
@@ -48,15 +53,18 @@
       sendingAttempt = false;
       formValues = { ...formValuesInit };
       await localforage.setItem('pubFormSubmitted', 'true').then(() => {
-        pubFormSubmitted.set(true);
-        pubModalIsOpen.set(false);
+        $isSubmitted = true;
+        $modalIsOpen = false;
       });
     }
   };
 
-  pubTargetSlug.subscribe((slug) => {
-    const pubTarget = publishingOptions.find((option) => option.slug === slug);
-    formValues.selectedDir = pubTarget?.value || null;
+  onMount(() => {
+    if (targetSlug) {
+      formValues.selectedDir =
+        publishingOptions.find((option) => option.slug === targetSlug)?.value ||
+        null;
+    }
   });
 </script>
 

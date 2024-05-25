@@ -13,9 +13,7 @@ const vacancies = await getVacancies();
 
 <BasicLayout>
   <SEO slot="seo" title="Карьера" {description} imageUrls={{ fb: '' }} />
-  <LandingHero>
-    <!-- <ModalTrigger type={"services"} client:load>Создать новый мир</ModalTrigger> -->
-  </LandingHero>
+  <LandingHero />
   <section class="banner">
     <div class="container">
       <h1>
@@ -43,8 +41,6 @@ const vacancies = await getVacancies();
     </div>
   </section>
 </BasicLayout>
-
-<!-- <ServicesModalForm client:load /> -->
 
 <style lang="scss">
   .banner {

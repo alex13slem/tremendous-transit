@@ -1,0 +1,91 @@
+---
+import { parse } from 'marked';
+import DetailSlider from '../../components/ArticleSlider/DetailSlider.svelte';
+import PreviewSlider from '../../components/ArticleSlider/PreviewSlider.svelte';
+import AsideNav from '../../components/AsideNav.astro';
+import AsideLayout from '../../layouts/AsideLayout.astro';
+import SEO from '../../layouts/SEO.astro';
+import {
+  aboutUsArticles,
+  getAboutUsArticles,
+} from '../../store/about-us-articles';
+import BtnFirm from '../../components/ui/BtnFirm.svelte';
+import { aboutUsNavLinks } from '../../store/nav-links';
+
+const article = (await getAboutUsArticles()).find(
+  ({ slug }) => slug === 'about-us'
+)!;
+const { title, description, gallery, thumbnail, buttons } = article.data;
+---
+
+<AsideLayout>
+  <SEO
+    slot="seo"
+    {title}
+    description={description || ''}
+    imageUrls={{ fb: '' }}
+  />
+  <Fragment slot="aside">
+    {!!aboutUsNavLinks.length && <AsideNav links={aboutUsNavLinks} />}
+  </Fragment>
+  <Fragment slot="main">
+    {
+      !gallery && thumbnail && (
+        <div class="thumbnail">
+          <img src={thumbnail.src} alt={thumbnail.alt} />
+        </div>
+      )
+    }
+    {
+      gallery && !!gallery.length && (
+        <>
+          <DetailSlider data={gallery} client:load />
+          <PreviewSlider data={gallery} client:load />
+        </>
+      )
+    }
+    <section class="prose detail">
+      {!!description && <blockquote set:html={parse(description)} />}
+      <Fragment set:html={parse(article.body)} />
+    </section>
+    {
+      buttons && !!buttons.length && (
+        <div class="btns">
+          {buttons.map((button) => (
+            <a href={button.link}>
+              <BtnFirm>{button.text}</BtnFirm>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </Fragment>
+</AsideLayout>
+
+<style lang="scss">
+  section {
+    &:not(:first-child) {
+      margin-top: 3rem;
+    }
+    margin-bottom: 3rem;
+  }
+  .btns {
+    display: flex;
+    gap: 20px;
+  }
+  .thumbnail {
+    box-shadow: var(--box-shadow-active);
+    border: thin solid #555660;
+    aspect-ratio: 16 / 9;
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+  @media (max-width: 1023.98px) {
+    .btns {
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,14 +1,15 @@
 <script lang="ts">
-  import ModalTrigger from '../components/modals/ModalTrigger.svelte';
   import BtnFirm from '../components/ui/BtnFirm.svelte';
-  import type { Game } from '../schemas/gamesSchema';
-  import { GamesQrModal } from '../components/modals/GamesQrModal';
+  import type { GameSelect } from '../schemas/gamesSchema';
+  import GamesQrModal from '../components/modals/GamesQrModal.svelte';
   import { useragent } from '@sveu/browser';
   import { onMount } from 'svelte';
   import { getAndroidLink, getIOSLink } from '../utils/helpers';
   const { platform, mobile } = useragent();
 
-  export let game: Game;
+  export let game: GameSelect;
+
+  let modalIsOpen = false;
 
   let steamLink: string | undefined;
   let iosLink: string | undefined;
@@ -62,8 +63,8 @@
 
 {#if !$mobile}
   {#if game.type === 'isMobile'}
-    <ModalTrigger type={'qrGame'} slug={game.slug}>Играть сейчас</ModalTrigger>
-    <GamesQrModal />
+    <BtnFirm on:click={() => (modalIsOpen = true)}>Играть сейчас</BtnFirm>
+    <GamesQrModal bind:isOpen={modalIsOpen} {game} />
   {:else if (game.type === 'isBrowser' && game.browserLink) || steamLink}
     <a href={game.browserLink || steamLink} target="_blank">
       <BtnFirm>Играть сейчас</BtnFirm>

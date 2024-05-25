@@ -1,12 +1,14 @@
 <script lang="ts">
   import { navigate, type Options } from 'astro:transitions/client';
   import ArrowDetail from '../svg/ArrowDetail.svelte';
+  import { cn } from '../../utils/helpers';
 
   export let replace: true | null = null;
   export let toBack: true | null = null;
   export let toForward: true | null = null;
   export let to: string | null = null;
   export let text = 'Узнать больше';
+  export let variant: 'default' | 'arrow' = 'default';
 
   function handleClick() {
     let options: Options = {};
@@ -21,7 +23,11 @@
   }
 </script>
 
-<button on:click={handleClick} class:toBack class="link-to-detail-page">
+<button
+  on:click={handleClick}
+  class:toBack
+  class={cn('link-to-detail-page', `variant-${variant}`)}
+>
   <span class="text">{text}</span>
   <span class="arrow" />
   <span class="small-arrow">
@@ -38,11 +44,24 @@
     font-size: 16px;
     line-height: 1;
     text-transform: uppercase;
+
     @media (hover: hover) {
       &:hover {
         .arrow {
           width: 30px;
         }
+      }
+    }
+
+    &.variant-arrow {
+      .small-arrow {
+        display: block;
+      }
+      .arrow {
+        display: none;
+      }
+      .text {
+        display: none;
       }
     }
   }
@@ -100,12 +119,12 @@
       rotate: 180deg;
     }
   }
-  @media (min-width: 992px) {
+  @media (min-width: 1024px) {
     .small-arrow {
       display: none;
     }
   }
-  @media (max-width: 991.98px) {
+  @media (max-width: 1023.98px) {
     .arrow {
       display: none;
     }

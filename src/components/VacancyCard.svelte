@@ -38,23 +38,12 @@
     >
   {/if}
 
-  <div class="link-to-detail-page">
-    <LinkToDetailPage
-      to="/career/{vacancy.slug}"
-      replace={linkHistoryReplace}
-      text="Подробнее"
-    />
-  </div>
-
-  <button
-    class="arrow-to-detail"
-    on:click={() =>
-      navigate(`/career/${vacancy.slug}`, {
-        history: linkHistoryReplace ? 'replace' : 'auto',
-      })}
-  >
-    <ArrowDetail />
-  </button>
+  <LinkToDetailPage
+    to="/career/{vacancy.slug}"
+    replace={linkHistoryReplace}
+    text="Подробнее"
+    variant={size === 'sm' ? 'arrow' : 'default'}
+  />
 
   {#if size === 'md'}
     <ShareLinksBlock
@@ -74,43 +63,30 @@
     display: grid;
     gap: 20px;
 
+    & > :global(.link-to-detail-page) {
+      justify-self: end;
+      grid-column: 2;
+      grid-row: 1;
+    }
     &.size {
       &-sm {
-        & > .link-to-detail-page {
-          justify-self: end;
-        }
+        min-height: 115px;
       }
       &-md {
         grid-template-columns: 1fr auto;
-        .link-to-detail-page {
+        :global(.link-to-detail-page) {
           grid-column: 2;
           grid-row: 1;
         }
-        @media (max-width: 1023.98px) {
-          .arrow-to-detail {
-            grid-column: 2;
-            grid-row: 1;
-            display: flex;
-            justify-content: end;
-          }
-        }
+
         @media (max-width: 629.98px) {
           padding-inline: var(--container-offset);
-          h3 {
-            // grid-column: span 2;
-          }
-          & > .link-to-detail-page {
-            grid-column: span 2;
-            grid-row: 2;
-          }
         }
         @media (max-width: 424.98px) {
           h3 {
             grid-column: 1;
           }
-          & > .link-to-detail-page {
-            grid-column: 1;
-          }
+
           & > :global(.share-links-block) {
             align-items: flex-start;
           }
@@ -142,9 +118,6 @@
     }
 
     @media (min-width: 890px) {
-      .arrow-to-detail {
-        display: none;
-      }
       &.isEven {
         border-image: linear-gradient(
             -90deg,
@@ -157,11 +130,6 @@
           left: auto;
           clip-path: polygon(100% 0, 0 0, 100% 100%);
         }
-      }
-    }
-    @media (max-width: 1023.98px) {
-      .link-to-detail-page {
-        display: none;
       }
     }
 

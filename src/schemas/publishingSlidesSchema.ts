@@ -1,5 +1,5 @@
 import { z } from 'astro:content';
-import { serviceArticlesSchema } from './serviceArticlesSchema';
+import { articlesSchema } from './articlesSchema';
 
 export const publishingSlidesSchema = z.object({
   title: z.string(),
@@ -13,7 +13,7 @@ export const publishingSlidesSchema = z.object({
 });
 
 export const publishingSlidesSchemaSelect = publishingSlidesSchema.extend({
-  article: serviceArticlesSchema.extend({ slug: z.string() }).optional(),
+  article: articlesSchema.extend({ slug: z.string() }).optional(),
   slug: z.string(),
 });
 

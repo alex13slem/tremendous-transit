@@ -2,7 +2,7 @@ import { getCollection } from 'astro:content';
 import { atom } from 'nanostores';
 
 const publishingSlidesCollection = await getCollection('publishing-slides');
-const servicesArticlesCollection = await getCollection('service-articles');
+const servicesArticlesCollection = await getCollection('articles');
 
 export const publishingSlides = atom(
   publishingSlidesCollection

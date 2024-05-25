@@ -40,7 +40,49 @@
     bind:this={root}
     style="--max-height: {maxHeight}px;"
   >
-    {@html descriptionMD}
+    <!-- {@html descriptionMD} -->
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
+      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
+      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
+      architecto.
+    </p>
   </div>
   {#if maxHeight > 500}
     <BtnFirm size="sm" variant="transparent" on:click={() => (open = !open)}>
@@ -55,6 +97,7 @@
 
 <style lang="scss">
   .body {
+    grid-area: body;
     :global(.btn-arrow) {
       display: inline-flex;
       color: rgb(var(--c-text), 50%);

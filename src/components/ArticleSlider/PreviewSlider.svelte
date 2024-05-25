@@ -15,13 +15,13 @@
     isEnd = swiper.isEnd;
     isBeginning = swiper.isBeginning;
   };
-  onMount(() => {
-    swiperEl.breakpoints = {
-      1024: {
-        slidesPerView: 3.33,
-      },
-    };
-  });
+  // onMount(() => {
+  //   swiperEl.breakpoints = {
+  //     1024: {
+  //       slidesPerView: 3.33,
+  //     },
+  //   };
+  // });
 </script>
 
 <div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
@@ -29,8 +29,9 @@
     id="preview-slider"
     bind:this={swiperEl}
     mousewheel
-    slides-per-view="1.2"
+    slides-per-view="auto"
     watch-slides-progress
+    space-between={-16}
     on:swiperprogress={onProgress}
   >
     {#each data as { src, alt }}

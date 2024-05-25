@@ -1,0 +1,54 @@
+---
+import GamesSlider from '../../components/GamesSlider.svelte';
+import BasicLayout from '../../layouts/BasicLayout.astro';
+import SEO from '../../layouts/SEO.astro';
+import SectCommon from '../../sections/SectCommon.astro';
+import { bestGames } from '../../store/games';
+import { artists } from '../../store/artists';
+import { ArtistCard } from '../../components/ArtistCard';
+import LinkToDetailPage from '../../components/ui/LinkToDetailPage.svelte';
+
+export async function getStaticPaths() {
+  const paths = artists.map((artist) => ({
+    params: {
+      slug: artist.slug,
+    },
+    props: { artist },
+  }));
+  return paths;
+}
+
+const { artist } = Astro.props;
+const { title, about, image } = artist;
+
+const seoImg = new URL(image, Astro.site);
+---
+
+<BasicLayout>
+  <SEO
+    slot="seo"
+    {title}
+    description={about}
+    imageUrls={{ fb: seoImg.toString() }}
+  />
+
+  <section>
+    <div class="container">
+      <LinkToDetailPage client:load toBack text="Назад" />
+
+      <ArtistCard {artist} client:load />
+    </div>
+  </section>
+
+  <SectCommon title="Наши игры">
+    <GamesSlider games={bestGames} client:load />
+  </SectCommon>
+</BasicLayout>
+
+<style lang="scss">
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+</style>

@@ -1,4 +1,8 @@
 import { z } from 'astro:content';
+import {
+  gameDevStageSchema,
+  gameDevStageSelectSchema,
+} from './gameDevStagesSchema';
 import { marketplacesSchema } from './gameMarketplacesSchema';
 
 const gamesPlatformsSchema = z.object({
@@ -6,9 +10,23 @@ const gamesPlatformsSchema = z.object({
   href: z.string(),
   appId: z.string().optional(),
 });
-
-const gamesPlatformsSchemaSelect =
+const gamesPlatformsSelectSchema =
   gamesPlatformsSchema.merge(marketplacesSchema);
+
+const gameTranslationsSchema = z.object({
+  lang: z.string(),
+  interface: z.boolean(),
+  voice: z.boolean(),
+});
+
+const gameDevStagesSchema = z.object({
+  stageSlug: z.string(),
+  num: z.number(),
+});
+
+const gameDevStagesSelectSchema = gameDevStagesSchema.merge(
+  gameDevStageSelectSchema
+);
 
 export const gamesSchema = z.object({
   title: z.string(),
@@ -22,17 +40,13 @@ export const gamesSchema = z.object({
   publisher: z.string(),
   releaseDate: z.date(),
   team: z.string().array().optional(),
-  translations: z
-    .object({
-      lang: z.string(),
-      interface: z.boolean(),
-      voice: z.boolean(),
-    })
-    .array(),
-  platforms: gamesPlatformsSchema.array().nullish(),
+  translations: gameTranslationsSchema.array(),
+  platforms: gamesPlatformsSchema.array().optional(),
+  devStages: gameDevStagesSchema.array().optional(),
   status: z.string().optional(),
   favorites: z.string().array().optional(),
   thumbnail: z.string(),
+  icon: z.string(),
   heroImage: z.object({
     src: z.string(),
     srcPlaceholder: z.string(),
@@ -43,9 +57,12 @@ export const gamesSchema = z.object({
 });
 
 export const gamesSchemaSelect = gamesSchema.extend({
-  platforms: gamesPlatformsSchemaSelect.array().nullish(),
+  platforms: gamesPlatformsSelectSchema.array().optional(),
+  devStages: gameDevStagesSelectSchema.array().nullish(),
 });
 
 export type Game = z.infer<typeof gamesSchema>;
 export type GameSelect = z.infer<typeof gamesSchemaSelect>;
-export type GamePlatform = z.infer<typeof gamesPlatformsSchemaSelect>;
+export type GamePlatform = z.infer<typeof gamesPlatformsSelectSchema>;
+export type GameTranslation = z.infer<typeof gameTranslationsSchema>;
+export type GameDevStageSelect = z.infer<typeof gameDevStagesSelectSchema>;

@@ -1,0 +1,185 @@
+---
+import BasicLayout from '../../../../layouts/BasicLayout.astro';
+import SectCommon from '../../../../sections/SectCommon.astro';
+import GamesSlider from '../../../../components/GamesSlider.svelte';
+
+import SEO from '../../../../layouts/SEO.astro';
+import { bestGames, gamesWithRelations } from '../../../../store/games';
+import { gamesDevStages } from '../../../../store/gameDevStages';
+import { parse } from 'marked';
+import DonateLink from '../../../../components/DonateLink.svelte';
+
+export async function getStaticPaths() {
+  const stagesWCrowdfundingPlatforms = gamesDevStages.filter(
+    (stage) => !!stage.crowdfundingPlatforms
+  );
+
+  const paths = stagesWCrowdfundingPlatforms.map((stage) => {
+    const stageGame = gamesWithRelations.find(
+      (game) => game.slug === stage.gameSlug
+    )!;
+    return {
+      params: {
+        slug: stageGame.slug,
+        stageSlug: stage.slug,
+      },
+      props: { game: stageGame, stage },
+    };
+  });
+  return paths;
+}
+
+const { game, stage } = Astro.props;
+const { title, description } = stage;
+
+const seoImg = new URL(game.thumbnail, Astro.site);
+---
+
+<BasicLayout>
+  <SEO slot="seo" {title} {description} imageUrls={{ fb: seoImg.toString() }} />
+
+  <section class="hero">
+    <div class="container">
+      <h1>{game.title}</h1>
+      <h2>Этап: <span>{stage.title}</span></h2>
+      <img src={game.thumbnail} alt={game.title} />
+      <div class="prose" set:html={parse(stage.description)} />
+    </div>
+  </section>
+
+  <section class="cards">
+    <div class="container">
+      <div class="inner">
+        <a href="#platforms" class="cash-card current">
+          <h3>Текущая сумма</h3>
+          <p>{stage.currentCash}$</p>
+        </a>
+        <article class="cash-card total">
+          <h3>Общая сумма</h3>
+          <p>{stage.totalCash}$</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="platforms" id="platforms">
+    <div class="container">
+      <div class="inner">
+        <ul>
+          {
+            stage.crowdfundingPlatforms!.map((platform) => (
+              <li>
+                <DonateLink {platform} client:load />
+              </li>
+            ))
+          }
+        </ul>
+        <dotlottie-player
+          src="https://lottie.host/0874c209-9842-49aa-828a-69890bb08a51/EHSjmjwrxP.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height:300px;"
+          loop
+          autoplay></dotlottie-player>
+      </div>
+    </div>
+  </section>
+
+  <SectCommon title="Наши игры">
+    <GamesSlider games={bestGames} client:load />
+  </SectCommon>
+</BasicLayout>
+
+<style lang="scss">
+  @import '../../../../styles/animations.scss';
+  section.hero {
+    & .container {
+      display: grid;
+      grid-template-areas: 'img title' 'img subtitle' 'img description';
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto auto 1fr;
+      gap: 1rem 2rem;
+      align-content: start;
+      @media (max-width: 767.98px) {
+        grid-template-columns: 1fr;
+        grid-template-areas: 'img' 'title' 'subtitle' 'description';
+        grid-template-rows: auto;
+      }
+    }
+    & img {
+      grid-area: img;
+
+      border: thin solid #555660;
+      box-shadow: var(--box-shadow-active);
+    }
+    & h1 {
+      grid-area: title;
+    }
+    & h2 {
+      grid-area: subtitle;
+      & span {
+        color: rgb(var(--c-accent));
+      }
+    }
+  }
+  section.cards {
+    & .inner {
+      display: flex;
+      gap: 2rem;
+      justify-content: space-evenly;
+      @media (max-width: 767.98px) {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    & .cash-card {
+      display: grid;
+      border: thin solid rgb(var(--c-border));
+      background-color: rgb(var(--c-card));
+      box-shadow: var(--box-shadow-active);
+      text-align: center;
+      padding: 1rem;
+      gap: 1.5rem;
+      width: 270px;
+
+      &.current {
+        color: rgb(var(--c-bg));
+        animation: pulsar-bg-c 1.5s infinite alternate;
+        font-weight: 700;
+      }
+
+      &.total {
+      }
+
+      & h3 {
+        font-size: 1.5rem;
+      }
+      & p {
+        font-size: 3rem;
+      }
+    }
+  }
+  section.platforms {
+    & .inner {
+      display: flex;
+      justify-content: space-evenly;
+      gap: 2rem;
+      @media (max-width: 767.98px) {
+        flex-direction: column-reverse;
+        align-items: center;
+      }
+    }
+    & ul {
+      padding: 0;
+      list-style: none;
+      font-size: 2rem;
+      width: fit-content;
+    }
+
+    & li {
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+</style>

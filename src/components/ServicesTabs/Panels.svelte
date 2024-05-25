@@ -3,12 +3,13 @@
   import { fly } from 'svelte/transition';
   import { TabPanels } from '@rgossiaux/svelte-headlessui';
   import css from './panels.module.scss';
-  import ModalTrigger from '../modals/ModalTrigger.svelte';
   import { formatStrToId } from '../../utils/helpers';
   import { devArticles } from '../../store/service-articles';
   import { useragent } from '@sveu/browser';
   import { selectedOptionValue } from '.';
   import type { SwiperContainer } from 'swiper/element';
+  import BtnFirm from '../ui/BtnFirm.svelte';
+  import { DevServModal, isOpen as modalIsOpen } from '../modals/DevServModal';
 
   let swiperEl: SwiperContainer;
   const { mobile } = useragent();
@@ -45,63 +46,63 @@
               }}
               on:swiperprogress={onProgress}
             >
-              {#each gallery as { src, alt }}
-                <swiper-slide lazy="true">
-                  <div class={css['slide-wrap']}>
-                    <a
-                      href="{category}/{slug}/#{formatStrToId(alt)}"
-                      class={css.image}
-                      data-astro-reload
-                    >
-                      <img
-                        {src}
-                        {alt}
-                        width="268"
-                        height="193"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                </swiper-slide>
-              {/each}
-              {#each gallery as { src, alt }}
-                <swiper-slide lazy="true">
-                  <div class={css['slide-wrap']}>
-                    <a
-                      href="{category}/{slug}/#{formatStrToId(alt)}"
-                      class={css.image}
-                      data-astro-reload
-                    >
-                      <img
-                        {src}
-                        {alt}
-                        width="268"
-                        height="193"
-                        loading="lazy"
-                      />
-                    </a>
-                  </div>
-                </swiper-slide>
-              {/each}
+              {#if gallery && !!gallery.length}
+                {#each gallery as { src, alt }}
+                  <swiper-slide lazy="true">
+                    <div class={css['slide-wrap']}>
+                      <a
+                        href="{category}/{slug}/#{formatStrToId(alt)}"
+                        class={css.image}
+                        data-astro-reload
+                      >
+                        <img
+                          {src}
+                          {alt}
+                          width="268"
+                          height="193"
+                          loading="lazy"
+                        />
+                      </a>
+                    </div>
+                  </swiper-slide>
+                {/each}
+                {#each gallery as { src, alt }}
+                  <swiper-slide lazy="true">
+                    <div class={css['slide-wrap']}>
+                      <a
+                        href="{category}/{slug}/#{formatStrToId(alt)}"
+                        class={css.image}
+                        data-astro-reload
+                      >
+                        <img
+                          {src}
+                          {alt}
+                          width="268"
+                          height="193"
+                          loading="lazy"
+                        />
+                      </a>
+                    </div>
+                  </swiper-slide>
+                {/each}
+              {/if}
             </swiper-container>
           </div>
 
           <div class="prose">
-            <!-- {@html parse(description)} -->
-            <p>
-              Возьмем на себя полный цикл разработки игры на Unity и UE
-              портируем на ПК, консоли и мобильные устройства.
-            </p>
-            <p>Eisvil - это то место, где идеи становятся игрой!</p>
+            {#if description}
+              {@html parse(description)}
+            {/if}
           </div>
 
           <div class={css['btn-wrap']}>
-            <ModalTrigger variant="contrast" type="development" {slug}
-              >Расчитать</ModalTrigger
+            <BtnFirm variant="contrast" on:click={() => ($modalIsOpen = true)}
+              >Расчитать</BtnFirm
             >
           </div>
         </div>
       {/if}
+      <DevServModal targetSlug={slug} />
     {/each}
   </TabPanels>
 </div>

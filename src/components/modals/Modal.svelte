@@ -125,7 +125,6 @@
   }
   .body {
     display: flex;
-    justify-content: center;
     gap: 50px;
     padding: var(--padding);
   }

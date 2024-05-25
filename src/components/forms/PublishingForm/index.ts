@@ -1,3 +1,5 @@
+import localforage from 'localforage';
+import { atom } from 'nanostores';
 import { pubArticles } from '../../../store/service-articles';
 import Root from './index.svelte';
 
@@ -29,6 +31,16 @@ const formValuesInit: PublishingFormValues = {
   selectedDir: null,
 };
 
+const isSubmitted = atom<boolean>(false);
+
+try {
+  const localeSubmitted = await localforage.getItem('pubFormSubmitted');
+
+  if (localeSubmitted) {
+    isSubmitted.set(true);
+  }
+} catch (error) {}
+
 const publishingOptions = pubArticles
   .get()
   .map(({ slug, data: { title: value } }) => ({
@@ -41,6 +53,7 @@ export {
   Root as PublishingForm,
   Root,
   formValuesInit,
+  isSubmitted,
   publishingOptions,
   type PublishingFormValues,
 };

@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { NavLink } from '../types/project';
+import { aboutUsArticles } from './about-us-articles';
 import { devArticles, pubArticles } from './service-articles';
 
 const navLinksCollection = await getCollection('nav-links');
@@ -15,6 +16,15 @@ const pubArticlesNavLinks: NavLink[] = pubArticles.get().map((article) => ({
   text: article.data.title,
   slug: article.slug,
 }));
+
+const aboutUsNavLinks: NavLink[] = aboutUsArticles
+  .get()
+  .filter((a) => a.slug !== 'about-us')
+  .map((article) => ({
+    href: `/about-us/${article.slug}`,
+    text: article.data.title,
+    slug: article.slug,
+  }));
 
 const navLinks = [...navLinksCollection]
   .map(({ data }) => {
@@ -41,10 +51,13 @@ const mobileMenuNavLinks = navLinks.map((siteLink) => ({
       ? pubArticlesNavLinks
       : siteLink.slug === 'development'
       ? devArticlesNavLinks
+      : siteLink.slug === 'about-us'
+      ? aboutUsNavLinks
       : [],
 }));
 
 export {
+  aboutUsNavLinks,
   devArticlesNavLinks,
   mobileMenuNavLinks,
   navLinks,

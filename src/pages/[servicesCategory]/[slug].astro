@@ -3,19 +3,17 @@ import { getCollection } from 'astro:content';
 import AsideLayout from '../../layouts/AsideLayout.astro';
 import SEO from '../../layouts/SEO.astro';
 import AsideNav from '../../components/AsideNav.astro';
-import ModalTrigger from '../../components/modals/ModalTrigger.svelte';
-import PublishingModalForm from '../../components/modals/PublishingModalForm.svelte';
 import { parse } from 'marked';
-import ServicesModalForm from '../../components/modals/ServicesModalForm.svelte';
 import {
   devArticlesNavLinks,
   pubArticlesNavLinks,
 } from '../../store/nav-links';
 import DetailSlider from '../../components/ArticleSlider/DetailSlider.svelte';
 import PreviewSlider from '../../components/ArticleSlider/PreviewSlider.svelte';
+import ArticlePageInteractive from '../../components/ArticlePageInteractive.svelte';
 
 export async function getStaticPaths() {
-  const servicesArticles = await getCollection('service-articles');
+  const servicesArticles = await getCollection('articles');
 
   return servicesArticles.map((article) => ({
     params: { servicesCategory: article.data.category, slug: article.slug },
@@ -36,13 +34,18 @@ const navLinks =
 ---
 
 <AsideLayout>
-  <SEO slot="seo" {title} {description} imageUrls={{ fb: '' }} />
+  <SEO
+    slot="seo"
+    {title}
+    description={description || ''}
+    imageUrls={{ fb: '' }}
+  />
   <Fragment slot="aside">
     {!!navLinks.length && <AsideNav links={navLinks} />}
   </Fragment>
   <Fragment slot="main">
     {
-      !!gallery.length && (
+      gallery && !!gallery.length && (
         <>
           <DetailSlider data={gallery} client:load />
           <PreviewSlider data={gallery} client:load />
@@ -50,24 +53,13 @@ const navLinks =
       )
     }
     <section class="prose detail">
-      <blockquote set:html={parse(article.data.description)} />
+      {description && <blockquote set:html={parse(description)} />}
       <Fragment set:html={parse(article.body)} />
     </section>
-    <div class="btns">
-      <ModalTrigger
-        client:visible
-        type={category}
-        variant="contrast"
-        slug={article.slug}
-      >
-        Заказать
-      </ModalTrigger>
-    </div>
+
+    <ArticlePageInteractive client:visible {article} />
   </Fragment>
 </AsideLayout>
-
-{category === 'development' && <ServicesModalForm client:load />}
-{category === 'publishing' && <PublishingModalForm client:load />}
 
 <style lang="scss">
   section {
@@ -75,11 +67,5 @@ const navLinks =
       margin-top: 3rem;
     }
     margin-bottom: 3rem;
-  }
-  @media (max-width: 1023.98px) {
-    .btns {
-      display: flex;
-      justify-content: center;
-    }
   }
 </style>

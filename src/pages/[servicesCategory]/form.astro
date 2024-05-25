@@ -7,7 +7,7 @@ import { PublishingForm } from '../../components/forms/PublishingForm';
 import SEO from '../../layouts/SEO.astro';
 
 export async function getStaticPaths() {
-  const servicesArticles = await getCollection('service-articles');
+  const servicesArticles = await getCollection('articles');
 
   return servicesArticles.map((article) => ({
     params: { servicesCategory: article.data.category },
@@ -23,7 +23,12 @@ const { servicesCategory } = Astro.params;
 ---
 
 <BasicLayout>
-  <SEO slot="seo" {title} {description} imageUrls={{ fb: '' }} />
+  <SEO
+    slot="seo"
+    {title}
+    description={description || ''}
+    imageUrls={{ fb: '' }}
+  />
   <div class="root">
     <div class="container">
       <LinkToDetailPage client:load toBack text="Назад" />

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SwiperContainer } from 'swiper/element';
   import type { Artist } from '../../schemas/artistsSchema';
-  import ArtistCard from '../ArtistCard.svelte';
+  import { ArtistSlide } from '../ArtistSlide';
 
   export let artists: Artist[];
 
@@ -15,12 +15,11 @@
     bind:this={swiperEl}
     mousewheel
     slides-per-view="auto"
-    centered-slides
   >
     {#each artists as artist}
       <swiper-slide class="slide">
         <div class="slide-wrap">
-          <ArtistCard {artist} />
+          <ArtistSlide {artist} />
         </div>
       </swiper-slide>
     {/each}

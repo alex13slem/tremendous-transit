@@ -1,10 +1,13 @@
+import { articleCategoriesCollection } from './articleCategories';
+import { articlesCollection } from './articles';
 import { artistsCollection } from './artists';
 import { citiesCollection } from './cities';
 import { companyInfoCollection } from './companyInfo';
+import { crowdfundingPlatformsCollection } from './crowdfundingPlatforms';
 import { developersCollection } from './developers';
+import { gameDevStagesCollection } from './gameDevStages';
 import { genresCollection } from './gameGenres';
 import { gameMarketplacesCollection } from './gameMarketplaces';
-import { gameStagesCollection } from './gameStages';
 import { gamesCollection } from './games';
 import { gamesFavoritesCollection } from './gamesFavorites';
 import { gamesStatusesCollection } from './gamesStatuses';
@@ -13,16 +16,15 @@ import { navLinksCollection } from './nav-links';
 import { professionsCollection } from './professions';
 import { publishersCollection } from './publishers';
 import { publishingSlidesCollection } from './publishingSlides';
-import { articlesCollection } from './serviceArticles';
-import { serviceCategoriesCollection } from './serviceCategories';
 import { socialsCollection } from './socials';
 import { vacanciesCollection } from './vacancies';
 
 export const decapCollections = [
-  gameStagesCollection,
+  crowdfundingPlatformsCollection,
+  gameDevStagesCollection,
   artistsCollection,
   professionsCollection,
-  serviceCategoriesCollection,
+  articleCategoriesCollection,
   articlesCollection,
   citiesCollection,
   developersCollection,

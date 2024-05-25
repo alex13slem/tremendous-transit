@@ -2,15 +2,19 @@
   import { cn, toRoman } from '../utils/helpers';
   import { onMount } from 'svelte';
   import { parse } from 'marked';
-  import ModalTrigger from './modals/ModalTrigger.svelte';
-  import type { Stage } from '../schemas/gameStagesSchema';
+  import type { GameDevStageSelect } from '../schemas/gamesSchema';
+  import DonatQrModal from './modals/DonatQrModal.svelte';
+  import BtnFirm from './ui/BtnFirm.svelte';
+  import { useragent } from '@sveu/browser';
+  const { mobile } = useragent();
 
   export let isLast: boolean = false;
 
-  export let stage: Stage;
+  export let stage: GameDevStageSelect;
 
   let proseRef: HTMLDivElement;
   let proseMaxHeight: number;
+  let modalIsOpen = false;
 
   onMount(() => {
     proseMaxHeight = proseRef.scrollHeight;
@@ -40,7 +44,7 @@
 >
   <button class="stage-num" tabindex="-1">{toRoman(stage.num)}</button>
   <article class="stage-art">
-    <h3>{stage.name}</h3>
+    <h3>{stage.title}</h3>
     {#if stage.description}
       <div
         class="prose"
@@ -67,9 +71,13 @@
       <div class="bottom-block">
         {#if state === 'done'}
           <p class="done-text">ЭТАП ЗАВЕРШЁН</p>
+        {:else if $mobile}
+          <a href={`/games/${stage.gameSlug}/dev-stages/${stage.slug}`}>
+            <BtnFirm>Поддержать проект</BtnFirm>
+          </a>
         {:else}
-          <ModalTrigger flexPosition="end" type="qrDonat"
-            >Поддержать проект</ModalTrigger
+          <BtnFirm on:click={() => (modalIsOpen = true)}
+            >Поддержать проект</BtnFirm
           >
         {/if}
         <div class="progress-num">
@@ -80,64 +88,73 @@
   </article>
 </div>
 
+{#if stage.crowdfundingPlatforms}
+  <DonatQrModal
+    bind:isOpen={modalIsOpen}
+    crowdfundingPlatforms={stage.crowdfundingPlatforms}
+  />
+{/if}
+
 <style lang="scss">
   .stage {
     --size: 50px;
     --c-line: rgb(var(--c-border));
     position: relative;
-    height: 400px;
-    width: 50%;
+    @media (max-width: 1279.98px) {
+      margin-top: 80px;
+    }
+    @media (min-width: 1280px) {
+      height: 400px;
+      width: 50%;
 
-    display: flex;
-    justify-content: end;
+      display: flex;
+      justify-content: end;
 
-    transition: var(--trans-default);
-    transition-property: filter;
-  }
-
-  .stage.isEven {
-    margin-left: auto;
-  }
-
-  .stage:not(.isLast) {
-    margin-bottom: calc(var(--size) * -2);
-  }
-  .stage:not(.isLast)::after {
-    content: '';
-    position: absolute;
-    background-image: linear-gradient(
-      to top,
-      transparent 0%,
-      transparent calc(var(--size) / 2),
-      var(--c-line) calc(var(--size) / 2),
-      var(--c-line) calc(var(--size) * 1.5),
-      transparent calc(var(--size) * 1.5),
-      transparent calc(var(--size) * 2.5),
-      var(--c-line) calc(var(--size) * 2.5),
-      var(--c-line) calc(var(--size) * 3.5),
-      transparent calc(var(--size) * 3.5),
-      transparent calc(var(--size) * 4.5)
-    );
-    width: 1px;
-    right: 0;
-    height: calc(var(--size) * 4);
-    top: calc(var(--size) * 1.5);
-  }
-
-  .stage.isEven:not(.isLast)::after {
-    left: 0;
-  }
-
-  .stage:is(:hover, :focus-visible) {
-    filter: drop-shadow(var(--box-shadow-active));
+      transition: var(--trans-default);
+      transition-property: filter;
+      &.isEven {
+        margin-left: auto;
+        &:not(.isLast)::after {
+          left: 0;
+        }
+      }
+      &:not(.isLast) {
+        margin-bottom: calc(var(--size) * -2);
+        &::after {
+          content: '';
+          position: absolute;
+          background-image: linear-gradient(
+            to top,
+            transparent 0%,
+            transparent calc(var(--size) / 2),
+            var(--c-line) calc(var(--size) / 2),
+            var(--c-line) calc(var(--size) * 1.5),
+            transparent calc(var(--size) * 1.5),
+            transparent calc(var(--size) * 2.5),
+            var(--c-line) calc(var(--size) * 2.5),
+            var(--c-line) calc(var(--size) * 3.5),
+            transparent calc(var(--size) * 3.5),
+            transparent calc(var(--size) * 4.5)
+          );
+          width: 1px;
+          right: 0;
+          height: calc(var(--size) * 4);
+          top: calc(var(--size) * 1.5);
+        }
+      }
+      &:is(:hover, :focus-visible) {
+        filter: drop-shadow(var(--box-shadow-active));
+      }
+      &.done {
+        --c-line: rgb(var(--c-accent));
+      }
+    }
   }
 
   .stage-num {
     --color: rgb(var(--c-border));
     z-index: 0;
     position: absolute;
-    top: calc(var(--size) / 4);
-    right: calc(var(--size) / -2);
     width: var(--size);
     height: var(--size);
     color: var(--color);
@@ -148,120 +165,169 @@
     transition: var(--trans-default);
     transition-property: color;
 
-    .stage:hover & {
-      --color: rgb(var(--c-text));
-    }
-
-    .stage.isEven & {
-      left: calc(var(--size) / -2);
-    }
-  }
-
-  .stage-num::after {
-    content: '';
-    z-index: -1;
-    inset: 0;
-    position: absolute;
-    transform: rotate(45deg);
-    border: 3px solid;
-    transition: var(--trans-default);
-    transition-property: border-color;
-  }
-  .planned {
-    .stage-num::after {
-      border-color: var(--color);
-    }
-  }
-  .process {
-    .stage-num::after {
-      border-color: rgb(var(--c-accent-dark));
-    }
-    &:is(:hover, :focus-visible) {
-      .stage-num::after {
-        border-color: rgb(var(--c-accent));
+    @media (max-width: 1279.98px) {
+      top: calc(var(--size) / -2);
+      margin-inline: auto;
+      left: 0;
+      right: 0;
+      &::after {
+        background-color: rgb(var(--c-card));
+        border: 1px solid;
+        border-bottom: none;
+        border-right: none;
+      }
+      .stage.process & {
+        color: rgb(var(--c-accent));
       }
     }
-  }
-  .done {
-    --c-line: rgb(var(--c-accent));
-    .stage-num {
-      color: rgb(var(--c-bg));
-    }
-    .stage-num::after {
-      background-color: rgb(var(--c-accent-dark));
-      // background-image: var(--gradient);
+    @media (min-width: 1280px) {
+      top: calc(var(--size) / 4);
+      right: calc(var(--size) / -2);
 
-      // border-color: transparent;
-      // border: none;
-      border-color: rgb(var(--c-accent-dark));
+      &::after {
+        border: 3px solid;
+      }
+
+      .stage:hover & {
+        --color: rgb(var(--c-text));
+      }
+
+      .stage.isEven & {
+        left: calc(var(--size) / -2);
+      }
+
+      .stage.process:is(:hover, :focus-visible) & {
+        &::after {
+          border-color: rgb(var(--c-accent));
+        }
+      }
+
+      .stage.done:is(:hover, :focus-visible) & {
+        &::after {
+          border-color: rgb(var(--c-accent));
+        }
+      }
     }
-    &:is(:hover, :focus-visible) {
-      .stage-num::after {
-        border-color: rgb(var(--c-accent));
+
+    &::after {
+      content: '';
+      z-index: -1;
+      inset: 0;
+      position: absolute;
+      transform: rotate(45deg);
+      transition: var(--trans-default);
+      transition-property: border-color;
+    }
+
+    .stage.planned & {
+      &::after {
+        border-color: var(--color);
+      }
+    }
+    .stage.process & {
+      &::after {
+        border-color: rgb(var(--c-accent-dark));
+      }
+    }
+
+    .stage.done & {
+      color: rgb(var(--c-bg));
+      &::after {
+        background-color: rgb(var(--c-accent-dark));
+        border-color: rgb(var(--c-accent-dark));
       }
     }
   }
 
   .stage-art {
-    overflow: clip;
-    position: absolute;
-    top: 0;
-    // height: 140px;
-    right: calc(var(--size) / 2);
-    width: min(510px, calc(100% - var(--size) / 2));
-
     padding: 20px;
     display: flex;
     flex-direction: column;
-    // gap: 20px;
+    background-color: rgb(var(--c-card));
+    border: thin solid;
 
-    transition: var(--trans-default);
-    transition-property: width, height;
-    border: thin solid rgb(var(--c-card-border));
+    @media (max-width: 1279.98px) {
+      border-inline: none;
+      padding-top: 40px;
 
-    clip-path: polygon(100% 0, 100% 100%, 39px 100%, 39px 39px, 0 0);
+      .stage.planned & {
+        border-color: rgb(var(--c-card-border));
+      }
 
-    .stage:is(:hover, :focus-visible) & {
-      width: calc(100% - var(--size) / 2);
+      .stage.process & {
+        border-color: rgb(var(--c-accent));
+      }
     }
-    :not(.isEven) & {
-      padding-right: 55px;
-      clip-path: polygon(
-        100% 0,
-        calc(100% - 39px) 39px,
-        calc(100% - 39px) 100%,
-        0 100%,
-        0 0
-      );
-      border-image: linear-gradient(
-          90deg,
-          rgb(var(--c-card-border)),
-          transparent
-        )
-        1;
-    }
-    .isEven & {
-      left: calc(var(--size) / 2);
-      padding-left: 55px;
-      border-image: linear-gradient(
-          -90deg,
-          rgb(var(--c-card-border)),
-          transparent
-        )
-        1;
+    @media (min-width: 1280px) {
+      overflow: clip;
+      position: absolute;
+      top: 0;
+      right: calc(var(--size) / 2);
+      width: min(510px, calc(100% - var(--size) / 2));
+      clip-path: polygon(100% 0, 100% 100%, 39px 100%, 39px 39px, 0 0);
+
+      transition: var(--trans-default);
+      transition-property: width, height;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        background-color: rgb(var(--c-card-border));
+
+        .stage:not(.isEven) & {
+          clip-path: polygon(0 0, 0% 100%, 100% 0);
+          left: 0;
+        }
+        .stage.isEven & {
+          clip-path: polygon(100% 100%, 0 0, 100% 0);
+          right: 0;
+        }
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        top: auto;
+        height: 20px;
+        background-image: linear-gradient(transparent, rgb(var(--c-card)));
+      }
+
+      .stage:is(:hover, :focus-visible) & {
+        width: calc(100% - var(--size) / 2);
+      }
+      .stage:not(.isEven) & {
+        padding-right: 55px;
+        clip-path: polygon(
+          100% 0,
+          calc(100% - 39px) 39px,
+          calc(100% - 39px) 100%,
+          0 100%,
+          0 0
+        );
+        border-image: linear-gradient(
+            90deg,
+            rgb(var(--c-card-border)),
+            transparent
+          )
+          1;
+      }
+      .stage.isEven & {
+        left: calc(var(--size) / 2);
+        padding-left: 55px;
+        border-image: linear-gradient(
+            -90deg,
+            rgb(var(--c-card-border)),
+            transparent
+          )
+          1;
+      }
     }
 
-    .planned & {
-      border-width: 1px;
-      background-color: rgb(var(--c-card));
-    }
-
-    .process & {
-      border-width: 1px;
-      background-color: rgb(var(--c-card));
-    }
-
-    .done & {
+    .stage.done & {
       background-image: var(--gradient);
       border: none;
       &::after {
@@ -274,12 +340,12 @@
         background-image: linear-gradient(transparent, rgb(var(--c-accent)));
       }
     }
-    .done.isEven & {
+    .stage.done.isEven & {
       &::after {
         right: 3px;
       }
     }
-    .done:not(.isEven) & {
+    .stage.done:not(.isEven) & {
       &::after {
         left: 3px;
       }
@@ -293,77 +359,63 @@
     }
 
     .prose {
-      height: 0;
       overflow: hidden;
       margin-bottom: 20px;
 
-      transition: var(--trans-default);
-      transition-property: height;
-
-      .stage:is(:hover, :focus-visible) & {
-        height: var(--max-height);
+      @media (min-width: 1280px) {
+        height: 0;
+        transition: var(--trans-default);
+        transition-property: height;
+        .stage:is(:hover, :focus-visible) & {
+          height: var(--max-height);
+        }
       }
     }
 
     h4 {
       text-transform: uppercase;
       margin-bottom: 10px;
+      & span {
+        text-transform: none;
+        font-weight: 400;
+      }
+      @media (max-width: 1279.98px) {
+        font-size: 14px;
+      }
     }
-    h4 span {
-      text-transform: none;
-      font-weight: 400;
-    }
-  }
-
-  .stage-art::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 10px;
-    height: 10px;
-    background-color: rgb(var(--c-card-border));
-
-    :not(.isEven) & {
-      clip-path: polygon(0 0, 0% 100%, 100% 0);
-      left: 0;
-    }
-    .isEven & {
-      clip-path: polygon(100% 100%, 0 0, 100% 0);
-      right: 0;
-    }
-  }
-  .stage-art::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    top: auto;
-    height: 20px;
-    background-image: linear-gradient(transparent, rgb(var(--c-card)));
   }
 
   .bottom-block {
     overflow: hidden;
-    height: 0;
     display: flex;
+    gap: 1rem;
     align-items: center;
     justify-content: space-between;
 
-    transition: var(--trans-default);
-    transition-property: height, margin;
-
-    .stage:is(:hover, :focus-visible) & {
-      height: 75px;
+    @media (max-width: 1279.98px) {
       margin-top: 20px;
+    }
+
+    @media (min-width: 1280px) {
+      height: 0;
+      transition: var(--trans-default);
+      transition-property: height, margin;
+
+      .stage:is(:hover, :focus-visible) & {
+        height: 75px;
+        margin-top: 20px;
+      }
     }
   }
 
   .progress-num {
-    font-size: 75px;
+    min-width: fit-content;
+    font-size: clamp(3.125rem, 1.634rem + 6.36vw, 4.688rem);
     font-weight: 700;
     text-transform: uppercase;
-    line-height: 0.7;
+    line-height: 1;
     color: rgb(var(--c-border));
-    .done & {
+    .stage.done & {
       color: rgb(var(--c-text));
     }
   }
@@ -371,21 +423,25 @@
   .done-text {
     font-size: 25px;
     font-weight: 700;
+    @media (max-width: 1279.98px) {
+      font-size: 1rem;
+    }
   }
 
   .scale {
+    --base-width: 300px;
     position: relative;
-    width: 300px;
+    width: calc(var(--base-width) + 2px);
     height: 10px;
     background-color: rgb(var(--c-bg));
-    border: thin solid rgb(var(--c-border));
+    border: thin solid rgb(var(--c-bg));
 
     &::after {
       content: '';
       position: absolute;
       inset: 0;
       right: auto;
-      width: calc(300px / calc(var(--max-value) / var(--value)));
+      width: calc(var(--base-width) / calc(var(--max-value) / var(--value)));
       background-color: rgb(var(--c-border));
     }
   }

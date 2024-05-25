@@ -1,18 +1,25 @@
 import { getCollection } from 'astro:content';
 import type { GameSelect } from '../schemas/gamesSchema';
+import { gamesDevStages } from './gameDevStages';
 import { gameMarketplaces } from './gameMarketplaces';
 
 export const gamesWithRelations: GameSelect[] = (await getCollection('games'))
   .map((game) => game.data)
   .map((game) => {
-    const platforms =
-      game.platforms?.map((platform) => ({
-        ...platform,
-        ...gameMarketplaces.find(
-          (marketplace) => marketplace.slug === platform.marketplace
-        )!,
-      })) ?? [];
+    const platforms = game.platforms?.map((platform) => ({
+      ...platform,
+      ...gameMarketplaces.find(
+        (marketplace) => marketplace.slug === platform.marketplace
+      )!,
+    }));
     return { ...game, platforms };
+  })
+  .map((game) => {
+    const devStages = game.devStages?.map((devStage) => ({
+      ...devStage,
+      ...gamesDevStages.find(({ slug }) => slug === devStage.stageSlug)!,
+    }));
+    return { ...game, devStages };
   });
 
 export const fakeGames: GameSelect[] = Array.from(

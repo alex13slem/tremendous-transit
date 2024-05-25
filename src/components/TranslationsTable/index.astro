@@ -1,0 +1,87 @@
+---
+import type { GameTranslation } from '../../schemas/gamesSchema';
+import { getLanguageTitle } from '../../store/languages';
+import SVGCheck from '../svg/SVGCheck.svelte';
+interface Props {
+  translations: GameTranslation[];
+}
+
+const { translations } = Astro.props;
+---
+
+<div class="root">
+  <div
+    class:list={['table-langs', translations.length <= 3 ? 'open' : '']}
+    style=`--length: ${translations.length}`
+  >
+    <div><b>Языки:</b></div>
+    <div class="ta-c"><b>Озвучка</b></div>
+    <div class="ta-c"><b>Текст</b></div>
+
+    {
+      translations.map(({ lang, voice, interface: text }) => (
+        <>
+          <div class="td-lang">{getLanguageTitle(lang)}</div>
+          <div class="td-check">{voice && <SVGCheck />}</div>
+          <div class="td-check">{text && <SVGCheck />}</div>
+        </>
+      ))
+    }
+  </div>
+  {
+    translations.length > 3 && (
+      <button class="toggle-all-langs">
+        <span>Посмотреть</span> все поддерживаемые языки ({translations.length})
+      </button>
+    )
+  }
+</div>
+
+<style lang="scss">
+  .table-langs {
+    --lh: 2.5em;
+    --min-height: calc(calc(3 + 1) * calc(var(--lh) + 1px));
+    --max-height: calc(calc(var(--length) + 1) * var(--lh));
+
+    height: var(--min-height);
+    overflow: hidden;
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(120px, auto) 1fr 1fr;
+    grid-auto-rows: var(--lh);
+
+    font-size: 14px;
+
+    transition: var(--trans-slow);
+    transition-property: height;
+
+    .td-lang {
+      grid-column: 1;
+    }
+    .td-check {
+      place-items: center;
+      color: rgb(var(--c-accent));
+    }
+    & > * {
+      display: grid;
+      align-items: center;
+      border-bottom: var(--border-card);
+      width: 100%;
+      height: 100%;
+    }
+    &.open {
+      height: var(--max-height);
+    }
+  }
+  .toggle-all-langs {
+    margin-top: -20px;
+    text-align: left;
+    font-size: 12px;
+    transition: var(--trans-default);
+    transition-property: color;
+    &:hover {
+      color: rgb(var(--c-accent));
+    }
+  }
+</style>

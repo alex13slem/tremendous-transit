@@ -1,30 +1,32 @@
 <script lang="ts">
-  // import type { CollectionEntry } from "astro:content";
   import Modal from '../../components/modals/Modal.svelte';
   import QRCode from '@castlenine/svelte-qrcode';
-  import { qrDonatModalIsOpen } from '../../store/modals';
   import Icon from '@iconify/svelte';
+  import type { GameDevCrowdfundingPlatformSelect } from '../../schemas/gameDevStagesSchema';
 
-  // export let game: CollectionEntry<"games">;
-  // const { platforms } = game.data;
+  export let crowdfundingPlatforms: GameDevCrowdfundingPlatformSelect[];
+  export let isOpen: boolean = false;
 </script>
 
-<Modal bind:isOpen={$qrDonatModalIsOpen} title="Поддержи проект">
+<Modal bind:isOpen title="Поддержи проект">
   <div class="qr-block">
-    <div class="platform">
-      <QRCode
-        content="https://boosty.to/alex13slem/donate"
-        backgroundColor="#fff"
-        color="#1c1d2b"
-        padding={0}
-        size={250}
-      />
-      <p>
-        <a href="https://boosty.to/alex13slem/donate" class="link">
-          <Icon icon="simple-icons:boosty" class="icon" /> Boosty
-        </a>
-      </p>
-    </div>
+    {#each crowdfundingPlatforms as platform}
+      <div class="platform">
+        <QRCode
+          content={platform.href}
+          backgroundColor="#fff"
+          color="#1c1d2b"
+          padding={0}
+          size={278}
+        />
+        <p>
+          <a href={platform.href} class="link">
+            <Icon icon={platform.iconifyId} class="icon" />
+            {platform.title}
+          </a>
+        </p>
+      </div>
+    {/each}
   </div>
 </Modal>
 
@@ -33,6 +35,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
+    margin-inline: auto;
   }
   .platform {
     display: flex;

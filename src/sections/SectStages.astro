@@ -1,0 +1,33 @@
+---
+import ProjectStage from '../components/ProjectStage.svelte';
+import type { GameDevStageSelect } from '../schemas/gamesSchema';
+import SectCommon from './SectCommon.astro';
+
+interface Props {
+  gameDevStages: GameDevStageSelect[];
+}
+
+const { gameDevStages } = Astro.props;
+---
+
+<SectCommon title="План проекта">
+  <div class="stages">
+    {
+      gameDevStages.map((stage, idx) => (
+        <ProjectStage
+          client:load
+          {stage}
+          isLast={gameDevStages.length - 1 === idx}
+        />
+      ))
+    }
+  </div>
+</SectCommon>
+
+<style lang="scss">
+  .stages {
+    @media (max-width: 1279.98px) {
+      margin-inline: calc(var(--container-offset) * -1);
+    }
+  }
+</style>

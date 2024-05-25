@@ -1,21 +1,22 @@
 import { defineCollection } from 'astro:content';
+import { articleCategoriesSchema } from '../schemas/articleCategories';
+import { articlesSchema } from '../schemas/articlesSchema';
 import { artistsSchema } from '../schemas/artistsSchema';
 import { citiesSchema } from '../schemas/citiesSchema';
 import { companyInfoSchema } from '../schemas/companyInfo';
+import { crowdfundingPlatformsSchema } from '../schemas/crowdfundingPlatformsSchema';
+import { gameDevStageSchema } from '../schemas/gameDevStagesSchema';
 import { developersSchema } from '../schemas/gameDevelopersSchema';
 import { gameFavoritesSchema } from '../schemas/gameFavoritesSchema';
 import { gameGenresSchema } from '../schemas/gameGenresSchema';
 import { marketplacesSchema } from '../schemas/gameMarketplacesSchema';
 import { publishersSchema } from '../schemas/gamePublishersSchema';
-import { gameStagesSchema } from '../schemas/gameStagesSchema';
 import { gameStatusesSchema } from '../schemas/gameStatusesSchema';
 import { gamesSchema } from '../schemas/gamesSchema';
 import { languagesSchema } from '../schemas/languagesSchema';
 import { navLinksSchema } from '../schemas/navLinks';
 import { professionsSchema } from '../schemas/professionsSchema';
 import { publishingSlidesSchema } from '../schemas/publishingSlidesSchema';
-import { serviceArticlesSchema } from '../schemas/serviceArticlesSchema';
-import { serviceCategoriesSchema } from '../schemas/serviceCategories';
 import { socialsSchema } from '../schemas/socialsSchema';
 import { vacancySchema } from '../schemas/vacancySchema';
 
@@ -59,9 +60,9 @@ const socialsCollection = defineCollection({
   schema: socialsSchema,
 });
 
-const serviceCategoriesCollection = defineCollection({
+const articleCategoriesCollection = defineCollection({
   type: 'data',
-  schema: serviceCategoriesSchema,
+  schema: articleCategoriesSchema,
 });
 
 const languagesCollection = defineCollection({
@@ -69,9 +70,9 @@ const languagesCollection = defineCollection({
   schema: languagesSchema,
 });
 
-const serviceArticlesCollection = defineCollection({
+const articlesCollection = defineCollection({
   type: 'content',
-  schema: serviceArticlesSchema,
+  schema: articlesSchema,
 });
 
 const citiesCollection = defineCollection({
@@ -109,9 +110,14 @@ const artistsCollection = defineCollection({
   schema: artistsSchema,
 });
 
-const gameStagesCollection = defineCollection({
+const gameDevStagesCollection = defineCollection({
   type: 'data',
-  schema: gameStagesSchema,
+  schema: gameDevStageSchema,
+});
+
+const crowdfundingPlatformsCollection = defineCollection({
+  type: 'data',
+  schema: crowdfundingPlatformsSchema,
 });
 
 export const collections = {
@@ -119,16 +125,17 @@ export const collections = {
   professions: professionsCollection,
   'company-info': companyInfoCollection,
   games: gamesCollection,
+  'crowdfunding-platforms': crowdfundingPlatformsCollection,
   'game-genres': gameGenresCollection,
   'game-statuses': gameStatusesCollection,
   'game-favorites': gameFavoritesCollection,
   'game-marketplaces': gameMarketplacesCollection,
-  'game-stages': gameStagesCollection,
+  'game-dev-stages': gameDevStagesCollection,
   languages: languagesCollection,
   developers: developersCollection,
   publishers: publishersCollection,
-  'service-articles': serviceArticlesCollection,
-  'service-categories': serviceCategoriesCollection,
+  articles: articlesCollection,
+  'article-categories': articleCategoriesCollection,
   'publishing-slides': publishingSlidesCollection,
   socials: socialsCollection,
   'nav-links': navLinksCollection,

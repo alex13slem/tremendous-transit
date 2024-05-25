@@ -13,7 +13,7 @@ body: |-
 genre:
   - arcade
 type: isMobile
-browserLink: ""
+browserLink: ''
 developer: eisvil
 publisher: eisvil
 releaseDate: 2024-04-12T13:43:00
@@ -27,15 +27,32 @@ translations:
 platforms:
   - marketplace: apple
     href: https://apps.apple.com/us/app/township/id638689075
-    appId: "638689075"
+    appId: '638689075'
   - marketplace: google
     href: https://play.google.com/store/apps/details?id=com.gamebrain.hexasort&hl=ru&gl=US
     appId: com.gamebrain.hexasort
+devStages:
+  - stageSlug: first
+    num: 1
+    title: Первый этап
+  - title: Второй этап
+    stageSlug: vtoroy-etap
+    num: 2
+  - title: Третий этап
+    stageSlug: tretiy-etap
+    num: 3
+  - title: Четвёртый этап
+    stageSlug: chetvertiy-etap
+    num: 4
+  - title: Пятый этап
+    stageSlug: pyatiy-etap
+    num: 5
 status: dev
 favorites:
   - top
   - best
 thumbnail: /images/uploads/academy-1024x500.jpg
+icon: /images/uploads/icon.jpg
 heroImage:
   src: /images/uploads/academy-baner.jpg
   srcPlaceholder: /images/uploads/banner-ph.webp

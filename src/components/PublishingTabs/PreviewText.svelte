@@ -1,24 +1,27 @@
 <script lang="ts">
   import { parse } from 'marked';
-  import ModalTrigger from '../modals/ModalTrigger.svelte';
   import { publishingSlides } from '../../store/publishing-slides';
   import { activeIdx } from '.';
+  import {
+    PublishingModal,
+    isOpen as modalIsOpen,
+  } from '../modals/PublishingModal';
+  import BtnFirm from '../ui/BtnFirm.svelte';
 </script>
 
 {#each $publishingSlides as { slug, article }, idx}
   {#if idx === $activeIdx}
     <div class="preview">
-      {#if article}
+      {#if article.description}
         <div class="body prose">
           {@html parse(article.description)}
         </div>
       {/if}
       <div class="buttons">
-        <ModalTrigger type="publishing" slug={article.slug}
-          >Подать заявку</ModalTrigger
-        >
+        <BtnFirm on:click={() => ($modalIsOpen = true)}>Подать заявку</BtnFirm>
       </div>
     </div>
+    <PublishingModal targetSlug={article.slug} />
   {/if}
 {/each}
 

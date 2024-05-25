@@ -15,10 +15,9 @@
     text-align: left;
     overflow: hidden;
     position: relative;
-    padding-inline: 2ch;
+    padding: 1em 2ch;
 
     font-weight: 700;
-    line-height: 3em;
     text-transform: uppercase;
     cursor: pointer;
     transition: background-color var(--trans-default);
@@ -62,7 +61,7 @@
 
     &::after,
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       width: 5px;
       height: 0;
