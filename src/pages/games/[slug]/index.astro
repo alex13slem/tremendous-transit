@@ -11,6 +11,7 @@ import GameActionButton from '../../../components/GameActionButton.svelte';
 import { getArtistBySlug } from '../../../store/artists';
 import { TeamSlider } from '../../../components/TeamSlider';
 import SectStages from '../../../sections/SectStages.astro';
+import GamesHero from '../../../sections/GamesHero.svelte';
 
 export async function getStaticPaths() {
   const paths = gamesWithRelations.map((game) => ({
@@ -35,9 +36,7 @@ const artists = !game.team?.length
 <BasicLayout>
   <SEO slot="seo" {title} {description} imageUrls={{ fb: seoImg.toString() }} />
 
-  <GameHero {game}>
-    <GameActionButton {game} client:load />
-  </GameHero>
+  <GamesHero {game} />
 
   <SectGamesDetail {game} />
 

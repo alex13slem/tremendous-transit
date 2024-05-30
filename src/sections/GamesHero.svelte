@@ -2,25 +2,37 @@
   import { getRandom } from '../utils/helpers';
   import { fade } from 'svelte/transition';
   import { onMount } from 'svelte';
-  import type { Game } from '../schemas/gamesSchema';
+  import type { GameSelect } from '../schemas/gamesSchema';
   import { topGames } from '../store/games';
   import GameActionButton from '../components/GameActionButton.svelte';
+  import { useragent } from '@sveu/browser';
 
-  let game: Game;
+  const { mobile } = useragent();
+
+  export let game: GameSelect | undefined = undefined;
 
   onMount(() => {
-    game = getRandom(topGames);
+    if (!game) game = getRandom(topGames);
   });
 </script>
 
 <div class="games-hero">
   {#if game}
-    <img
-      transition:fade={{ duration: 300 }}
-      src={game.heroImage.src}
-      style="background-image: {game.heroImage.srcPlaceholder};"
-      alt={game.title}
-    />
+    <!-- <img transition:fade={{ duration: 300 }} src={game.icon} alt={game.title} /> -->
+    {#if $mobile}
+      <img
+        transition:fade={{ duration: 300 }}
+        src={game.thumbnail}
+        alt={game.title}
+      />
+    {:else}
+      <img
+        transition:fade={{ duration: 300 }}
+        src={game.heroImage.src}
+        style="background-image: {game.heroImage.srcPlaceholder};"
+        alt={game.title}
+      />
+    {/if}
 
     <GameActionButton {game} />
   {/if}
