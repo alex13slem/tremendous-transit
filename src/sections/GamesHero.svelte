@@ -21,13 +21,13 @@
     <!-- <img transition:fade={{ duration: 300 }} src={game.icon} alt={game.title} /> -->
     {#if $mobile}
       <img
-        transition:fade={{ duration: 300 }}
+        transition:fade={{ duration: 100 }}
         src={game.icon}
         alt={game.title}
       />
     {:else}
       <img
-        transition:fade={{ duration: 300 }}
+        transition:fade={{ duration: 100 }}
         src={game.heroImage.src}
         style="background-image: {game.heroImage.srcPlaceholder};"
         alt={game.title}
