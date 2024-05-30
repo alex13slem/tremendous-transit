@@ -4,7 +4,7 @@
   import List from './List.svelte';
   import Panels from './Panels.svelte';
   import { Select } from '../ui/Select';
-  import { options, selectedOptionValue } from './index';
+  import { options, selectedOptionValue } from '.';
 </script>
 
 <TabGroup class={css.root}>

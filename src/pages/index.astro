@@ -9,6 +9,8 @@ import { PublishingTabs } from '../components/PublishingTabsInf';
 import SEO from '../layouts/SEO.astro';
 import { navLinks } from '../store/nav-links';
 import { bestGames } from '../store/games';
+import { PublishingModal } from '../components/modals/PublishingModal';
+import { DevServModal } from '../components/modals/DevServModal';
 
 const toDetailDevelopment = navLinks.find(
   ({ slug }) => slug === 'development'
@@ -35,4 +37,7 @@ const toDetailPublishing = navLinks.find(
   </SectCommon>
 
   <SectCarrier linkToDetail="/career" />
+
+  <PublishingModal client:load />
+  <DevServModal client:load />
 </BasicLayout>

@@ -2,7 +2,6 @@
   import { PublishingForm } from '../../forms/PublishingForm';
   import Modal from '../Modal.svelte';
   import { isOpen } from '.';
-  export let targetSlug: string | null = null;
 </script>
 
 <Modal
@@ -16,5 +15,5 @@
     ],
   }}
 >
-  <PublishingForm {targetSlug} />
+  <PublishingForm />
 </Modal>

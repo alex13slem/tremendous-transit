@@ -17,8 +17,9 @@
   import { isSubmitted } from '.';
 
   import { isOpen as modalIsOpen } from '../../modals/PublishingModal';
+  import { urlQuery } from '@sveu/browser';
 
-  export let targetSlug: string | null = null;
+  const query = urlQuery('history');
 
   let formValues = { ...formValuesInit };
   let submitting = false;
@@ -60,10 +61,11 @@
   };
 
   onMount(() => {
-    if (targetSlug) {
+    if ($query['publishing-slug']) {
       formValues.selectedDir =
-        publishingOptions.find((option) => option.slug === targetSlug)?.value ||
-        null;
+        publishingOptions.find(
+          (option) => option.slug === $query['publishing-slug']
+        )?.value || null;
     }
   });
 </script>

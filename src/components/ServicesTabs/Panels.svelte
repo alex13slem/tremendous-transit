@@ -5,14 +5,17 @@
   import css from './panels.module.scss';
   import { formatStrToId } from '../../utils/helpers';
   import { devArticles } from '../../store/service-articles';
-  import { useragent } from '@sveu/browser';
+  import { urlQuery, useragent } from '@sveu/browser';
   import { selectedOptionValue } from '.';
   import type { SwiperContainer } from 'swiper/element';
   import BtnFirm from '../ui/BtnFirm.svelte';
-  import { DevServModal, isOpen as modalIsOpen } from '../modals/DevServModal';
+  import { isOpen as modalIsOpen } from '../modals/DevServModal';
+  import { navigate } from 'astro:transitions/client';
+
+  const query = urlQuery('history');
+  const { mobile } = useragent();
 
   let swiperEl: SwiperContainer;
-  const { mobile } = useragent();
 
   let isEnd: boolean;
   let isBeginning: boolean;
@@ -96,13 +99,17 @@
           </div>
 
           <div class={css['btn-wrap']}>
-            <BtnFirm variant="contrast" on:click={() => ($modalIsOpen = true)}
-              >Расчитать</BtnFirm
+            <BtnFirm
+              variant="contrast"
+              on:click={() => {
+                if ($mobile) navigate(`/development/form`);
+                else $modalIsOpen = true;
+                $query['development-slug'] = slug;
+              }}>Расчитать</BtnFirm
             >
           </div>
         </div>
       {/if}
-      <DevServModal targetSlug={slug} />
     {/each}
   </TabPanels>
 </div>

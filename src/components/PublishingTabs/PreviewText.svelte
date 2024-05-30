@@ -2,11 +2,10 @@
   import { parse } from 'marked';
   import { publishingSlides } from '../../store/publishing-slides';
   import { activeIdx } from '.';
-  import {
-    PublishingModal,
-    isOpen as modalIsOpen,
-  } from '../modals/PublishingModal';
+  import { PublishingModal } from '../modals/PublishingModal';
   import BtnFirm from '../ui/BtnFirm.svelte';
+
+  let isOpen = false;
 </script>
 
 {#each $publishingSlides as { slug, article }, idx}
@@ -18,10 +17,10 @@
         </div>
       {/if}
       <div class="buttons">
-        <BtnFirm on:click={() => ($modalIsOpen = true)}>Подать заявку</BtnFirm>
+        <BtnFirm on:click={() => (isOpen = true)}>Подать заявку</BtnFirm>
       </div>
     </div>
-    <PublishingModal targetSlug={article.slug} />
+    <PublishingModal />
   {/if}
 {/each}
 

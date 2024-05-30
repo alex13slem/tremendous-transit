@@ -2,11 +2,12 @@
   import { parse } from 'marked';
   import { activeIdx } from '.';
   import { publishingSlides } from '../../store/publishing-slides';
-  import {
-    PublishingModal,
-    isOpen as modalIsOpen,
-  } from '../modals/PublishingModal';
   import BtnFirm from '../ui/BtnFirm.svelte';
+  import { urlQuery, useragent } from '@sveu/browser';
+  import { navigate } from 'astro:transitions/client';
+  import { isOpen } from '../modals/PublishingModal';
+  const query = urlQuery('history');
+  const { mobile } = useragent();
 
   let currIdx: number;
   activeIdx.subscribe((idx) => {
@@ -28,10 +29,15 @@
         </div>
       {/if}
       <div class="buttons">
-        <BtnFirm on:click={() => ($modalIsOpen = true)}>Подать заявку</BtnFirm>
+        <BtnFirm
+          on:click={() => {
+            if ($mobile) navigate('/publishing/form');
+            else $isOpen = true;
+            $query['publishing-slug'] = article.slug;
+          }}>Подать заявку</BtnFirm
+        >
       </div>
     </div>
-    <PublishingModal targetSlug={article.slug} />
   {/if}
 {/each}
 

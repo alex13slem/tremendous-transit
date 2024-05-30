@@ -16,8 +16,9 @@
   import { onMount } from 'svelte';
   import { isOpen as modalIsOpen } from '../../modals/DevServModal';
   import { isSubmitted } from '.';
+  import { urlQuery } from '@sveu/browser';
 
-  export let targetSlug: string | null = null;
+  const query = urlQuery('history');
 
   let formValues = { ...formValuesInit };
   let submitting = false;
@@ -58,10 +59,11 @@
   };
 
   onMount(() => {
-    if (targetSlug) {
+    if ($query['development-slug']) {
       formValues.selectedService =
-        servicesOptions.find((option) => option.slug === targetSlug)?.value ||
-        null;
+        servicesOptions.find(
+          (option) => option.slug === $query['development-slug']
+        )?.value || null;
     }
   });
 </script>

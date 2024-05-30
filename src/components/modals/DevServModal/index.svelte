@@ -1,9 +1,7 @@
 <script lang="ts">
   import Modal from '../Modal.svelte';
-  import { isOpen } from '.';
   import { ServicesForm } from '../../forms/ServicesForm';
-
-  export let targetSlug: string | null = null;
+  import { isOpen } from '.';
 </script>
 
 <Modal
@@ -17,5 +15,5 @@
     ],
   }}
 >
-  <ServicesForm {targetSlug} />
+  <ServicesForm />
 </Modal>
