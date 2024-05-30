@@ -17,24 +17,22 @@
 </script>
 
 <div class="games-hero">
-  {#if $mobile}
-    {#if game}
-      <!-- <img transition:fade={{ duration: 300 }} src={game.icon} alt={game.title} /> -->
+  {#if game}
+    <!-- <img transition:fade={{ duration: 300 }} src={game.icon} alt={game.title} /> -->
+    {#if $mobile}
       <img
         transition:fade={{ duration: 300 }}
-        src={game.thumbnail}
+        src={game.icon}
+        alt={game.title}
+      />
+    {:else}
+      <img
+        transition:fade={{ duration: 300 }}
+        src={game.heroImage.src}
+        style="background-image: {game.heroImage.srcPlaceholder};"
         alt={game.title}
       />
     {/if}
-  {:else if game}
-    <img
-      transition:fade={{ duration: 300 }}
-      src={game.heroImage.src}
-      style="background-image: {game.heroImage.srcPlaceholder};"
-      alt={game.title}
-    />
-  {/if}
-  {#if game}
     <GameActionButton {game} />
   {/if}
 </div>
