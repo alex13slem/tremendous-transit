@@ -34,7 +34,7 @@ const artists = !game.team?.length
 <BasicLayout>
   <SEO slot="seo" {title} {description} imageUrls={{ fb: seoImg.toString() }} />
 
-  <GamesHero {game} />
+  <GamesHero {game} client:load />
 
   <SectGamesDetail {game} />
 
