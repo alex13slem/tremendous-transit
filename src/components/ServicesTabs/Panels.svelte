@@ -102,7 +102,8 @@
             <BtnFirm
               variant="contrast"
               on:click={() => {
-                if ($mobile) navigate(`/development/form`);
+                if ($mobile)
+                  navigate(`/development/form?development-slug=${slug}`);
                 else $modalIsOpen = true;
                 $query['development-slug'] = slug;
               }}>Расчитать</BtnFirm

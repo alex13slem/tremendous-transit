@@ -17,7 +17,7 @@
 <div class="root">
   {#if $mobile}
     <form action="/{category}/form">
-      <input type="hidden" name="publishing-slug" value={article.slug} />
+      <input type="hidden" name={`${category}-slug`} value={article.slug} />
       <BtnFirm variant="contrast">Заказать</BtnFirm>
     </form>
   {:else}

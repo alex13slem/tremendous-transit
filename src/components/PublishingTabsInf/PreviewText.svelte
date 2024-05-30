@@ -31,9 +31,12 @@
       <div class="buttons">
         <BtnFirm
           on:click={() => {
-            if ($mobile) navigate('/publishing/form');
-            else $isOpen = true;
-            $query['publishing-slug'] = article.slug;
+            if ($mobile)
+              navigate('/publishing/form?publishing-slug=' + article.slug);
+            else {
+              $isOpen = true;
+              $query['publishing-slug'] = article.slug;
+            }
           }}>Подать заявку</BtnFirm
         >
       </div>
