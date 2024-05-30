@@ -18,21 +18,16 @@
 
 <div class="games-hero">
   {#if game}
-    <!-- <img transition:fade={{ duration: 300 }} src={game.icon} alt={game.title} /> -->
-    {#if $mobile}
+    <picture>
+      <source media="(max-width: 1023.98px)" srcset={game.icon} />
       <img
         transition:fade={{ duration: 100 }}
-        src={game.icon}
-        alt={game.title}
-      />
-    {:else}
-      <img
-        transition:fade={{ duration: 100 }}
+        loading="lazy"
         src={game.heroImage.src}
         style="background-image: {game.heroImage.srcPlaceholder};"
         alt={game.title}
       />
-    {/if}
+    </picture>
     <GameActionButton {game} />
   {/if}
 </div>
