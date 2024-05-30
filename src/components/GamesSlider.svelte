@@ -91,7 +91,7 @@
   .wrap {
     position: relative;
     z-index: 0;
-    margin: -20px;
+    margin: calc(var(--container-offset) * -1);
   }
   .wrap::after,
   .wrap::before {
@@ -99,7 +99,7 @@
     content: '';
     position: absolute;
     height: 100%;
-    width: 30px;
+    width: var(--container-offset);
     top: 0;
     background: linear-gradient(90deg, rgb(var(--c-bg)), transparent);
   }
@@ -112,7 +112,7 @@
   }
 
   .slide-wrap {
-    padding: 20px;
+    padding: var(--container-offset);
     min-width: 270px;
   }
   swiper-container {

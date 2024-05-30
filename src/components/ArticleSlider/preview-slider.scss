@@ -1,6 +1,7 @@
 .root {
   position: relative;
-  margin: -1rem;
+  // margin: -1rem;
+  margin: calc(var(--container-offset) * -1);
   transition: var(--load-fade);
   transition-property: opacity;
   &.load {
@@ -42,7 +43,8 @@
 .slide-wrap {
   position: relative;
 
-  padding: 1rem;
+  // padding: 1rem;
+  padding: var(--container-offset);
 
   display: flex;
   align-items: center;

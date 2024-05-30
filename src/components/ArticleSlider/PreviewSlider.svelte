@@ -2,8 +2,10 @@
   import { type SwiperContainer } from 'swiper/element/bundle';
   import type { Image } from '../../types/project';
   import { beforeUpdate, onMount } from 'svelte';
+  import { formatStrToId } from '../../utils/helpers';
 
   export let data: Image[];
+  export let staticHref: string | undefined = undefined;
 
   let swiperEl: SwiperContainer;
 
@@ -15,13 +17,6 @@
     isEnd = swiper.isEnd;
     isBeginning = swiper.isBeginning;
   };
-  // onMount(() => {
-  //   swiperEl.breakpoints = {
-  //     1024: {
-  //       slidesPerView: 3.33,
-  //     },
-  //   };
-  // });
 </script>
 
 <div class="root" class:isEnd class:isBeginning class:load={!swiperEl}>
@@ -31,13 +26,24 @@
     mousewheel
     slides-per-view="auto"
     watch-slides-progress
-    space-between={-16}
+    space-between={-20}
     on:swiperprogress={onProgress}
   >
     {#each data as { src, alt }}
       <swiper-slide class="slide">
         <div class="slide-wrap">
-          <button><img {src} {alt} /></button>
+          <button>
+            {#if staticHref}
+              <a
+                href={staticHref + '/#' + formatStrToId(alt)}
+                data-astro-reload
+              >
+                <img {src} {alt} loading="lazy" />
+              </a>
+            {:else}
+              <img {src} {alt} loading="lazy" />
+            {/if}
+          </button>
         </div>
       </swiper-slide>
     {/each}
