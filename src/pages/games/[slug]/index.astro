@@ -38,7 +38,7 @@ const artists = !game.team?.length
 
   <SectGamesDetail {game} />
 
-  {game.devStages && <SectStages gameDevStages={game.devStages} />}
+  {!!game.devStages?.length && <SectStages gameDevStages={game.devStages} />}
 
   {
     artists ? (

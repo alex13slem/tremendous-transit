@@ -1,3 +1,26 @@
-import { atom } from "nanostores";
+import { writable } from 'svelte/store';
 
-export const isOpen = atom(false);
+const createSiteMenuStore = () => {
+  const { subscribe, set, update } = writable(false);
+
+  const open = () => {
+    set(true);
+  };
+
+  const close = () => {
+    set(false);
+  };
+
+  const toggle = () => {
+    update((open) => !open);
+  };
+
+  return {
+    subscribe,
+    open,
+    close,
+    toggle,
+  };
+};
+
+export const siteMenuStore = createSiteMenuStore();

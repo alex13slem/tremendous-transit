@@ -61,12 +61,8 @@ const {
         {genre.map((g) => <span>{getGenreTitle(g)}</span>)}
       </div>
     </div>
-    <PreviewSlider client:load data={gallery} />
-    {
-      platforms && (
-        <PlatformsSlider client:load {platforms} isScrollable={false} />
-      )
-    }
+    {gallery && <PreviewSlider client:load data={gallery} />}
+    {platforms && <PlatformsSlider client:load {platforms} />}
     <div>
       <h2 class="sect-title">
         Описание <LinkToDetailPage

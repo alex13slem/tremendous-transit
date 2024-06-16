@@ -95,9 +95,8 @@ export const gamesCollection: CmsCollection = {
       label: 'Дата выхода',
       name: 'releaseDate',
       widget: 'datetime',
-      date_format: 'DD-MM-YYYY',
-      default: '',
       picker_utc: true,
+      required: false,
     },
     {
       // Комманда разработчиков

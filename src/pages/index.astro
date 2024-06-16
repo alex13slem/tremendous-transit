@@ -4,13 +4,14 @@ import SectCarrier from '../sections/SectCarrier.astro';
 import BasicLayout from '../layouts/BasicLayout.astro';
 import GamesSlider from '../components/GamesSlider.svelte';
 import { ServicesTabs } from '../components/ServicesTabs';
-import SectCommon from '../sections/SectCommon.astro';
 import { PublishingTabs } from '../components/PublishingTabsInf';
 import SEO from '../layouts/SEO.astro';
 import { navLinks } from '../store/nav-links';
 import { bestGames } from '../store/games';
 import { PublishingModal } from '../components/modals/PublishingModal';
 import { DevServModal } from '../components/modals/DevServModal';
+import LinkToDetailPage from '../components/ui/LinkToDetailPage.svelte';
+import { OnDetailServices } from '../components/detail-links/OnDetailServices';
 
 const toDetailDevelopment = navLinks.find(
   ({ slug }) => slug === 'development'
@@ -24,20 +25,54 @@ const toDetailPublishing = navLinks.find(
   <SEO slot="seo" title="Главная" description={''} imageUrls={{ fb: '' }} />
   <SectHero wInteractive />
 
-  <SectCommon title="Наши игры" linkToDetail="/games">
-    <GamesSlider client:load games={bestGames} />
-  </SectCommon>
+  <section class="our-games">
+    <div class="container">
+      <h2 class="sect-title">
+        Наши игры
+        <LinkToDetailPage to="/games" client:visible />
+      </h2>
+      <GamesSlider client:load games={bestGames} />
+    </div>
+  </section>
 
-  <SectCommon title="Услуги" linkToDetail={toDetailDevelopment}>
-    <ServicesTabs client:visible />
-  </SectCommon>
+  <section class="services">
+    <div class="container">
+      <h2 class="sect-title">
+        Услуги
+        <OnDetailServices client:load />
+      </h2>
+      <ServicesTabs client:visible />
+    </div>
+  </section>
 
-  <SectCommon title="Издательство" linkToDetail={toDetailPublishing}>
-    <PublishingTabs client:visible />
-  </SectCommon>
+  <section class="publishing">
+    <div class="container">
+      <h2 class="sect-title">
+        Издательство
+        <LinkToDetailPage to={toDetailPublishing} client:visible />
+      </h2>
+      <PublishingTabs client:visible />
+    </div>
+  </section>
 
   <SectCarrier linkToDetail="/career" />
 
   <PublishingModal client:load />
   <DevServModal client:load />
 </BasicLayout>
+
+<style lang="scss">
+  section {
+    overflow: clip;
+  }
+
+  .container {
+    position: relative;
+  }
+
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>

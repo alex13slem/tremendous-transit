@@ -32,6 +32,7 @@
     autocomplete="new-password"
     {...$$restProps}
   />
+
   {#if error && errorVisible}
     <p
       class="error-message"

@@ -17,6 +17,7 @@
     inset: -1px;
     width: var(--container-offset);
     background: linear-gradient(90deg, transparent, rgb(var(--c-bg)));
+    transition: var(--trans-default);
     @media (min-width: 1290px) {
       width: 15%;
     }

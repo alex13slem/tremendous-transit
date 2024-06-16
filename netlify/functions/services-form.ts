@@ -1,43 +1,57 @@
+import type { HandlerContext, HandlerEvent } from '@netlify/functions';
 import type { ServicesFormSchema } from '../../src/schemas/forms';
 import { notifyViaTelegramBot } from '../../src/utils/notifyViaTelegramBot';
-import { post } from '../post';
+import handleNetlifyPost from '../handleNetlifyPost';
 
 const { TG_BOT_SERVICES_API_TOKEN, TG_BOT_SERVICES_CHAT_ID } = process.env;
 
-async function sendBlogerForm(data: ServicesFormSchema) {
+async function sendServicesForm(
+  data: ServicesFormSchema,
+  event: HandlerEvent,
+  context: HandlerContext
+): Promise<Response> {
   const { botFlaggedSpam, access, name, email, info, selectedService } = data;
 
-  let error = false;
-  let statusText;
-
   if (!access) {
-    error = true;
-    statusText =
+    const statusText =
       'There is no agreement with the privacy policy on the processing of personal data';
-  }
-  if (botFlaggedSpam) {
-    error = true;
-    statusText = 'Spam detected';
-  }
-
-  if (error) {
     console.error(new Error(statusText));
-    return Promise.reject({ status: 400, statusText });
+    return new Response(JSON.stringify({ error: statusText }), {
+      status: 400,
+      statusText,
+    });
   }
 
-  const htmlMessage = /* html */ `<b>${selectedService}</b>
+  if (botFlaggedSpam) {
+    const statusText = 'Spam detected';
+    console.error(new Error(statusText));
+    return new Response(JSON.stringify({ error: statusText }), {
+      status: 400,
+      statusText,
+    });
+  }
 
-  <i>имя</i>: ${name}
-  <i>почта</i>: <a href="mailto:${email}">${email}</a>
-  <i>о проекте</i>: ${info || 'нет'}`;
+  const htmlMessage = /* html */ `
+<b>Заявка на услугу:</b> ${selectedService}
 
-  const { status } = await notifyViaTelegramBot({
-    htmlMessage,
-    apiToken: TG_BOT_SERVICES_API_TOKEN,
-    chatId: TG_BOT_SERVICES_CHAT_ID,
-  });
+<b>Имя</b>: ${name}
+<b>Почта</b>: <a href="mailto:${email}">${email}</a>
+<b>О проекте</b>: ${info || 'нет'}`;
 
-  return new Response(JSON.stringify({ data }), { status });
+  try {
+    const { status } = await notifyViaTelegramBot({
+      text: htmlMessage,
+      apiToken: TG_BOT_SERVICES_API_TOKEN!,
+      chatId: TG_BOT_SERVICES_CHAT_ID!,
+    });
+
+    return new Response(JSON.stringify({ data }), { status });
+  } catch (error: any) {
+    console.error(error);
+    return new Response(JSON.stringify({ error: 'Failed to send message' }), {
+      status: 500,
+    });
+  }
 }
 
-export default post(sendBlogerForm);
+export const handler = handleNetlifyPost(sendServicesForm);

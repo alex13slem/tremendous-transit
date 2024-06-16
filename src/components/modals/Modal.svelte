@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { blur } from 'svelte/transition';
   import Icon from '@iconify/svelte';
   import Portal from '../Portal.svelte';
   import type { Link } from '../../types/project';
@@ -33,13 +32,13 @@
             {#if links}
               <aside>
                 {#if links?.contacts.length}
-                  <h3>Можете написать нам сами:</h3>
+                  <h3>Наша почта:</h3>
                   {#each links.contacts as { href, text }}
                     <a {href}>{text}</a>
                   {/each}
                 {/if}
                 {#if links?.other.length}
-                  <h3>Как мы работаем | полезное:</h3>
+                  <h3>Как мы работаем · Полезное:</h3>
                   {#each links.other as { href, text }}
                     <a {href}>{text}</a>
                   {/each}
@@ -82,7 +81,7 @@
     display: flex;
     align-items: center;
     padding: var(--padding);
-    padding-top: 3rem;
+    // padding-top: 3rem;
 
     border-bottom: var(--border-card);
     h2 {

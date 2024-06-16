@@ -76,7 +76,6 @@ swiper-container.load {
 
 .left {
   flex: 1 0 630px;
-  padding-top: 11px;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -93,6 +92,7 @@ swiper-container.load {
       inset: 0;
       z-index: 2;
       height: 100%;
+      pointer-events: none;
     }
 
     clip-path: polygon(

@@ -32,6 +32,7 @@ export const publishingSlidesCollection: CmsCollection = {
       label: 'Текст',
       name: 'text',
       widget: 'markdown',
+      hint: 'НЕ ИСПОЛЬЗОВАТЬ',
     },
     {
       label: 'Изображение',

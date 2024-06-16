@@ -1,24 +1,22 @@
 import { getCollection } from 'astro:content';
 import type { NavLink } from '../types/project';
-import { aboutUsArticles } from './about-us-articles';
-import { devArticles, pubArticles } from './service-articles';
+import { aboutUsArticles, devArticles, pubArticles } from './articles';
 
 const navLinksCollection = await getCollection('nav-links');
 
-const devArticlesNavLinks: NavLink[] = devArticles.get().map((article) => ({
+const devArticlesNavLinks: NavLink[] = devArticles.map((article) => ({
   href: `/development/${article.slug}`,
   text: article.data.title,
   slug: article.slug,
 }));
 
-const pubArticlesNavLinks: NavLink[] = pubArticles.get().map((article) => ({
+const pubArticlesNavLinks: NavLink[] = pubArticles.map((article) => ({
   href: `/publishing/${article.slug}`,
   text: article.data.title,
   slug: article.slug,
 }));
 
 const aboutUsNavLinks: NavLink[] = aboutUsArticles
-  .get()
   .filter((a) => a.slug !== 'about-us')
   .map((article) => ({
     href: `/about-us/${article.slug}`,

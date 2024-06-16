@@ -59,26 +59,6 @@
           <GameCard {game} />
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div class="slide-wrap">
-          <GameCard {game} />
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="slide-wrap">
-          <GameCard {game} />
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="slide-wrap">
-          <GameCard {game} />
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="slide-wrap">
-          <GameCard {game} />
-        </div>
-      </swiper-slide>
     {/each}
   </swiper-container>
   <div class="pagination" />

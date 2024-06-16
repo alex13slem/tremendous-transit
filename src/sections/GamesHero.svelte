@@ -5,9 +5,6 @@
   import type { GameSelect } from '../schemas/gamesSchema';
   import { topGames } from '../store/games';
   import GameActionButton from '../components/GameActionButton.svelte';
-  import { useragent } from '@sveu/browser';
-
-  const { mobile } = useragent();
 
   export let game: GameSelect | undefined = undefined;
 

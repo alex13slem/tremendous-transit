@@ -66,17 +66,14 @@
   border-top: var(--border-card-accent);
   padding: 14px 10px 10px;
   display: grid;
-  grid-template-areas:
-    'title title'
-    'tags links';
   grid-template-columns: 1fr auto;
-  row-gap: 16px;
+  gap: 1rem;
   transition: var(--trans-default);
   transition-property: border-color;
 }
 .body h3 {
   overflow: hidden;
-  grid-area: title;
+  grid-column: span 2;
   font-size: 16px;
   line-height: 1;
   white-space: nowrap;
@@ -85,16 +82,22 @@
 
 .tags {
   margin: 0;
-  grid-area: tags;
-  display: flex;
-  align-items: flex-end;
-  gap: 0.5ch;
+  // grid-area: tags;
+  // display: flex;
+  // align-items: flex-end;
+  // gap: 0.5ch;
   font-size: 10px;
   letter-spacing: 0.15ch;
   color: rgb(var(--c-text), 30%);
   font-weight: 300;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
-.tags :global(span):not(:last-of-type)::after {
-  content: '|';
-  margin-left: 0.5ch;
+.favorites {
+  color: rgb(var(--c-accent));
 }
+// .tags :global(span):not(:last-of-type)::after {
+//   content: '|';
+//   margin-left: 0.5ch;
+// }

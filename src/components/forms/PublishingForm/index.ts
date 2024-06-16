@@ -1,6 +1,6 @@
 import localforage from 'localforage';
-import { atom } from 'nanostores';
-import { pubArticles } from '../../../store/service-articles';
+import { writable } from 'svelte/store';
+import { pubArticles } from '../../../store/articles';
 import Root from './index.svelte';
 
 type PublishingFormValues = {
@@ -9,12 +9,12 @@ type PublishingFormValues = {
     secure: boolean;
     user: boolean;
   };
-  name: string | null;
-  email: string | null;
-  linkPreview: string | null;
-  linkBuild: string | null;
-  info: string | null;
-  selectedDir: string | null;
+  name: string | undefined;
+  email: string | undefined;
+  linkPreview: string | undefined;
+  linkBuild: string | undefined;
+  info: string | undefined;
+  selectedDir: string | undefined;
 };
 
 const formValuesInit: PublishingFormValues = {
@@ -23,15 +23,15 @@ const formValuesInit: PublishingFormValues = {
     secure: false,
     user: false,
   },
-  name: null,
-  email: null,
-  linkPreview: null,
-  linkBuild: null,
-  info: null,
-  selectedDir: null,
+  name: undefined,
+  email: undefined,
+  linkPreview: undefined,
+  linkBuild: undefined,
+  info: undefined,
+  selectedDir: undefined,
 };
 
-const isSubmitted = atom<boolean>(false);
+const isSubmitted = writable<boolean>(false);
 
 try {
   const localeSubmitted = await localforage.getItem('pubFormSubmitted');
@@ -41,13 +41,11 @@ try {
   }
 } catch (error) {}
 
-const publishingOptions = pubArticles
-  .get()
-  .map(({ slug, data: { title: value } }) => ({
-    slug,
-    value,
-    disabled: false,
-  }));
+const publishingOptions = pubArticles.map(({ slug, data: { title } }) => ({
+  value: slug,
+  text: title,
+  disabled: false,
+}));
 
 export {
   Root as PublishingForm,

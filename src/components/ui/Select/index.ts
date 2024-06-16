@@ -1,6 +1,6 @@
 import Root from './Select.svelte';
 
-export type SelectOption = { slug: string; value: string; disabled: boolean };
+export type SelectOption = { text: string; value: string; disabled: boolean };
 
 export {
   Root,

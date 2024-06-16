@@ -3,34 +3,31 @@
   import { fly } from 'svelte/transition';
   import { TabPanels } from '@rgossiaux/svelte-headlessui';
   import css from './panels.module.scss';
-  import { devArticles } from '../../store/service-articles';
+  import { devArticles } from '../../store/articles';
   import { urlQuery, useragent } from '@sveu/browser';
-  import { selectedOptionValue } from '.';
-  import type { SwiperContainer } from 'swiper/element';
+  import { targetValue } from '.';
   import BtnFirm from '../ui/BtnFirm.svelte';
   import { isOpen as modalIsOpen } from '../modals/DevServModal';
   import { navigate } from 'astro:transitions/client';
   import PreviewSlider from '../ArticleSlider/PreviewSlider.svelte';
+  import { onMount } from 'svelte';
 
   const query = urlQuery('history');
   const { mobile } = useragent();
 
-  let swiperEl: SwiperContainer;
-
-  let isEnd: boolean;
-  let isBeginning: boolean;
-
-  const onProgress = (e: any) => {
-    const [swiper, progress] = e.detail;
-    isEnd = swiper.isEnd;
-    isBeginning = swiper.isBeginning;
-  };
+  onMount(() => {
+    $targetValue = $query['development-slug'];
+    if (!$targetValue) {
+      $targetValue = devArticles[0].slug;
+      $query['development-slug'] = $targetValue;
+    }
+  });
 </script>
 
 <div class={css.wrap}>
-  <TabPanels let:selectedIndex>
-    {#each $devArticles as { data: { gallery, description, category, title }, slug }, idx (slug)}
-      {#if ($mobile && $selectedOptionValue === title) || (!$mobile && selectedIndex === idx)}
+  <TabPanels>
+    {#each devArticles as { data: { gallery, description, category }, slug } (slug)}
+      {#if $targetValue === slug}
         <div class={css.panel} transition:fly={{ y: '75%', duration: 700 }}>
           {#if gallery}
             <PreviewSlider data={gallery} staticHref="{category}/{slug}" />

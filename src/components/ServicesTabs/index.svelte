@@ -4,12 +4,12 @@
   import List from './List.svelte';
   import Panels from './Panels.svelte';
   import { Select } from '../ui/Select';
-  import { options, selectedOptionValue } from '.';
+  import { options, targetValue } from '.';
 </script>
 
 <TabGroup class={css.root}>
   <div class={css['select']}>
-    <Select {options} bind:value={$selectedOptionValue} />
+    <Select {options} bind:value={$targetValue} />
   </div>
   <List />
   <Panels />

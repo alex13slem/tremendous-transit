@@ -1,42 +1,30 @@
-import type { APIContext } from "astro";
+import type { APIContext } from 'astro';
 
-export function handlePostRequest<T>(
-  fn: (data: T, ctx: APIContext) => Promise<Response>,
+export default function handleAstroPost<T>(
+  fn: (data: T, ctx: APIContext) => Promise<Response>
 ) {
   return async (ctx: APIContext): Promise<Response> => {
     const { request } = ctx;
     try {
-      if (request.method.toUpperCase() !== "POST") {
-        return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+      if (request.method.toUpperCase() !== 'POST') {
+        return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
           status: 405,
         });
       }
 
-      const data = await request.json();
+      const data: T = await request.json();
 
-      await fn(data, ctx);
-
-      return new Response(JSON.stringify({ data }));
+      return await fn(data, ctx);
     } catch (error: any) {
-      if (error.status) {
-        const { status, statusText } = error;
+      console.error(error);
 
-        console.error(new Error(statusText));
+      const status = error.status || 500;
+      const statusText = error.statusText || 'Unknown error on server';
 
-        return new Response(JSON.stringify({ error: statusText }), {
-          status,
-          statusText,
-        });
-      }
-
-      console.error(new Error("Unknown error on server"));
-      return new Response(
-        JSON.stringify({ error: "Unknown error on server" }),
-        {
-          status: 500,
-          statusText: error.message || error,
-        },
-      );
+      return new Response(JSON.stringify({ error: statusText }), {
+        status,
+        statusText,
+      });
     }
   };
 }

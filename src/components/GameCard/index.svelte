@@ -23,10 +23,11 @@
     <h3>{title}</h3>
 
     <p class="tags">
-      <span>{genre.join(' ')}</span>
       {#if favorites}
-        <span>{favorites.join(' ')}</span>
+        <span class="favorites">{favorites.join(' · ')}</span>
       {/if}
+      <br />
+      <span>{genre.join(' · ')}</span>
     </p>
 
     {#if platforms?.length}

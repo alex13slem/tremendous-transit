@@ -1,5 +1,7 @@
-<script>
-  import { isOpen } from '../../store/site-menu';
+<script lang="ts">
+  import { siteMenuStore } from '../../store/site-menu';
+
+  const { close: closeMenu } = siteMenuStore;
 
   export let href = '/';
   export let active = false;
@@ -7,7 +9,7 @@
   export let onMobMenu = false;
 
   function handleClick() {
-    onMobMenu && isOpen.set(false);
+    onMobMenu && closeMenu();
   }
 </script>
 

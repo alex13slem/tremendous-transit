@@ -6,7 +6,7 @@
 </script>
 
 <nav class="nav">
-  {#each $publishingSlides as { slug }, idx}
+  {#each publishingSlides as { slug }, idx}
     <button
       class={cn('link', idx === $activeIdx && 'active')}
       on:click={() => ($activeIdx = idx)}

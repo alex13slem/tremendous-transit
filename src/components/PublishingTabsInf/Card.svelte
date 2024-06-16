@@ -9,7 +9,7 @@
   export let idx: number;
   export let clientHeight: number;
 
-  const { article, order, infIdx, image, text, title } = data;
+  const { article, order, infIdx, image, title } = data;
 
   let load = false;
   onMount(() => (load = true));
@@ -39,8 +39,8 @@
   >
     <div class="image"><img src={image.src} alt={image.alt} /></div>
     <div class="body">
-      <h3>{title}</h3>
-      <p>{text}</p>
+      <h4>{title}</h4>
+      <!-- <p>{text}</p> -->
     </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -230,22 +230,22 @@
     transition: border-image var(--trans-slow);
   }
 
-  h3 {
-    margin-bottom: clamp(0.5rem, 0.409rem + 0.39vw, 0.75rem);
-    font-size: clamp(0.625rem, 0.488rem + 0.59vw, 1rem);
-    text-transform: uppercase;
+  h4 {
+    // margin-bottom: clamp(0.5rem, 0.409rem + 0.39vw, 0.75rem);
+    // font-size: clamp(0.625rem, 0.488rem + 0.59vw, 1rem);
+    // text-transform: uppercase;
     line-height: 1;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
   }
 
-  p {
-    margin: 0;
-    font-size: clamp(0.5rem, 0.409rem + 0.39vw, 0.75rem);
-    line-height: 1;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
+  // p {
+  //   margin: 0;
+  //   font-size: clamp(0.5rem, 0.409rem + 0.39vw, 0.75rem);
+  //   line-height: 1;
+  //   white-space: nowrap;
+  //   text-overflow: ellipsis;
+  //   overflow: hidden;
+  // }
 </style>

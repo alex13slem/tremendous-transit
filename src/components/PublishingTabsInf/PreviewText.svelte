@@ -6,6 +6,7 @@
   import { urlQuery, useragent } from '@sveu/browser';
   import { navigate } from 'astro:transitions/client';
   import { isOpen } from '../modals/PublishingModal';
+  import { fade } from 'svelte/transition';
   const query = urlQuery('history');
   const { mobile } = useragent();
 
@@ -15,9 +16,9 @@
   });
 </script>
 
-{#each $publishingSlides as { slug, article }, idx (slug)}
+{#each publishingSlides as { slug, article }, idx (slug)}
   {#if idx === currIdx}
-    <div class="preview">
+    <div class="preview" transition:fade={{ duration: 700 }}>
       {#if article.description}
         <div class="body prose">
           {@html parse(article.description)}

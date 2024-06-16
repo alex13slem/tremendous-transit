@@ -1,7 +1,6 @@
 <script lang="ts">
   import { type SwiperContainer } from 'swiper/element/bundle';
   import type { Image } from '../../types/project';
-  import { beforeUpdate, onMount } from 'svelte';
   import { formatStrToId } from '../../utils/helpers';
 
   export let data: Image[];
@@ -23,7 +22,7 @@
   <swiper-container
     id="preview-slider"
     bind:this={swiperEl}
-    mousewheel
+    mousewheel={true}
     slides-per-view="auto"
     watch-slides-progress
     space-between={-20}

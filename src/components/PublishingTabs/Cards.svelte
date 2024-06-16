@@ -11,14 +11,14 @@
     style="--activeIdx: {$activeIdx}"
     use:swipe={{
       onSwipeLeft() {
-        $activeIdx = Math.min($publishingSlides.length - 1, $activeIdx + 1);
+        $activeIdx = Math.min(publishingSlides.length - 1, $activeIdx + 1);
       },
       onSwipeRight() {
         $activeIdx = Math.max(0, $activeIdx - 1);
       },
     }}
   >
-    {#each $publishingSlides as data, idx (data.slug)}
+    {#each publishingSlides as data, idx (data.slug)}
       <Card {data} {idx} />
     {/each}
   </div>

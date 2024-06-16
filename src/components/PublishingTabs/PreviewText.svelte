@@ -8,7 +8,7 @@
   let isOpen = false;
 </script>
 
-{#each $publishingSlides as { slug, article }, idx}
+{#each publishingSlides as { slug, article }, idx}
   {#if idx === $activeIdx}
     <div class="preview">
       {#if article.description}

@@ -1,44 +1,61 @@
-import type { BlogersFormSchema } from "../../src/schemas/forms";
-import { notifyViaTelegramBot } from "../../src/utils/notifyViaTelegramBot";
-import { post } from "../post";
+import type { HandlerContext, HandlerEvent } from '@netlify/functions';
+import type { BlogersFormSchema } from '../../src/schemas/forms';
+import { notifyViaTelegramBot } from '../../src/utils/notifyViaTelegramBot';
+import handleNetlifyPost from '../handleNetlifyPost';
 
 const { TG_BOT_BLOGERS_API_TOKEN, TG_BOT_BLOGERS_CHAT_ID } = process.env;
 
-async function sendBlogerForm(data: BlogersFormSchema) {
+async function sendBlogerForm(
+  data: BlogersFormSchema,
+  event: HandlerEvent,
+  context: HandlerContext
+): Promise<Response> {
   const { botFlaggedSpam, access, name, email, fromLink, contact, comment } =
     data;
 
-  let error = false;
-  let statusText;
-
   if (!access) {
-    error = true;
-    statusText =
-      "There is no agreement with the privacy policy on the processing of personal data";
-  }
-  if (botFlaggedSpam) {
-    error = true;
-    statusText = "Spam detected";
-  }
-
-  if (error) {
+    const statusText =
+      'There is no agreement with the privacy policy on the processing of personal data';
     console.error(new Error(statusText));
-    return Promise.reject({ status: 400, statusText });
+    return new Response(JSON.stringify({ error: statusText }), {
+      status: 400,
+      statusText,
+    });
   }
 
-  const htmlMessage = /* html */ `<i>имя</i>: ${name}
-<i>почта</i>: <a href="mailto:${email}">${email}</a>
-<i>откуда</i>: <a href="${fromLink}">${fromLink}</a>
-<i>способ связи</i>: ${contact || "нет"}
-<i>комментарий</i>: ${comment || "нет"}`;
+  if (botFlaggedSpam) {
+    const statusText = 'Spam detected';
+    console.error(new Error(statusText));
+    return new Response(JSON.stringify({ error: statusText }), {
+      status: 400,
+      statusText,
+    });
+  }
 
-  const { status } = await notifyViaTelegramBot({
-    htmlMessage,
-    apiToken: TG_BOT_BLOGERS_API_TOKEN,
-    chatId: TG_BOT_BLOGERS_CHAT_ID,
-  });
+  const htmlMessage = /* html */ `
+<b>Заявка от блогера</b>:
 
-  return new Response(JSON.stringify({ data }), { status });
+<b>Имя</b>: ${name}
+<b>Почта</b>: <a href="mailto:${email}">${email}</a>
+<b>Откуда</b>: <a href="${fromLink}">${fromLink}</a>
+<b>Способ связи</b>: ${contact || 'нет'}
+<b>Комментарий</b>: ${comment || 'нет'}
+  `;
+
+  try {
+    const { status } = await notifyViaTelegramBot({
+      text: htmlMessage,
+      apiToken: TG_BOT_BLOGERS_API_TOKEN!,
+      chatId: TG_BOT_BLOGERS_CHAT_ID!,
+    });
+
+    return new Response(JSON.stringify({ data }), { status });
+  } catch (error: any) {
+    console.error(error);
+    return new Response(JSON.stringify({ error: 'Failed to send message' }), {
+      status: 500,
+    });
+  }
 }
 
-export default post(sendBlogerForm);
+export const handler = handleNetlifyPost(sendBlogerForm);

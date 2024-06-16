@@ -28,7 +28,8 @@ const {
   translations,
 } = game;
 const genres = genre.map((genre) => getGenreTitle(genre));
-const dateString = new Date(releaseDate).toLocaleDateString('ru-RU');
+const dateString =
+  releaseDate && new Date(releaseDate).toLocaleDateString('ru-RU');
 ---
 
 <script>
@@ -54,15 +55,11 @@ const dateString = new Date(releaseDate).toLocaleDateString('ru-RU');
   <img class="thumbnail" src={thumbnail} alt={title} />
 
   <div class="body">
-    {
-      platforms && (
-        <PlatformsSlider {platforms} isScrollable={false} client:load />
-      )
-    }
+    {platforms && <PlatformsSlider {platforms} client:load />}
 
     <div class="table-info">
       <div class="td-left">Жанр:</div>
-      <div class="td-right"><strong>{genres}</strong></div>
+      <div class="td-right"><strong>{genres.join(' • ')}</strong></div>
 
       <div class="td-left">Разработчик:</div>
       <div class="td-right">
@@ -75,7 +72,7 @@ const dateString = new Date(releaseDate).toLocaleDateString('ru-RU');
       </div>
 
       <div class="td-left">Дата выхода:</div>
-      <div class="td-right"><strong>{dateString}</strong></div>
+      <div class="td-right"><strong>{dateString || 'Неизвестно'}</strong></div>
     </div>
 
     <TranslationsTable translations={translations} />

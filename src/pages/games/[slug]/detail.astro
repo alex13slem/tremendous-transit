@@ -24,16 +24,13 @@ const { title, description } = game;
 const seoImg = new URL(game.thumbnail, Astro.site);
 ---
 
-<BasicLayout>
+<BasicLayout sectBloggerForm={false} sectSocialSlider={false}>
   <SEO slot="seo" {title} {description} imageUrls={{ fb: seoImg.toString() }} />
 
   <div class="root">
     <div class="container">
       <LinkToDetailPage client:load toBack text="Назад" />
       <div class="prose">
-        <blockquote>
-          <Fragment set:html={parse(game.description)} />
-        </blockquote>
         <Fragment set:html={parse(game.body)} />
       </div>
     </div>

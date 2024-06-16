@@ -2,6 +2,8 @@
   import { shiftIdx, infSlides, moveSlide, wheel } from '.';
   import { swipe } from '../../utils/svelte/swipe';
   import Card from './Card.svelte';
+  import { urlQuery } from '@sveu/browser';
+  const query = urlQuery('history');
 
   let clientHeight: number;
 </script>

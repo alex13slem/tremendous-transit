@@ -5,16 +5,11 @@ import PreviewSlider from '../../components/ArticleSlider/PreviewSlider.svelte';
 import AsideNav from '../../components/AsideNav.astro';
 import AsideLayout from '../../layouts/AsideLayout.astro';
 import SEO from '../../layouts/SEO.astro';
-import {
-  aboutUsArticles,
-  getAboutUsArticles,
-} from '../../store/about-us-articles';
 import BtnFirm from '../../components/ui/BtnFirm.svelte';
 import { aboutUsNavLinks } from '../../store/nav-links';
+import { aboutUsArticles } from '../../store/articles';
 
-const article = (await getAboutUsArticles()).find(
-  ({ slug }) => slug === 'about-us'
-)!;
+const article = aboutUsArticles.find(({ slug }) => slug === 'about-us')!;
 const { title, description, gallery, thumbnail, buttons } = article.data;
 ---
 

@@ -6,6 +6,7 @@ export const articlesCollection: CmsCollection = {
   folder: 'src/content/articles',
   create: true,
   slug: '{{fields.category}}-{{fields.slug}}',
+  summary: '{{fields.category}} • {{fields.title}}',
   extension: 'md',
   format: 'frontmatter',
   fields: [
@@ -37,22 +38,23 @@ export const articlesCollection: CmsCollection = {
       label: 'Дата публикации',
       name: 'date',
       widget: 'datetime',
-      date_format: 'YYYY-MM-DD',
-      time_format: 'HH:mm:ss',
       required: false,
     },
     {
       // Краткое описание
       label: 'Краткое описание',
       name: 'description',
+      hint: 'До 200 символов',
       widget: 'markdown',
       required: false,
+      default: '',
     },
     {
       // Подробное описание
       label: 'Подробное описание',
       name: 'body',
       widget: 'markdown',
+      hint: 'До 4000 символов',
     },
     {
       // Обложка
@@ -82,6 +84,7 @@ export const articlesCollection: CmsCollection = {
       widget: 'number',
       value_type: 'int',
       required: false,
+      default: 0,
     },
     {
       // Галлерея

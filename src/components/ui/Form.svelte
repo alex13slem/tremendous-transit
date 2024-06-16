@@ -11,7 +11,4 @@
   form :global(textarea) {
     min-height: 118px;
   }
-  form :global(button) {
-    align-self: flex-start;
-  }
 </style>

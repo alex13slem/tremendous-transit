@@ -1,11 +1,11 @@
 <script lang="ts">
   import { cn, toRoman } from '../utils/helpers';
-  import { onMount } from 'svelte';
   import { parse } from 'marked';
   import type { GameDevStageSelect } from '../schemas/gamesSchema';
   import DonatQrModal from './modals/DonatQrModal.svelte';
   import BtnFirm from './ui/BtnFirm.svelte';
   import { useragent } from '@sveu/browser';
+  import { scale } from 'svelte/transition';
   const { mobile } = useragent();
 
   export let isLast: boolean = false;
@@ -13,27 +13,17 @@
   export let stage: GameDevStageSelect;
 
   let proseRef: HTMLDivElement;
-  let proseMaxHeight: number;
   let modalIsOpen = false;
 
-  onMount(() => {
-    proseMaxHeight = proseRef.scrollHeight;
-  });
-
-  let state: 'done' | 'process' | 'planned';
-  if (stage.currentCash && stage.totalCash) {
-    if (stage.currentCash >= stage.totalCash) state = 'done';
-    else if (stage.currentCash < stage.totalCash && !stage.isPlanned)
+  let state: 'done' | 'process' | 'planned' = 'done';
+  if (stage.currentCash && stage.totalCash)
+    if (stage.currentCash < stage.totalCash && !stage.isPlanned) {
       state = 'process';
-  }
+    }
+  if ((stage.currentCash && !stage.totalCash) || stage.isPlanned)
+    state = 'planned';
   if (stage.isPlanned) state = 'planned';
 </script>
-
-<svelte:window
-  on:resize={() => {
-    proseMaxHeight = proseRef.scrollHeight;
-  }}
-/>
 
 <div
   class={cn('stage', state)}
@@ -47,9 +37,9 @@
     <h3>{stage.title}</h3>
     {#if stage.description}
       <div
+        transition:scale={{ delay: 300, duration: 300 }}
         class="prose"
         bind:this={proseRef}
-        style="--max-height: {proseMaxHeight}px;"
       >
         {@html parse(stage.description)}
       </div>
@@ -97,14 +87,14 @@
 
 <style lang="scss">
   .stage {
-    --size: 50px;
+    --size: 52px;
     --c-line: rgb(var(--c-border));
     position: relative;
     @media (max-width: 1279.98px) {
       margin-top: 80px;
     }
     @media (min-width: 1280px) {
-      height: 400px;
+      height: 600px;
       width: 50%;
 
       display: flex;
@@ -118,29 +108,52 @@
           left: 0;
         }
       }
+      &::after,
+      &::before {
+        width: 1px;
+        right: 0;
+        height: calc(var(--size) * 8);
+        position: absolute;
+        top: calc(var(--size) * 1.5);
+      }
+      &::after {
+        z-index: -1;
+        content: '';
+        background-image: linear-gradient(
+          to top,
+          transparent 0%,
+          transparent calc(var(--size) / 2),
+          var(--c-line) calc(var(--size) / 2),
+          var(--c-line) calc(var(--size) * 1.5),
+          transparent calc(var(--size) * 1.5),
+          transparent calc(var(--size) * 2.5),
+          var(--c-line) calc(var(--size) * 2.5),
+          var(--c-line) calc(var(--size) * 3.5),
+          transparent calc(var(--size) * 3.5),
+          transparent calc(var(--size) * 4.5),
+          var(--c-line) calc(var(--size) * 4.5),
+          var(--c-line) calc(var(--size) * 5.5),
+          transparent calc(var(--size) * 5.5),
+          transparent calc(var(--size) * 6.5),
+          var(--c-line) calc(var(--size) * 6.5),
+          var(--c-line) calc(var(--size) * 7.5),
+          transparent calc(var(--size) * 7.5),
+          transparent calc(var(--size) * 8.5)
+        );
+      }
+
+      &.isLast {
+        &::before {
+          content: '';
+          background-image: linear-gradient(
+            to bottom,
+            transparent,
+            rgb(var(--c-bg))
+          );
+        }
+      }
       &:not(.isLast) {
         margin-bottom: calc(var(--size) * -2);
-        &::after {
-          content: '';
-          position: absolute;
-          background-image: linear-gradient(
-            to top,
-            transparent 0%,
-            transparent calc(var(--size) / 2),
-            var(--c-line) calc(var(--size) / 2),
-            var(--c-line) calc(var(--size) * 1.5),
-            transparent calc(var(--size) * 1.5),
-            transparent calc(var(--size) * 2.5),
-            var(--c-line) calc(var(--size) * 2.5),
-            var(--c-line) calc(var(--size) * 3.5),
-            transparent calc(var(--size) * 3.5),
-            transparent calc(var(--size) * 4.5)
-          );
-          width: 1px;
-          right: 0;
-          height: calc(var(--size) * 4);
-          top: calc(var(--size) * 1.5);
-        }
       }
       &:is(:hover, :focus-visible) {
         filter: drop-shadow(var(--box-shadow-active));
@@ -363,11 +376,11 @@
       margin-bottom: 20px;
 
       @media (min-width: 1280px) {
-        height: 0;
+        max-height: 0;
+
         transition: var(--trans-default);
-        transition-property: height;
         .stage:is(:hover, :focus-visible) & {
-          height: var(--max-height);
+          max-height: 600px;
         }
       }
     }

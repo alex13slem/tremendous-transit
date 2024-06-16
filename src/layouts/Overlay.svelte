@@ -4,7 +4,7 @@
   export let onClose: (() => any) | undefined = undefined;
 </script>
 
-<div class="root" transition:blur>
+<div class="root" transition:blur={{ duration: 300 }}>
   <div
     class="overlay"
     role="button"
@@ -21,9 +21,10 @@
     z-index: 3;
     overflow-y: auto;
     inset: 0;
-    margin-top: var(--header-height);
+    padding-top: var(--header-height);
     background: rgb(var(--c-bg), 50%);
     backdrop-filter: blur(13px);
+    scrollbar-gutter: stable;
   }
   .overlay {
     z-index: -1;

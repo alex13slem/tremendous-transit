@@ -1,8 +1,8 @@
 title: ПК
 slug: computer
-article: development-eisvil
-text: текст текст
+article: publishing-pc-games
+text: '*"Публикуем шедевры для ПК"*'
 image:
   src: /images/uploads/pc.jpg
-  alt: ффыук
+  alt: Публикация и продвижение компьютерных игр на ведущих платформах.
 order: 2

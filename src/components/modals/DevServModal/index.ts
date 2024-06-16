@@ -1,6 +1,6 @@
-import { atom } from 'nanostores';
+import { writable } from 'svelte/store';
 import Root from './index.svelte';
 
-const isOpen = atom(false);
+const isOpen = writable(false);
 
 export { Root as DevServModal, Root, isOpen };

@@ -1,26 +1,35 @@
-import axios, { AxiosError } from "axios";
+import axios, { AxiosError } from 'axios';
+
+function escapeMarkdown(text: string) {
+  return text.replace(/([\_\*\[\]\(\)\~\`\>\#\+\-\=\|\{\}\.\!])/g, '\\$1');
+}
 
 export async function notifyViaTelegramBot({
-  htmlMessage,
+  text,
   apiToken,
   chatId,
+  parseMode = 'HTML',
 }: {
-  htmlMessage: string;
+  text: string;
   apiToken: string;
   chatId: string;
+  parseMode?: 'HTML' | 'MarkdownV2';
 }) {
+  if (parseMode === 'MarkdownV2') {
+    text = escapeMarkdown(text);
+  }
   try {
     return await axios.post(
       `https://api.telegram.org/bot${apiToken}/sendMessage`,
       {
         chat_id: chatId,
-        text: htmlMessage,
+        text: text,
       },
       {
         params: {
-          parse_mode: "HTML",
+          parse_mode: parseMode,
         },
-      },
+      }
     );
   } catch (error: any) {
     let status: number;

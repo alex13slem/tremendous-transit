@@ -12,9 +12,7 @@
   min-width: 0;
   // min-height: 0;
 }
-:root {
-  scroll-behavior: smooth;
-}
+
 body {
   -webkit-font-smoothing: antialiased;
 }
@@ -56,8 +54,8 @@ button:not([class]) {
 }
 
 a {
-  text-decoration: none;
-  color: currentColor;
+  text-decoration: inherit;
+  color: inherit;
 }
 #root,
 #__next {

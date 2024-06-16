@@ -1,7 +1,8 @@
 <script lang="ts">
   import localforage from 'localforage';
   import { blogersFormSchema } from '../../../schemas/forms';
-  import { toasterHub } from '../../../store/toasterHub';
+  import { toastStore } from '../../../store/toaster';
+
   import { formatErrors } from '../../../utils/helpers';
   import { sendForm } from '../../../utils/sendForm';
   import { getErrors } from '../../../utils/zod';
@@ -32,6 +33,7 @@
     sendingAttempt = true;
     submitting = true;
 
+    console.log(validationResult.success);
     if (!validationResult.success || !formValues.access)
       return (submitting = false);
 
@@ -43,9 +45,9 @@
     });
 
     if (!ok) {
-      toasterHub.set([error, ...$toasterHub]);
+      toastStore.addToast(error);
     } else {
-      toasterHub.set(['Ваша заявка отправлена!', ...$toasterHub]);
+      toastStore.addToast('Спасибо за заявку!');
       sendingAttempt = false;
       formValues = { ...formValuesInit };
       await localforage.setItem('blogerFormSubmitted', 'true').then(() => {
@@ -72,7 +74,7 @@
     />
 
     <FormField
-      type="url"
+      type="text"
       name="from_link"
       className="from-link"
       placeholder="Ссылка на Ваш ресурс"
@@ -117,12 +119,14 @@
       />
       <p>
         Нажимая на кнопку, вы соглашаетесь с
-        <a href="/">политикой конфиденциальности</a><br /> и на обработку персональных
-        данных
+        <a href="/about-us/privacy-policy">политикой конфиденциальности</a><br
+        /> и на обработку персональных данных
       </p>
     </label>
   </fieldset>
-  <BtnFirm type="submit" disabled={submitting}>Отправить</BtnFirm>
+  <div class="form-footer">
+    <BtnFirm type="submit" disabled={submitting}>Отправить</BtnFirm>
+  </div>
 </form>
 
 <style lang="scss">
@@ -189,5 +193,10 @@
   }
   form :global(.btn-firm) {
     align-self: center;
+  }
+
+  .form-footer {
+    display: flex;
+    justify-content: center;
   }
 </style>

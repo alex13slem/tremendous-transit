@@ -1,9 +1,12 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { isOpen } from '../store/site-menu';
+  import { siteMenuStore } from '../store/site-menu';
   import Overlay from './Overlay.svelte';
   import Portal from '../components/Portal.svelte';
   import { mobileMenuNavLinks as navLinks } from '../store/nav-links';
+
+  const isOpen = siteMenuStore;
+  const { close } = siteMenuStore;
 
   let category: string | null = null;
   let subCategory: string | null = null;
@@ -24,7 +27,7 @@
             <a
               href={link.href}
               class="nav-link"
-              on:click={() => ($isOpen = false)}
+              on:click={close}
               class:active={category === link.slug}>{link.text}</a
             >
             {#if link.categoriesLinks.length}
@@ -33,7 +36,7 @@
                   <a
                     href={categoryLink.href}
                     class="category-link"
-                    on:click={() => ($isOpen = false)}
+                    on:click={close}
                     class:active={subCategory === categoryLink.slug}
                     >{categoryLink.text}</a
                   >

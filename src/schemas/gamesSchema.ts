@@ -1,8 +1,5 @@
 import { z } from 'astro:content';
-import {
-  gameDevStageSchema,
-  gameDevStageSelectSchema,
-} from './gameDevStagesSchema';
+import { gameDevStageSelectSchema } from './gameDevStagesSchema';
 import { marketplacesSchema } from './gameMarketplacesSchema';
 
 const gamesPlatformsSchema = z.object({
@@ -38,7 +35,7 @@ export const gamesSchema = z.object({
   browserLink: z.string().optional(),
   developer: z.string(),
   publisher: z.string(),
-  releaseDate: z.date(),
+  releaseDate: z.date().optional(),
   team: z.string().array().optional(),
   translations: gameTranslationsSchema.array(),
   platforms: gamesPlatformsSchema.array().optional(),
@@ -53,7 +50,7 @@ export const gamesSchema = z.object({
     alt: z.string(),
   }),
   adBanner: z.object({ src: z.string(), alt: z.string() }),
-  gallery: z.object({ src: z.string(), alt: z.string() }).array(),
+  gallery: z.object({ src: z.string(), alt: z.string() }).array().optional(),
 });
 
 export const gamesSchemaSelect = gamesSchema.extend({

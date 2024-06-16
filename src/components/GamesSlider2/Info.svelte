@@ -7,11 +7,11 @@
 
   export let game: GameSelect;
 
-  const { platforms, title, description } = game;
+  const { platforms, title, description, slug } = game;
 </script>
 
 <article>
-  <h3>{title}</h3>
+  <h3><a href="/games/{slug}">{title}</a></h3>
   {#if platforms?.length}
     <PlatformsSlider {platforms} />
   {/if}

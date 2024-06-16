@@ -9,19 +9,23 @@
   import { cn } from '../../../utils/helpers';
   import { clickOutside } from '../../../utils/svelte/clickOutside';
   import type { SelectOption } from '.';
+  import { beforeUpdate } from 'svelte';
 
-  export let value: string | null = null;
   export let options: SelectOption[] = [];
+  export let value: string | undefined = undefined;
   export let placeholder: string = '';
   export let size: 'md' | 'sm' = 'md';
   export let variant: 'default' | 'dark' = 'default';
   export let open = false;
 
-  let targetIdx: number;
   let listBoxBtn: HTMLElement;
 
-  $: options.map((option, idx) => {
-    if (option.value === value) targetIdx = idx + 1;
+  let selectedOption: SelectOption | undefined = undefined;
+  let targetIdx: number = 0;
+
+  beforeUpdate(() => {
+    selectedOption = options.find((option) => option.value === value);
+    if (selectedOption) targetIdx = options.indexOf(selectedOption) + 1;
   });
 </script>
 
@@ -34,7 +38,7 @@
     <div bind:this={listBoxBtn}>
       <ListboxButton
         class={cn('selected-option', open && 'open', value && 'active')}
-        style="--curr-idx: {targetIdx || 0}"
+        style="--curr-idx: {targetIdx}"
       >
         {#if variant === 'dark'}
           {#if size === 'sm'}
@@ -73,10 +77,10 @@
           {/if}
         {/if}
         <slot name="left" />
-        {#if open && !value}
+        {#if open && !selectedOption}
           ...
         {:else}
-          {value || placeholder}
+          {selectedOption?.text || placeholder}
         {/if}
         <span class="selected-option-bg"></span>
         <button class="selected-option-arrow" />
@@ -85,16 +89,16 @@
     {#if open}
       <div transition:fade>
         <ListboxOptions class="options-list" static>
-          {#each options as { slug: selfSlug, value: selfValue, disabled }, idx (selfSlug)}
+          {#each options as { text, value: thisValue, disabled }, idx (thisValue)}
             <ListboxOption
-              class={cn('option', selfValue === value && 'active')}
-              value={selfValue}
+              class={cn('option', value === thisValue && 'active')}
+              value={thisValue}
               {disabled}
               on:click={() => {
                 targetIdx = idx + 1;
               }}
             >
-              <span>{selfValue}</span>
+              <span>{text}</span>
             </ListboxOption>
           {/each}
         </ListboxOptions>

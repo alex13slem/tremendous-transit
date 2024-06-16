@@ -1,10 +1,12 @@
 title: Александр Щерба
 slug: aleksandr-scherba
 about: Разработчик сайта
-image: /images/uploads/hey.png
+image: /images/uploads/dsc08561-2.jpg
 contacts:
   - href: vk.com/alex13slem
     slug: vk
+  - slug: telegram
+    href: t.me/alex13slem
 profession:
   - ui-ux-artist
   - game-designer

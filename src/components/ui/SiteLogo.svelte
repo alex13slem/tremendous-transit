@@ -1,11 +1,10 @@
 <script lang="ts">
   import SVGSiteLogo from '../../components/svg/SVGSiteLogo.svelte';
-  import { isOpen } from '../../store/site-menu';
+  import { siteMenuStore } from '../../store/site-menu';
+  const { close: closeMenu } = siteMenuStore;
 </script>
 
-<a href="/" class="site-logo" on:click={() => ($isOpen = false)}
-  ><SVGSiteLogo /></a
->
+<a href="/" class="site-logo" on:click={closeMenu}><SVGSiteLogo /></a>
 
 <style>
   .site-logo {

@@ -1,6 +1,9 @@
 import type { PublishingSlideSelect } from '../../schemas/publishingSlidesSchema';
 import { publishingSlides } from '../../store/publishing-slides';
-import { useInfSlides, type InfSlide } from '../../utils/svelte/useInfSlides';
+import {
+  createInfSlidesStore,
+  type InfSlide,
+} from '../../utils/svelte/createInfSlidesStore';
 import Root from './index.svelte';
 
 const {
@@ -11,7 +14,7 @@ const {
   slidingProcess,
   moveSlide,
   wheel,
-} = useInfSlides(publishingSlides.get());
+} = createInfSlidesStore(publishingSlides);
 
 export type InfPublishingSlide = InfSlide<PublishingSlideSelect>;
 

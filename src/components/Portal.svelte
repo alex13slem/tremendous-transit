@@ -1,7 +1,11 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   export let lock: boolean = false;
   let ref: HTMLDivElement;
-  $: ref && document.body.appendChild(ref);
+  onMount(() => {
+    document.body.appendChild(ref);
+  });
 </script>
 
 <svelte:head>

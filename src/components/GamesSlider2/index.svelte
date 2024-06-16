@@ -56,9 +56,11 @@
   <div class="left">
     <swiper-container bind:this={swiperThumb} init={false} class="swiper-thumb">
       <ShadowDecor1024x500 class="shadow" />
-      {#each games as { thumbnail, title }}
+      {#each games as { thumbnail, title, slug }}
         <swiper-slide>
-          <img src={thumbnail} alt={title} loading="lazy" height="297" />
+          <a href="/games/{slug}">
+            <img src={thumbnail} alt={title} loading="lazy" height="297" />
+          </a>
         </swiper-slide>
       {/each}
     </swiper-container>

@@ -11,7 +11,7 @@
 </script>
 
 <nav class="nav">
-  {#each $publishingSlides as { slug }, idx}
+  {#each publishingSlides as { slug }, idx}
     <button class={cn('link', idx === currIdx && 'active')}>
       {#if slug === 'computer'}
         <Icon icon="bx:desktop" width="36" height="36" />

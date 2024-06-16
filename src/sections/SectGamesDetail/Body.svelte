@@ -31,8 +31,10 @@
 />
 
 <div class="body">
-  <DetailSlider data={gallery} />
-  <PreviewSlider data={gallery} />
+  {#if gallery}
+    <DetailSlider data={gallery} />
+    <PreviewSlider data={gallery} />
+  {/if}
   <div
     class="prose detail"
     class:open
@@ -40,49 +42,7 @@
     bind:this={root}
     style="--max-height: {maxHeight}px;"
   >
-    <!-- {@html descriptionMD} -->
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta eveniet
-      quidem eos inventore culpa reprehenderit aut! Nobis voluptas, quas facere
-      recusandae beatae quia neque animi quisquam. Repudiandae optio minima
-      architecto.
-    </p>
+    {@html descriptionMD}
   </div>
   {#if maxHeight > 500}
     <BtnFirm size="sm" variant="transparent" on:click={() => (open = !open)}>

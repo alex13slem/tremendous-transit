@@ -1,18 +1,15 @@
 :root {
   overflow-x: hidden;
-  scroll-behavior: smooth;
+  // scroll-behavior: smooth;
+
+  color: rgb(var(--c-text));
+  background: rgb(var(--c-bg));
 }
 
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-
-  font-size: 16px;
-  line-height: 1.125;
-
-  background: rgb(var(--c-bg));
-  color: rgb(var(--c-text));
+  min-height: 100svh;
 }
 
 main {

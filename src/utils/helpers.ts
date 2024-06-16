@@ -15,7 +15,11 @@ export const createWrapperAndAppendToBody = (
 export const formatErrors = (error: { _errors: string[] }) =>
   error._errors.join(', ');
 
-export const formatStrToId = (string: string) => string.split(' ').join('-');
+export const formatStrToId = (string: string) => {
+  if (!string) return 'alt';
+
+  return string.split(' ').join('-');
+};
 
 export function getRandom<T>(list: T[]): T {
   return list[Math.floor(Math.random() * list.length)];

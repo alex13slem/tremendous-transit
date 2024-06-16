@@ -42,12 +42,14 @@ export const gameDevStagesCollection: CmsCollection = {
       name: 'currentCash',
       widget: 'number',
       required: false,
+      default: 0,
     },
     {
       label: 'Общий баланс',
       name: 'totalCash',
       widget: 'number',
       required: false,
+      default: 0,
     },
     {
       label: 'Краудфандинг платформы',

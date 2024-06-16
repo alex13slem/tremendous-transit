@@ -6,11 +6,11 @@ import AsideNav from '../../../components/AsideNav.astro';
 import BtnFirm from '../../../components/ui/BtnFirm.svelte';
 import AsideLayout from '../../../layouts/AsideLayout.astro';
 import SEO from '../../../layouts/SEO.astro';
-import { getAboutUsArticles } from '../../../store/about-us-articles';
 import { aboutUsNavLinks } from '../../../store/nav-links';
+import { aboutUsArticles } from '../../../store/articles';
 
 export async function getStaticPaths() {
-  const paths = (await getAboutUsArticles())
+  const paths = aboutUsArticles
     .filter(({ slug }) => slug !== 'about-us')
     .map((article) => ({
       params: {

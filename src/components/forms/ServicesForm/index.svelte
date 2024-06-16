@@ -1,7 +1,7 @@
 <script lang="ts">
   import localforage from 'localforage';
   import { servicesFormSchema } from '../../../schemas/forms';
-  import { toasterHub } from '../../../store/toasterHub';
+  import { toastStore } from '../../../store/toaster';
   import { formatErrors } from '../../../utils/helpers';
   import { sendForm } from '../../../utils/sendForm';
   import { getErrors } from '../../../utils/zod';
@@ -17,6 +17,7 @@
   import { isOpen as modalIsOpen } from '../../modals/DevServModal';
   import { isSubmitted } from '.';
   import { urlQuery } from '@sveu/browser';
+  import { getArticleTitle } from '../../../store/articles';
 
   const query = urlQuery('history');
 
@@ -27,7 +28,6 @@
 
   $: validationResult = servicesFormSchema.safeParse(formValues);
   $: errors = getErrors(validationResult);
-  $: if (!formValues.info) formValues.info = null;
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
@@ -40,15 +40,20 @@
 
     const { ok, error } = await sendForm({
       url: '/api/services-form',
-      values: formValues,
+      values: {
+        ...formValues,
+        selectedService:
+          getArticleTitle(formValues.selectedService!) ||
+          formValues.selectedService!,
+      },
     }).finally(() => {
       submitting = false;
     });
 
     if (!ok) {
-      toasterHub.set([error, ...$toasterHub]);
+      toastStore.addToast(error);
     } else {
-      toasterHub.set(['Ваша заявка отправлена!', ...$toasterHub]);
+      toastStore.addToast('Спасибо за заявку!');
       sendingAttempt = false;
       formValues = { ...formValuesInit };
       await localforage.setItem('servFormSubmitted', 'true').then(() => {
@@ -60,10 +65,9 @@
 
   onMount(() => {
     if ($query['development-slug']) {
-      formValues.selectedService =
-        servicesOptions.find(
-          (option) => option.slug === $query['development-slug']
-        )?.value || null;
+      formValues.selectedService = servicesOptions.find(
+        (option) => option.value === $query['development-slug']
+      )?.value;
     }
   });
 </script>
@@ -113,9 +117,11 @@
     invalid={sendingAttempt && !formValues.access}
   >
     Нажимая на кнопку, вы соглашаетесь с
-    <a href="/">политикой конфиденциальности</a>
+    <a href="/about-us/privacy-policy">политикой конфиденциальности</a>
     и на обработку персональных данных
   </AccessBlock>
 
-  <BtnFirm variant="contrast" disabled={submitting}>Отправить</BtnFirm>
+  <div>
+    <BtnFirm variant="contrast" disabled={submitting}>Отправить</BtnFirm>
+  </div>
 </Form>

@@ -1,9 +1,11 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
-  import { isOpen } from '../../store/site-menu';
+  import { siteMenuStore } from '../../store/site-menu';
+  const isOpen = siteMenuStore;
+  const { toggle } = siteMenuStore;
 </script>
 
-<button class:open={$isOpen} on:click={() => isOpen.set(!$isOpen)}>
+<button class:open={$isOpen} on:click={toggle}>
   {#if $isOpen}
     <Icon icon="line-md:menu-to-close-alt-transition" />
   {:else}

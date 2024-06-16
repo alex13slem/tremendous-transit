@@ -1,8 +1,8 @@
 import localforage from 'localforage';
-import { atom } from 'nanostores';
 import Root from './index.svelte';
+import { writable } from 'svelte/store';
 
-const isSubmitted = atom<boolean>(false);
+const isSubmitted = writable(false);
 
 try {
   const localeSubmitted = await localforage.getItem('blogerFormSubmitted');

@@ -20,7 +20,7 @@
   {#each data as { src, alt }}
     <swiper-slide class="slide" data-hash={formatStrToId(alt)}>
       <div class="slide-wrap" style="background-image: url({src});">
-        <img {src} {alt} height="600" />
+        <img loading="lazy" {src} {alt} />
       </div>
     </swiper-slide>
   {/each}

@@ -23,13 +23,17 @@
   const pageSizeVariant = [16, 24, 40];
   let filteredItems: GameSelect[];
 
-  let searchValue = '';
-  let genreValue = '';
-  let marketplaceValue = '';
+  let searchValue: string | undefined = undefined;
+  let genreValue: string | undefined = undefined;
+  let marketplaceValue: string | undefined = undefined;
   let gameTypeValue = 'isMobile';
 
   let currentPage = 1;
   let pageSize = pageSizeVariant[0];
+
+  let genreSelectIsOpen = false;
+  let marketplaceSelectIsOpen = false;
+
   $: minVisibleGame = 1 + pageSize * (currentPage - 1);
   $: maxVisibleGame = pageSize + pageSize * (currentPage - 1);
 
@@ -89,13 +93,14 @@
         placeholder="Жанр"
         options={genresOptions}
         bind:value={genreValue}
+        bind:open={genreSelectIsOpen}
       >
         <button
           class="select-icon-btn"
           slot="left"
-          on:click|stopPropagation={(e) => {
-            if (!genreValue) return;
-            genreValue = '';
+          on:click|stopPropagation={() => {
+            genreValue = undefined;
+            genreSelectIsOpen = false;
           }}
         >
           {#if genreValue}
@@ -117,14 +122,14 @@
         placeholder="Платформа"
         options={marketplacesOptions}
         bind:value={marketplaceValue}
+        bind:open={marketplaceSelectIsOpen}
       >
         <button
           class="select-icon-btn"
           slot="left"
-          on:click={(e) => {
-            if (!marketplaceValue) return;
-            e.stopPropagation();
-            marketplaceValue = '';
+          on:click|stopPropagation={() => {
+            marketplaceValue = undefined;
+            marketplaceSelectIsOpen = false;
           }}
         >
           {#if marketplaceValue}

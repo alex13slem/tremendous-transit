@@ -2,7 +2,7 @@
   import type { SelectOption } from '../ui/Select';
 
   export let genres: SelectOption[];
-  export let value: string | null = null;
+  export let value: string | undefined = undefined;
 </script>
 
 <swiper-container slides-per-view="auto">
@@ -10,10 +10,10 @@
     <swiper-slide>
       <button
         on:click={() => {
-          if (value === genre.value) return (value = null);
+          if (value === genre.value) return (value = undefined);
           value = genre.value;
         }}
-        class:active={value === genre.value}>{genre.value}</button
+        class:active={value === genre.value}>{genre.text}</button
       >
     </swiper-slide>
   {/each}

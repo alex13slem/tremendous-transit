@@ -2,6 +2,13 @@
 import HtmlBase from './HtmlBase.astro';
 import SectSocialSlider from '../sections/SectSocialSlider.astro';
 import SectBloggerForm from '../sections/SectBloggerForm.astro';
+
+interface Props {
+  sectSocialSlider?: boolean;
+  sectBloggerForm?: boolean;
+}
+
+const { sectSocialSlider = true, sectBloggerForm = true } = Astro.props;
 ---
 
 <HtmlBase>
@@ -9,9 +16,9 @@ import SectBloggerForm from '../sections/SectBloggerForm.astro';
   <main>
     <slot />
 
-    <SectSocialSlider />
+    {sectSocialSlider && <SectSocialSlider />}
 
-    <SectBloggerForm title="Сми или блогер" />
+    {sectBloggerForm && <SectBloggerForm title="Сми или блогер" />}
   </main>
   <slot name="after-main" />
 </HtmlBase>

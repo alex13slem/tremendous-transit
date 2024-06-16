@@ -1,14 +1,14 @@
-import { atom } from 'nanostores';
-import { devArticles } from '../../store/service-articles';
+import { writable } from 'svelte/store';
+import { devArticles } from '../../store/articles';
 import type { SelectOption } from '../ui/Select';
 import Root from './index.svelte';
 
-const options: SelectOption[] = devArticles.get().map((art) => ({
-  slug: art.slug,
-  value: art.data.title,
+const options: SelectOption[] = devArticles.map((art) => ({
+  text: art.data.title,
+  value: art.slug,
   disabled: false,
 }));
 
-const selectedOptionValue = atom(options[0].value);
+const targetValue = writable<string | undefined>(undefined);
 
-export { Root, Root as ServicesTabs, options, selectedOptionValue };
+export { Root, Root as ServicesTabs, options, targetValue };

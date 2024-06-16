@@ -1,27 +1,27 @@
 import localforage from 'localforage';
-import { atom } from 'nanostores';
-import { devArticles } from '../../../store/service-articles';
+import { writable } from 'svelte/store';
+import { devArticles } from '../../../store/articles';
 import Root from './index.svelte';
 
 type DevelopmentFormValues = {
   access: boolean;
   botField: boolean;
-  name: string | null;
-  email: string | null;
-  info: string | null;
-  selectedService: string | null;
+  name: string | undefined;
+  email: string | undefined;
+  info: string | undefined;
+  selectedService: string | undefined;
 };
 
 const formValuesInit: DevelopmentFormValues = {
   botField: false,
   access: false,
-  name: null,
-  email: null,
-  info: null,
-  selectedService: null,
+  name: undefined,
+  email: undefined,
+  info: undefined,
+  selectedService: undefined,
 };
 
-const isSubmitted = atom<boolean>(false);
+const isSubmitted = writable<boolean>(false);
 
 try {
   const localeSubmitted = await localforage.getItem('servFormSubmitted');
@@ -30,13 +30,11 @@ try {
   }
 } catch (error) {}
 
-const servicesOptions = devArticles
-  .get()
-  .map(({ slug, data: { title: value } }) => ({
-    slug,
-    value,
-    disabled: false,
-  }));
+const servicesOptions = devArticles.map(({ slug, data: { title } }) => ({
+  value: slug,
+  text: title,
+  disabled: false,
+}));
 
 export {
   Root,
