@@ -28,7 +28,6 @@
 
   $: validationResult = publishingFormSchema.safeParse(formValues);
   $: errors = getErrors(validationResult);
-  // $: if (!formValues.linkPreview) formValues.linkPreview = null;
 
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();

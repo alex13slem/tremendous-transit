@@ -1,4 +1,5 @@
 ---
+import { companyInfoWRelations } from '../store/companyInfo';
 import type { OpenGraphProps } from '../types/open-graph';
 import OpenGraph from './OpenGraph.astro';
 
@@ -8,13 +9,18 @@ interface Props extends Omit<OpenGraphProps, 'siteName'> {
 
 const { keywords, description, title, ...props } = Astro.props;
 
-const siteName = import.meta.env.SITE_NAME_TAB;
+const { title: siteName, description: siteDescription } = companyInfoWRelations;
 ---
 
 <>
   {keywords && <meta name="keywords" content={keywords} />}
-  <meta name="description" content={description} />
-  <OpenGraph {description} {siteName} {title} {...props} />
+  <meta name="description" content={description || siteDescription} />
+  <OpenGraph
+    description={description || siteDescription}
+    {siteName}
+    title={`${siteName} • ${title}`}
+    {...props}
+  />
 
-  <title>{siteName} - {title}</title>
+  <title>{siteName} • {title}</title>
 </>

@@ -10,16 +10,97 @@ export const companyInfoCollection: CmsCollection = {
   format: 'yml',
   fields: [
     {
+      // Название
       label: 'Название',
       name: 'title',
       widget: 'string',
     },
     {
+      // Slug
       label: 'Slug',
       name: 'slug',
       widget: 'string',
     },
     {
+      // О компании
+      label: 'О компании',
+      name: 'description',
+      widget: 'text',
+    },
+    {
+      // Почта
+      label: 'Почты',
+      name: 'emails',
+      widget: 'list',
+      fields: [
+        {
+          label: 'Название',
+          name: 'title',
+          widget: 'string',
+        },
+        {
+          label: 'Почта',
+          name: 'email',
+          widget: 'string',
+        },
+      ],
+    },
+    {
+      // Телефоны
+      label: 'Телефоны',
+      name: 'phones',
+      widget: 'list',
+      fields: [
+        {
+          label: 'Название',
+          name: 'title',
+          widget: 'string',
+        },
+        {
+          label: 'Телефон',
+          name: 'phone',
+          widget: 'string',
+        },
+      ],
+    },
+    {
+      // Адрес
+      label: 'Адрес',
+      name: 'address',
+      widget: 'object',
+      fields: [
+        {
+          label: 'Город',
+          name: 'city',
+          widget: 'string',
+        },
+        {
+          label: 'Адрес',
+          name: 'address',
+          widget: 'string',
+        },
+      ],
+    },
+    {
+      // Полезные ссылки
+      label: 'Полезные ссылки',
+      name: 'links',
+      widget: 'list',
+      fields: [
+        {
+          label: 'Название',
+          name: 'title',
+          widget: 'string',
+        },
+        {
+          label: 'Ссылка',
+          name: 'href',
+          widget: 'string',
+        },
+      ],
+    },
+    {
+      // Socials
       label: 'Соцсети',
       name: 'socials',
       widget: 'list',
@@ -48,6 +129,7 @@ export const companyInfoCollection: CmsCollection = {
       ],
     },
     {
+      // Marketplaces
       label: 'Мы на платформах',
       name: 'marketplaces',
       widget: 'list',

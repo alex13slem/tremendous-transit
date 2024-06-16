@@ -14,6 +14,29 @@ const marketplacesSchemaSelect = marketplacesSchema.merge(
 export const companyInfoSchema = z.object({
   title: z.string(),
   slug: z.string(),
+  description: z.string(),
+  emails: z
+    .object({
+      title: z.string(),
+      email: z.string(),
+    })
+    .array(),
+  phones: z
+    .object({
+      title: z.string(),
+      phone: z.string(),
+    })
+    .array(),
+  address: z.object({
+    city: z.string(),
+    address: z.string(),
+  }),
+  links: z
+    .object({
+      title: z.string(),
+      href: z.string(),
+    })
+    .array(),
   socials: z
     .object({
       slug: z.string(),
@@ -30,5 +53,4 @@ const companyInfoSchemaSelect = companyInfoSchema.extend({
 
 export type CompanyInfo = z.infer<typeof companyInfoSchema>;
 export type CompanyInfoSelect = z.infer<typeof companyInfoSchemaSelect>;
-
 export type MarketplaceSelect = z.infer<typeof marketplacesSchemaSelect>;

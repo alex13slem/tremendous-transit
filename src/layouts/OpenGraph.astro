@@ -1,6 +1,8 @@
 ---
 import type { OpenGraphProps } from '../types/open-graph';
 
+export interface Props extends OpenGraphProps {}
+
 const {
   siteName,
   title,
@@ -11,7 +13,7 @@ const {
   profile,
   book,
   atricle,
-} = Astro.props as OpenGraphProps;
+} = Astro.props;
 
 imageUrls.tg || (imageUrls.tg = imageUrls.fb);
 imageUrls.vk || (imageUrls.vk = imageUrls.fb);

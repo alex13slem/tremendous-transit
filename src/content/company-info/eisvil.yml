@@ -1,5 +1,24 @@
-title: Eisvil
+title: EISVIL
 slug: eisvil
+description: Eisvil — это ведущая компания, специализирующаяся на поддержке и
+  продвижении независимых разработчиков инди-игр для смартфонов, компьютеров и
+  браузеров. Наша миссия — помочь талантливым создателям воплотить их уникальные
+  идеи в реальность, предоставляя комплексные услуги на всех этапах разработки
+  игр.
+emails:
+  - title: Поддержка
+    email: eisvildev@gmail.com
+phones:
+  - title: Телефон поддержки
+    phone: "+79809998844"
+address:
+  city: Москва
+  address: ул. Советская, 72
+links:
+  - title: Ссылка 1
+    href: https://decapcms.org/docs/widgets/#text
+  - href: https://decapcms.org/docs/widgets/#text
+    title: Ссылка 2
 socials:
   - slug: discord
     href: https://discord.gg/e9uTMxXGph

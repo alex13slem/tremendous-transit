@@ -1,17 +1,14 @@
 <script lang="ts">
   import Icon from '@iconify/svelte';
   import Portal from '../Portal.svelte';
-  import type { Link } from '../../types/project';
   import Overlay from '../../layouts/Overlay.svelte';
-
-  type Links = {
-    contacts: Link[];
-    other: Link[];
-  };
+  import { companyInfoWRelations } from '../../store/companyInfo';
 
   export let title: string = '';
-  export let links: Links | null = null;
+  export let wLinks: boolean = false;
   export let isOpen = false;
+
+  const { emails, links } = companyInfoWRelations;
 </script>
 
 {#if isOpen}
@@ -29,18 +26,18 @@
           <div class="body">
             <slot />
 
-            {#if links}
+            {#if wLinks}
               <aside>
-                {#if links?.contacts.length}
+                {#if emails.length}
                   <h3>Наша почта:</h3>
-                  {#each links.contacts as { href, text }}
-                    <a {href}>{text}</a>
+                  {#each emails as { email, title }}
+                    <a href="mailto:{email}" {title}>{email}</a>
                   {/each}
                 {/if}
-                {#if links?.other.length}
+                {#if links.length}
                   <h3>Как мы работаем · Полезное:</h3>
-                  {#each links.other as { href, text }}
-                    <a {href}>{text}</a>
+                  {#each links as { href, title }}
+                    <a {href}>{title}</a>
                   {/each}
                 {/if}
               </aside>
