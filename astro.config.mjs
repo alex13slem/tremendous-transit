@@ -3,6 +3,6 @@ import svelte from '@astrojs/svelte';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://eisvil.com/',
+  site: 'https://eisvil-new.netlify.app/',
   integrations: [svelte()],
 });
